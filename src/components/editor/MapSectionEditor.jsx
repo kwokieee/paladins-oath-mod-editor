@@ -1,14 +1,10 @@
-export default function MapSectionEditor({ content }) {
+export default function MapSectionEditor({ moduleDescriptor }) {
   return (
     <>
       <div>
         <div>
-          <p>
-            GUID
-          </p>
-          <p>
-            Name
-          </p>
+          <p>GUID</p>
+          <p>Name</p>
         </div>
       </div>
     </>

@@ -1,14 +1,10 @@
-export default function ScenarioEditor({ content }) {
+export default function ScenarioEditor({ moduleDescriptor }) {
   return (
     <>
       <div>
         <div>
-          <p>
-            GUID
-          </p>
-          <p>
-            Name
-          </p>
+          <p>GUID</p>
+          <p>Name</p>
         </div>
       </div>
     </>

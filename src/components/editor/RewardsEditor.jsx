@@ -1,14 +1,10 @@
-export default function RewardsEditor({ content }) {
+export default function RewardsEditor({ moduleDescriptor }) {
   return (
     <>
       <div>
         <div>
-          <p>
-            GUID
-          </p>
-          <p>
-            Name
-          </p>
+          <p>GUID</p>
+          <p>Name</p>
         </div>
       </div>
     </>

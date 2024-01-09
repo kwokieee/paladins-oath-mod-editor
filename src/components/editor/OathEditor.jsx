@@ -1,14 +1,10 @@
-export default function OathEditor({ content }) {
+export default function OathEditor({ moduleDescriptor }) {
   return (
     <>
       <div>
         <div>
-          <p>
-            GUID
-          </p>
-          <p>
-            Name
-          </p>
+          <p>GUID</p>
+          <p>Name</p>
         </div>
       </div>
     </>
