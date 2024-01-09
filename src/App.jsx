@@ -1,55 +1,63 @@
 import './App.css'
 import { useRef } from "react";
-import JSZip from 'jszip';
+import Editor from './components/editor/Editor';
+import ModuleExplorer from './components/moduleExplorer/ModuleExplorer';
+import { useModInfo } from './hooks/useModInfo';
 
-function App() {
+export default function App() {
   const fileInput = useRef();
-  const onButtonClick = () => {
+  const { modDescriptor, loadModFromZipFile } = useModInfo();
+  const onLoadModButtonClicked = () => {
     fileInput.current.click();
   };
+  const onNewModButtonClicked = () => {
+    console.log('new mod');
+  };
+  const onSaveModButtonClicked = () => {
+    console.log('save mod');
+  };
   const handleFileSelected = async () => {
-    const zipFile = fileInput.current.files[0]; // File object
-    console.log(zipFile);
-    const files = await JSZip.loadAsync(zipFile);
-    let modJsonFilePath;
-    const hasModJsonAtRoot = Object.keys(files.files).some(path => {
-      const isValidModJson = path.endsWith('/mod.json') && path.includes("/") && path.lastIndexOf("/") == path.indexOf("/");
-      if (isValidModJson) {
-        modJsonFilePath = path;
-      }
-      return isValidModJson;
-    });
+    const zipFile = fileInput.current.files[0];
+    await loadModFromZipFile(zipFile);
+  }
 
-    if (hasModJsonAtRoot) {
-      console.log('has mod.json at root');
-      console.log(modJsonFilePath);
-    } else {
-      console.error('No mod.json found in mod\'s root directory');
-    }
-
-    // console.log(files.files["com.firebiscuit.wolfhide/mod.json"]);
-    const textContent = await files.files[modJsonFilePath].async('text');
-    const modDescriptor = JSON.parse(textContent);
-    console.log(modDescriptor);
+  if (modDescriptor) {
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ width: '80%', minWidth: '80%', overflow: 'scroll', height: '100vh' }}>
+            <Editor />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', width: '20%', maxWidth: '20%', height: '100vh' }}>
+            <h2>{modDescriptor.name}</h2>
+            <ModuleExplorer modDescriptor={modDescriptor} />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: 10 }}>
+              <button onClick={onSaveModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
+                Save
+              </button>
+              <button onClick={onLoadModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
+                Load
+              </button>
+              <button onClick={onNewModButtonClicked} style={{ width: '100%' }}>
+                New
+              </button>
+            </div>
+          </div>
+        </div>
+    )
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vh', height: '100%' }}>
-      {/* Editor */}
-      <div style={{ display: 'flex', flex: 8}}>
-        <p>Editor</p>
-      </div>
-      <div style={{ display: 'flex', flex: 2 }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <h1 style={{ fontSize: 32 }}>Paladin's Oath Mod Editor</h1>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <input type='file' id='file' ref={fileInput} style={{display: 'none'}} onChange={handleFileSelected} accept='.zip'/>
-        <button onClick={onButtonClick}>
-          Open
+        <button onClick={onLoadModButtonClicked} style={{ marginBottom: 5 }}>
+          Load existing mod
         </button>
-        <button>
-          Save
+        <button onClick={onNewModButtonClicked}>
+          New mod
         </button>
       </div>
     </div>
   )
 }
-
-export default App

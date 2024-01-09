@@ -1,4 +1,4 @@
-export default function FileExplorer() {
+export default function OathEditor({ content }) {
   return (
     <>
       <div>
@@ -8,12 +8,6 @@ export default function FileExplorer() {
           </p>
           <p>
             Name
-          </p>
-          <p>
-            Number of instances in deck
-          </p>
-          <p>
-            
           </p>
         </div>
       </div>
