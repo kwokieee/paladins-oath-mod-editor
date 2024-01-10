@@ -51,6 +51,14 @@ export default function App() {
             <button onClick={onSaveModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
               Save
             </button>
+            <input
+              type="file"
+              id="file"
+              ref={fileInput}
+              style={{ display: 'none' }}
+              onChange={handleFileSelected}
+              accept=".zip"
+            />
             <button onClick={onLoadModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
               Load
             </button>
