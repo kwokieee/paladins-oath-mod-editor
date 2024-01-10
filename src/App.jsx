@@ -49,7 +49,7 @@ export default function App() {
             }}
           >
             <button onClick={onSaveModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
-              Save
+              Export
             </button>
             <input
               type="file"
@@ -60,7 +60,7 @@ export default function App() {
               accept=".zip"
             />
             <button onClick={onLoadModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
-              Load
+              Import
             </button>
             <button onClick={onNewModButtonClicked} style={{ width: '100%' }}>
               New
@@ -98,7 +98,7 @@ export default function App() {
           accept=".zip"
         />
         <button onClick={onLoadModButtonClicked} style={{ marginBottom: 5 }}>
-          Load existing mod
+          Import existing mod
         </button>
         <button onClick={onNewModButtonClicked}>New mod</button>
       </div>
