@@ -1,8 +1,9 @@
-# React + Vite
+# Local Development Setup
+1. Ensure that you have node v18 installed.
+1. Ensure that you have yarn v1.22.19 installed (e.g. `npm i -g yarn`).
+1. Run `yarn install`.
+1. Run `yarn dev` to start the frontend in development mode.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Local Production mode
+1. Run `yarn build`.
+1. Run `yarn preview`.
