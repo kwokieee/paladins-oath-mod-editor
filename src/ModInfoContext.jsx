@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { unzip, getTextContentOfFile } from './utils';
+import { unzip, getTextContentOfFile, createObjectURL } from './utils';
 
 export const ModInfoContext = createContext(null);
 
@@ -52,9 +52,14 @@ export function ModInfoProvider({ children }) {
     return moduleDescriptor;
   };
 
+  const getUrlForFile = async (filePath) => {
+    return await createObjectURL(filePath, moduleFiles);
+  }
+
   const value = {
     loadModFromZipFile,
     getModuleDescriptor,
+    getUrlForFile,
     modDescriptor,
     pathRoot,
     selectedModule,

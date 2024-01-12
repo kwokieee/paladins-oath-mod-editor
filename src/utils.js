@@ -20,3 +20,10 @@ export const unzip = async (zipFile) => {
 export const getTextContentOfFile = async (path, zip) => {
   return await zip.file(path).async('text');
 };
+
+export const createObjectURL = async (path, zip) => {
+  let content = await zip.file(path).async('arraybuffer');
+  let buffer = new Uint8Array(content);
+  let blob = new Blob([buffer.buffer]);
+  return URL.createObjectURL(blob);
+}
