@@ -1,4 +1,3 @@
-import {GameResources, FindResourceById} from '../GameResources';
 import {GameValues, FindEnumByValue} from '../GameValues';
 
 export class RewardData {
