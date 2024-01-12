@@ -1,10 +1,10 @@
-import {EnemyElusiveData} from './EnemyElusiveData';
-import {EnemyAttackData} from './EnemyAttackData';
-import {GameResources, FindResourceById} from '../GameResources';
-import {GameValues, FindEnumByValue} from '../GameValues';
+import { EnemyElusiveData } from './EnemyElusiveData';
+import { EnemyAttackData } from './EnemyAttackData';
+import { GameResources, FindResourceById } from '../GameResources';
+import { GameValues, FindEnumByValue } from '../GameValues';
 
 export class EnemyData {
-  constructor(){
+  constructor() {
     // string. guid, unique only within the mod. Will be turned into guid 'mod:'+$yourModId+':'+$guid
     this.guid = null;
     // string. Enemy name (not localized)
@@ -40,47 +40,47 @@ export class EnemyData {
     // TODO(ylaunay) add pictures and tileData files
   }
 
-  isValid(){
-    if( !this.guid ) return false;
-    if( !this.name ) return false;
-    if( this.numInstancesInDeck <= 0 ) return false;
-    if( !this.enemyType) return false;
-    if( this.armor <= 0 ) return false;
-    if( this.isElusive && (! this.elusiveData || ! this.elusiveData.isValid()) ) return false;
-    if( !this.fortification ) return false;
-    if( this.xpGain < 0 ) return false;
-    if( this.reputationGain < 0 ) return false;
-    if( this.reputationGainBonusWhenRampaging < 0 ) return false;
-    if( this.challengeRating < 1 || this.challengeRating > 10) return false;
-    if( this.attacks.length > 0 ){
-      for( let i = 0; i < this.attacks.length; i++ ){
+  isValid() {
+    if (!this.guid) return false;
+    if (!this.name) return false;
+    if (this.numInstancesInDeck <= 0) return false;
+    if (!this.enemyType) return false;
+    if (this.armor <= 0) return false;
+    if (this.isElusive && (!this.elusiveData || !this.elusiveData.isValid())) return false;
+    if (!this.fortification) return false;
+    if (this.xpGain < 0) return false;
+    if (this.reputationGain < 0) return false;
+    if (this.reputationGainBonusWhenRampaging < 0) return false;
+    if (this.challengeRating < 1 || this.challengeRating > 10) return false;
+    if (this.attacks.length > 0) {
+      for (let i = 0; i < this.attacks.length; i++) {
         const atk = this.attacks[i];
-        if( ! atk || ! atk.isValid() ){
+        if (!atk || !atk.isValid()) {
           return false;
         }
       }
     }
-    if( this.summoningAttacks.length > 0 ){
-      for( let i = 0; i < this.summoningAttacks.length; i++ ){
+    if (this.summoningAttacks.length > 0) {
+      for (let i = 0; i < this.summoningAttacks.length; i++) {
         const summonType = this.summoningAttacks[i];
-        if( ! summonType || ! FindResourceById(GameResources.EnemyType, summonType.value) ){
+        if (!summonType || !FindResourceById(GameResources.EnemyType, summonType.value)) {
           return false;
         }
       }
     }
-    if( this.attacks.length === 0 && this.summoningAttacks.length === 0 ) return false;
-    if( this.immunities.length > 0 ){
-      for( let i = 0; i < this.immunities.length; i++ ){
+    if (this.attacks.length === 0 && this.summoningAttacks.length === 0) return false;
+    if (this.immunities.length > 0) {
+      for (let i = 0; i < this.immunities.length; i++) {
         const immunity = this.immunities[i];
-        if( ! immunity || ! FindEnumByValue(GameValues.Immunity, immunity.value) ){
+        if (!immunity || !FindEnumByValue(GameValues.Immunity, immunity.value)) {
           return false;
         }
       }
     }
-    if( this.resistances.length > 0 ){
-      for( let i = 0; i < this.resistances.length; i++ ){
+    if (this.resistances.length > 0) {
+      for (let i = 0; i < this.resistances.length; i++) {
         const resistance = this.resistances[i];
-        if( ! resistance || ! FindEnumByValue(GameValues.Element, resistance.value) ){
+        if (!resistance || !FindEnumByValue(GameValues.Element, resistance.value)) {
           return false;
         }
       }
@@ -89,9 +89,9 @@ export class EnemyData {
   }
 
   // Throw if data is not valid
-  toJson(){
-    if( ! this.isValid() ) throw new Error('Invalid EnemyData');
- 
+  toJson() {
+    if (!this.isValid()) throw new Error('Invalid EnemyData');
+
     const out = {};
 
     out.guid = this.guid;
@@ -100,7 +100,7 @@ export class EnemyData {
     out.enemyType = this.enemyType.value;
     out.armor = this.armor;
     out.isElusive = this.isElusive;
-    if( this.isElusive ){
+    if (this.isElusive) {
       out.elusiveData = this.elusiveData.toJson();
     }
     out.fortification = this.fortification.value;
@@ -108,14 +108,14 @@ export class EnemyData {
     out.reputationGain = this.reputationGain;
     out.reputationGainBonusWhenRampaging = this.reputationGainBonusWhenRampaging;
     out.challengeRating = this.challengeRating;
-    out.summoningAttacks = this.summoningAttacks.map(atk => atk.value);
-    out.immunities = this.immunities.map(immunity => immunity.value);
-    out.resistances = this.resistances.map(res => res.value);
+    out.summoningAttacks = this.summoningAttacks.map((atk) => atk.value);
+    out.immunities = this.immunities.map((immunity) => immunity.value);
+    out.resistances = this.resistances.map((res) => res.value);
 
     return out;
   }
 
-  static fromJson(json){
+  static fromJson(json) {
     const data = new EnemyData();
 
     data.guid = json.guid;
@@ -124,7 +124,7 @@ export class EnemyData {
     data.enemyType = FindResourceById(GameResources.EnemyType, json.enemyType);
     data.armor = json.armor;
     data.isElusive = !!json.isElusive && !!json.elusiveData;
-    if( data.isElusive ){
+    if (data.isElusive) {
       data.elusiveData = EnemyElusiveData.fromJson(json.elusiveData);
     }
     data.fortification = FindEnumByValue(GameValues.Fortification, json.fortification);
@@ -132,10 +132,16 @@ export class EnemyData {
     data.reputationGain = json.reputationGain;
     data.reputationGainBonusWhenRampaging = json.reputationGainBonusWhenRampaging;
     data.challengeRating = json.challengeRating;
-    data.attacks = !!json.attacks ? json.attacks.map(atk => EnemyAttackData.fromJson(atk)) : [];
-    data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindResourceById(GameResources.EnemyType, atk)) : [];
-    data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
-    data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
+    data.attacks = json.attacks ? json.attacks.map((atk) => EnemyAttackData.fromJson(atk)) : [];
+    data.summoningAttacks = json.summoningAttacks
+      ? json.summoningAttacks.map((atk) => FindResourceById(GameResources.EnemyType, atk))
+      : [];
+    data.immunities = json.immunities
+      ? json.immunities.map((immunity) => FindEnumByValue(GameValues.Immunity, immunity))
+      : [];
+    data.resistances = json.resistances
+      ? json.resistances.map((res) => FindEnumByValue(GameValues.Element, res))
+      : [];
 
     return data.isValid() ? data : null;
   }

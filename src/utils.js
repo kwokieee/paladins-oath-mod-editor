@@ -26,4 +26,4 @@ export const createObjectURL = async (path, zip) => {
   let buffer = new Uint8Array(content);
   let blob = new Blob([buffer.buffer]);
   return URL.createObjectURL(blob);
-}
+};

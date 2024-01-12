@@ -54,7 +54,7 @@ export function ModInfoProvider({ children }) {
 
   const getUrlForFile = async (filePath) => {
     return await createObjectURL(filePath, moduleFiles);
-  }
+  };
 
   const value = {
     loadModFromZipFile,

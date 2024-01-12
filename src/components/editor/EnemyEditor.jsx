@@ -1,29 +1,39 @@
 import { useEffect, useState } from 'react';
 import ResourcePicker from '../resourcePicker/ResourcePicker';
 import { useModInfo } from '../../hooks/useModInfo';
-import {EnemyData} from '../../data/classes/EnemyData';
+import { EnemyData } from '../../data/classes/EnemyData';
 
 export default function EnemyEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
   const [isEditingEnemyType, setIsEditingEnemyType] = useState(false);
-  const [portraitSprite, setPortraitSprite] = useState("");
-  const [fullBodySprite, setFullBodySprite] = useState("");
-  const [fullBodyOutlineSprite, setFullBodyOutlineSprite] = useState("");
-  const [tileNormalSprite, setTileNormalSprite] = useState("");
-  const [tileOutlinedSprite, setTileOutlinedSprite] = useState("");
+  const [portraitSprite, setPortraitSprite] = useState('');
+  const [fullBodySprite, setFullBodySprite] = useState('');
+  const [fullBodyOutlineSprite, setFullBodyOutlineSprite] = useState('');
+  const [tileNormalSprite, setTileNormalSprite] = useState('');
+  const [tileOutlinedSprite, setTileOutlinedSprite] = useState('');
 
   const loadImages = async () => {
-    const portraitSprite = await getUrlForFile(`${pathRoot}/${selectedModule}/${moduleDescriptor?.portraitSprite}`);
+    const portraitSprite = await getUrlForFile(
+      `${pathRoot}/${selectedModule}/${moduleDescriptor?.portraitSprite}`,
+    );
     setPortraitSprite(portraitSprite);
-    const fullBodySprite = await getUrlForFile(`${pathRoot}/${selectedModule}/${moduleDescriptor?.fullBodySprite}`);
+    const fullBodySprite = await getUrlForFile(
+      `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullBodySprite}`,
+    );
     setFullBodySprite(fullBodySprite);
-    const fullBodyOutlineSprite = await getUrlForFile(`${pathRoot}/${selectedModule}/${moduleDescriptor?.fullBodyOutlineSprite}`);
+    const fullBodyOutlineSprite = await getUrlForFile(
+      `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullBodyOutlineSprite}`,
+    );
     setFullBodyOutlineSprite(fullBodyOutlineSprite);
-    const tileNormalSprite = await getUrlForFile(`${pathRoot}/${selectedModule}/${moduleDescriptor?.tileData?.tileNormalSprite}`);
+    const tileNormalSprite = await getUrlForFile(
+      `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileData?.tileNormalSprite}`,
+    );
     setTileNormalSprite(tileNormalSprite);
-    const tileOutlinedSprite = await getUrlForFile(`${pathRoot}/${selectedModule}/${moduleDescriptor?.tileData?.tileOutlinedSprite}`);
+    const tileOutlinedSprite = await getUrlForFile(
+      `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileData?.tileOutlinedSprite}`,
+    );
     setTileOutlinedSprite(tileOutlinedSprite);
-  }
+  };
 
   useEffect(() => {
     console.log(moduleDescriptor);
@@ -33,29 +43,31 @@ export default function EnemyEditor({ moduleDescriptor }) {
     setIsEditingEnemyType(!isEditingEnemyType);
   };
 
-  if( ! moduleDescriptor ){
+  if (!moduleDescriptor) {
     return <>Loading...</>;
   }
 
   const enemyData = EnemyData.fromJson(moduleDescriptor);
-  if( ! enemyData ){
+  if (!enemyData) {
     return <>Invalid or corrupted data</>;
   }
-  
+
   return (
     <div>
       <h5>GUID</h5>
       <input
-        type='text'
-        placeholder={'string. guid, unique only within the mod. Will be turned into GUID \'mod:\'+$yourModId+\':\'+$guid\''}
-        defaultValue={enemyData.guid} 
+        type="text"
+        placeholder={
+          "string. guid, unique only within the mod. Will be turned into GUID 'mod:'+$yourModId+':'+$guid'"
+        }
+        defaultValue={enemyData.guid}
       />
 
       <hr />
 
       <h5>Name</h5>
       <input
-        type='text'
+        type="text"
         placeholder={'string. Enemy name (not localized)'}
         defaultValue={enemyData.name}
       />
@@ -72,23 +84,21 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <hr />
 
       <h5>Enemy type: {enemyData.enemyType.name}</h5>
-      <button style={{ marginBottom: 10 }} onClick={onEditEnemyType}>Edit</button>
+      <button style={{ marginBottom: 10 }} onClick={onEditEnemyType}>
+        Edit
+      </button>
       {isEditingEnemyType && <ResourcePicker resourceType={'EnemyType'} />}
 
       <hr />
 
       <h5>Armor</h5>
       {/* Number input */}
-      <input
-        type='number'
-        placeholder={'int > 0'}
-        defaultValue={enemyData.armor}
-      />
+      <input type="number" placeholder={'int > 0'} defaultValue={enemyData.armor} />
 
       <hr />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <input
-          type='checkbox'
+          type="checkbox"
           checked={enemyData.isElusive}
           placeholder={'(Optional) bool [default=false]. If true, MUST specify elusive data.'}
         />
@@ -102,7 +112,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
           <h5>Elusive data</h5>
           <h6>Armor if blocked</h6>
           <input
-            type='number'
+            type="number"
             placeholder={'int > 0'}
             defaultValue={enemyData.elusiveData?.armorIfBlocked}
           />
@@ -113,7 +123,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <h5>Fortification</h5>
       <input
-        type='number'
+        type="number"
         placeholder={'(Optional) Fortification::int [default=NotFortified(2)]. Enum value'}
         defaultValue={enemyData.fortification.name}
       />
@@ -122,7 +132,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <h5>XP gain</h5>
       <input
-        type='number'
+        type="number"
         placeholder={'int >= 0. How much XP gained when defeating the enemy in battle.'}
         defaultValue={enemyData.xpGain}
       />
@@ -131,8 +141,10 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <h5>Reputation gain</h5>
       <input
-        type='number'
-        placeholder={'(Optional) int >= 0 [default=0]. How much reputation gained when defeating the enemy in battle.'}
+        type="number"
+        placeholder={
+          '(Optional) int >= 0 [default=0]. How much reputation gained when defeating the enemy in battle.'
+        }
         defaultValue={enemyData.reputationGain}
       />
 
@@ -140,8 +152,10 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <h5>Reputation gain bonus when rampaging</h5>
       <input
-        type='number'
-        placeholder={'(Optional) int >= 0 [default=1]. How much additional reputation gained when defeating the enemy in battle when it is rampaging.'}
+        type="number"
+        placeholder={
+          '(Optional) int >= 0 [default=1]. How much additional reputation gained when defeating the enemy in battle when it is rampaging.'
+        }
         defaultValue={enemyData.reputationGainBonusWhenRampaging}
       />
 
@@ -149,8 +163,10 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <h5>Challenge rating</h5>
       <input
-        type='number'
-        placeholder={'(Optional) int [1-10] [default=1]. How difficult is the enemy. Used for balancing when drawing randomly and for generating Battle Tale. Check the Wiki for example ratings.'}
+        type="number"
+        placeholder={
+          '(Optional) int [1-10] [default=1]. How difficult is the enemy. Used for balancing when drawing randomly and for generating Battle Tale. Check the Wiki for example ratings.'
+        }
         defaultValue={enemyData.challengeRating}
       />
 
@@ -163,43 +179,52 @@ export default function EnemyEditor({ moduleDescriptor }) {
           <p>Element: {attack.element.name}</p>
           <p>Attack type: {attack.attackType.name}</p>
           <p>Attack value: {attack.value}</p>
-          <p>Attack modifier(s): {attack.attackModifiers.map((attackModifier) => attackModifier.name).join(',')}</p>
+          <p>
+            Attack modifier(s):{' '}
+            {attack.attackModifiers.map((attackModifier) => attackModifier.name).join(',')}
+          </p>
         </div>
       ))}
 
       <hr />
 
       <h5>Summoning attacks</h5>
-      {enemyData.summoningAttacks.length === 0
-        ? <p>No summoning attacks</p>
-        : moduleDescriptor?.summoningAttacks.map((summoningAttack, index) => (
-        <div key={index}>
-          <hr />
-          <p>{summoningAttack.name}</p>
-        </div>
-      ))}
+      {enemyData.summoningAttacks.length === 0 ? (
+        <p>No summoning attacks</p>
+      ) : (
+        moduleDescriptor?.summoningAttacks.map((summoningAttack, index) => (
+          <div key={index}>
+            <hr />
+            <p>{summoningAttack.name}</p>
+          </div>
+        ))
+      )}
 
       <hr />
 
       <h5>Immunities</h5>
-      {enemyData.immunities.length === 0
-        ? <p>No immunities</p>
-        : moduleDescriptor?.immunities.map((immunity, index) => (
-        <div key={index}>
-          <p>{immunity.name}</p>
-        </div>
-      ))}
+      {enemyData.immunities.length === 0 ? (
+        <p>No immunities</p>
+      ) : (
+        moduleDescriptor?.immunities.map((immunity, index) => (
+          <div key={index}>
+            <p>{immunity.name}</p>
+          </div>
+        ))
+      )}
 
       <hr />
 
       <h5>Resistances</h5>
-      {enemyData.resistances.length === 0
-        ? <p>No resistances</p>
-        : moduleDescriptor?.resistances.map((resistance, index) => (
-        <div key={index}>
-          <p>{resistance.name}</p>
-        </div>
-      ))}
+      {enemyData.resistances.length === 0 ? (
+        <p>No resistances</p>
+      ) : (
+        moduleDescriptor?.resistances.map((resistance, index) => (
+          <div key={index}>
+            <p>{resistance.name}</p>
+          </div>
+        ))
+      )}
 
       <hr />
 

@@ -66,9 +66,9 @@ export default function ResourcePicker({ resourceType, preselected }) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <select>
-        {Object.entries(GameResources.EnemyType).map(([enemyType, enemyTypeDetails], index) => (
-          <option key={index}>{enemyTypeDetails.name}</option>
-        ))}
+          {Object.entries(GameResources.EnemyType).map(([enemyType, enemyTypeDetails], index) => (
+            <option key={index}>{enemyTypeDetails.name}</option>
+          ))}
         </select>
       </div>
     );

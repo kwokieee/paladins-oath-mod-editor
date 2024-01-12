@@ -1,17 +1,17 @@
 export class EnemyElusiveData {
-  constructor(){
+  constructor() {
     // int > 0.
     this.armorIfBlocked = 1;
   }
 
-  isValid(){
+  isValid() {
     return this.armorIfBlocked > 0;
   }
 
   // Throw if data is not valid
-  toJson(){
-    if( ! this.isValid() ) throw new Error('Invalid EnemyElusiveData');
-    
+  toJson() {
+    if (!this.isValid()) throw new Error('Invalid EnemyElusiveData');
+
     const out = {};
 
     out.armorIfBlocked = this.armorIfBlocked;
@@ -20,7 +20,7 @@ export class EnemyElusiveData {
   }
 
   // Returns null if json doesn't produce valid data.
-  static fromJson(json){
+  static fromJson(json) {
     const data = new EnemyElusiveData();
 
     data.armorIfBlocked = json.armorIfBlocked;

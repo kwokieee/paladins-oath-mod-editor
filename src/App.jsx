@@ -24,7 +24,15 @@ export default function App() {
   if (modDescriptor) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{ width: '80%', minWidth: '80%', overflow: 'scroll', height: '100vh', paddingRight: 30 }}>
+        <div
+          style={{
+            width: '80%',
+            minWidth: '80%',
+            overflow: 'scroll',
+            height: '100vh',
+            paddingRight: 30,
+          }}
+        >
           <Editor />
         </div>
         <div
