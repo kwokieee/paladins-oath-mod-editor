@@ -49,6 +49,7 @@ export class RewardData {
     data.guid = json.guid;
     data.name = json.name;
     data.comboType = FindEnumByValue(GameValues.RewardComboType, json.comboType);
+    // TODO(ylaunay) support loading local mod GUIDs
     data.rewardOptions = json.rewardOptions.map(r => FindEnumByValue(GameValues.Reward, r));
 
     return data.isValid() ? data : null;
