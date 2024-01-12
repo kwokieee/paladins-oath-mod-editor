@@ -92,7 +92,6 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <hr />
 
       <h5>Armor</h5>
-      {/* Number input */}
       <input type="number" placeholder={'int > 0'} defaultValue={enemyData.armor} />
 
       <hr />
