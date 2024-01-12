@@ -38,6 +38,8 @@ export class EnemyData {
     this.immunities = [];
     // List<Element>. List of element Ids the enemy is resistant to.
     this.resistances = [];
+    // string. name of local file (local to the mod enemy folder). PNG, 512x512. Shown in battle and location enemy lists.
+    this.portraitSprite = null;
     // string. name of local file (local to the mod enemy folder). PNG, 1024x1024, Outline (10px; 0,0,0). Shown in battle.
     this.fullBodySprite = null;
     // string. name of local file (local to the mod enemy folder). PNG, White, 1024x1024. Shown in battle.
@@ -91,6 +93,7 @@ export class EnemyData {
         }
       }
     }
+    if( ! this.portraitSprite ) return false;
     if( ! this.fullBodySprite ) return false;
     if( ! this.fullBodyOutlineSprite ) return false;
     if( ! this.tileData || ! this.tileData.isValid() ) return false;
@@ -121,6 +124,7 @@ export class EnemyData {
     out.summoningAttacks = this.summoningAttacks.map(atk => atk.value);
     out.immunities = this.immunities.map(immunity => immunity.value);
     out.resistances = this.resistances.map(res => res.value);
+    out.portraitSprite = this.portraitSprite;
     out.fullBodySprite = this.fullBodySprite;
     out.fullBodyOutlineSprite = this.fullBodyOutlineSprite;
     out.tileData = this.tileData.toJson();    
@@ -149,6 +153,7 @@ export class EnemyData {
     data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindResourceById(GameResources.EnemyType, atk)) : [];
     data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
     data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
+    data.portraitSprite = json.portraitSprite;
     data.fullBodySprite = json.fullBodySprite;
     data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;
     data.tileData = EnemyTileData.fromJson(json.tileData);
