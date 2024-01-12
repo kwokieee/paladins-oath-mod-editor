@@ -34,9 +34,9 @@ export default function RewardsEditor({ moduleDescriptor }) {
         placeholder={'string. Enemy name (not localized)'}
         defaultValue={moduleDescriptor?.name}
       />
-      {moduleDescriptor?.rewards.length === 0
+      {moduleDescriptor?.rewardOptions.length === 0
         ? <p>No rewards selected</p>
-        : moduleDescriptor?.rewards.map((reward, index) => (
+        : moduleDescriptor?.rewardOptions.map((reward, index) => (
         <div key={index}>
           <hr />
           <p>{reward}</p>
