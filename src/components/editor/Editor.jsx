@@ -21,7 +21,7 @@ export default function Editor() {
     loadModuleDescriptor();
   }, [selectedModule]);
 
-  if (selectedModuleType === '') {
+  if (selectedModuleType === '' || !moduleDescriptor) {
     return <>No module selected</>;
   } else if (selectedModuleType === 'rewardsMods') {
     return <RewardsEditor moduleDescriptor={moduleDescriptor} />;
