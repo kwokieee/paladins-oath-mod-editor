@@ -1,5 +1,6 @@
 import {EnemyElusiveData} from './EnemyElusiveData';
 import {EnemyAttackData} from './EnemyAttackData';
+import {EnemyTileData} from './EnemyTileData';
 import {GameResources, FindResourceById} from '../GameResources';
 import {GameValues, FindEnumByValue} from '../GameValues';
 
@@ -37,7 +38,12 @@ export class EnemyData {
     this.immunities = [];
     // List<Element>. List of element Ids the enemy is resistant to.
     this.resistances = [];
-    // TODO(ylaunay) add pictures and tileData files
+    // string. name of local file (local to the mod enemy folder). PNG, 1024x1024, Outline (10px; 0,0,0). Shown in battle.
+    this.fullBodySprite = null;
+    // string. name of local file (local to the mod enemy folder). PNG, White, 1024x1024. Shown in battle.
+    this.fullBodyOutlineSprite = null;
+    // EnemyTileData. Info to represent the enemy on the map.
+    this.tileData = null;
   }
 
   isValid(){
@@ -85,6 +91,9 @@ export class EnemyData {
         }
       }
     }
+    if( ! this.fullBodySprite ) return false;
+    if( ! this.fullBodyOutlineSprite ) return false;
+    if( ! this.tileData || ! this.tileData.isValid() ) return false;
     return true;
   }
 
@@ -108,9 +117,13 @@ export class EnemyData {
     out.reputationGain = this.reputationGain;
     out.reputationGainBonusWhenRampaging = this.reputationGainBonusWhenRampaging;
     out.challengeRating = this.challengeRating;
+    out.attacks = this.attacks.map(atk => atk.toJson());
     out.summoningAttacks = this.summoningAttacks.map(atk => atk.value);
     out.immunities = this.immunities.map(immunity => immunity.value);
     out.resistances = this.resistances.map(res => res.value);
+    out.fullBodySprite = this.fullBodySprite;
+    out.fullBodyOutlineSprite = this.fullBodyOutlineSprite;
+    out.tileData = this.tileData.toJson();    
 
     return out;
   }
@@ -136,6 +149,9 @@ export class EnemyData {
     data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindResourceById(GameResources.EnemyType, atk)) : [];
     data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
     data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
+    data.fullBodySprite = json.fullBodySprite;
+    data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;
+    data.tileData = EnemyTileData.fromJson(json.tileData);
 
     return data.isValid() ? data : null;
   }
