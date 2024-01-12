@@ -9,6 +9,8 @@ export function ModInfoProvider({ children }) {
   const [modDescriptor, setModDescriptor] = useState(null);
   const [selectedModule, setSelectedModule] = useState('');
   const [selectedModuleType, setSelectedModuleType] = useState('');
+  const [selectedModuleDescriptor, setSelectedModuleDescriptor] = useState(null);
+  const [isSwitchingModule, setIsSwitchingModule] = useState(false);
   const loadModFromZipFile = async (zipFile) => {
     const files = await unzip(zipFile);
 
@@ -40,12 +42,12 @@ export function ModInfoProvider({ children }) {
     setModDescriptor(modDescriptor);
   };
 
-  const getModuleDescriptor = async () => {
-    if (!selectedModule) {
+  const getModuleDescriptor = async (name) => {
+    if (!name) {
       return null;
     }
     const textContent = await getTextContentOfFile(
-      `${pathRoot}/${selectedModule}/mod.json`,
+      `${pathRoot}/${name}/mod.json`,
       moduleFiles,
     );
     const moduleDescriptor = JSON.parse(textContent);
@@ -56,16 +58,27 @@ export function ModInfoProvider({ children }) {
     return await createObjectURL(filePath, moduleFiles);
   };
 
+  const switchSelectedModuleTo = async (name, type) => {
+    setIsSwitchingModule(true);
+    const moduleDescriptor = await getModuleDescriptor(name);
+    setSelectedModuleDescriptor(moduleDescriptor);
+    setSelectedModule(name);
+    setSelectedModuleType(type);
+    setIsSwitchingModule(false);
+  }
+
   const value = {
     loadModFromZipFile,
-    getModuleDescriptor,
     getUrlForFile,
+    switchSelectedModuleTo,
     modDescriptor,
     pathRoot,
+    isSwitchingModule,
     selectedModule,
     setSelectedModule,
     selectedModuleType,
     setSelectedModuleType,
+    selectedModuleDescriptor,
   };
 
   return <ModInfoContext.Provider value={value}>{children}</ModInfoContext.Provider>;

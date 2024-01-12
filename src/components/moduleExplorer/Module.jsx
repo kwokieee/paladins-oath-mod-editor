@@ -1,10 +1,9 @@
 import { useModInfo } from '../../hooks/useModInfo';
 
 export default function Module({ name, type }) {
-  const { setSelectedModule, setSelectedModuleType } = useModInfo();
+  const { switchSelectedModuleTo } = useModInfo();
   const onClickModule = () => {
-    setSelectedModule(name);
-    setSelectedModuleType(type);
+    switchSelectedModuleTo(name, type);
   };
 
   return (

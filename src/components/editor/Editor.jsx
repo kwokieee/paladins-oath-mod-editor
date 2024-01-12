@@ -10,35 +10,28 @@ import ScenarioExtensionEditor from './ScenarioExtensionEditor';
 import { useModInfo } from '../../hooks/useModInfo';
 
 export default function Editor() {
-  const { selectedModuleType, selectedModule, getModuleDescriptor } = useModInfo();
-  const [moduleDescriptor, setModuleDescriptor] = useState(null);
-  const loadModuleDescriptor = async () => {
-    const moduleDescriptor = await getModuleDescriptor();
-    setModuleDescriptor(moduleDescriptor);
-  };
+  const { selectedModuleType, selectedModuleDescriptor, isSwitchingModule } = useModInfo();
 
-  useEffect(() => {
-    loadModuleDescriptor();
-  }, [selectedModule]);
-
-  if (selectedModuleType === '' || !moduleDescriptor) {
+  if (isSwitchingModule) {
+    return <>Loading...</>;
+  } else if (selectedModuleType === '' || !selectedModuleDescriptor) {
     return <>No module selected</>;
   } else if (selectedModuleType === 'rewardsMods') {
-    return <RewardsEditor moduleDescriptor={moduleDescriptor} />;
+    return <RewardsEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'oathMods') {
-    return <OathEditor moduleDescriptor={moduleDescriptor} />;
+    return <OathEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'characterMods') {
-    return <CharacterEditor moduleDescriptor={moduleDescriptor} />;
+    return <CharacterEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'enemyMods') {
-    return <EnemyEditor moduleDescriptor={moduleDescriptor} />;
+    return <EnemyEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'terrainMods') {
-    return <TerrainEditor moduleDescriptor={moduleDescriptor} />;
+    return <TerrainEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'mapSectionMods') {
-    return <MapSectionEditor moduleDescriptor={moduleDescriptor} />;
+    return <MapSectionEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'scenarioMods') {
-    return <ScenarioEditor moduleDescriptor={moduleDescriptor} />;
+    return <ScenarioEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'scenarioExtensionMods') {
-    return <ScenarioExtensionEditor moduleDescriptor={moduleDescriptor} />;
+    return <ScenarioExtensionEditor moduleDescriptor={selectedModuleDescriptor} />;
   }
 
   return <>Invalid module type detected</>;
