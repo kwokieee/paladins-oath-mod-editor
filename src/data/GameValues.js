@@ -575,6 +575,16 @@ export const GameValues = {
       name: "Throw 3 Wounds from Hand or Discard Pile",
     },
   },
+  RewardComboType: {
+    combo_and: {
+      value: 0,
+      name: "AND",
+    },
+    combo_or: {
+      value: 1,
+      name: "OR",
+    },
+  },
 };
 
 // Returns the value data or null if not found
