@@ -71,7 +71,7 @@ export class EnemyData {
     if( this.summoningAttacks.length > 0 ){
       for( let i = 0; i < this.summoningAttacks.length; i++ ){
         const summonType = this.summoningAttacks[i];
-        if( ! summonType || ! FindResourceById(GameResources.EnemyType, summonType.value) ){
+        if( ! summonType || ! FindResourceById(GameResources.EnemyType, summonType.id) ){
           return false;
         }
       }
@@ -109,7 +109,7 @@ export class EnemyData {
     out.guid = this.guid;
     out.name = this.name;
     out.numInstancesInDeck = this.numInstancesInDeck;
-    out.enemyType = this.enemyType.value;
+    out.enemyType = this.enemyType.id;
     out.armor = this.armor;
     out.isElusive = this.isElusive;
     if( this.isElusive ){
