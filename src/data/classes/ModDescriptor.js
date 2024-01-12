@@ -1,3 +1,6 @@
+// Must be provided with the mod. 256x256 image.
+const MOD_PREVIEW_IMAGE_NAME = 'mod_preview.jpg';
+
 export class ModDescriptor {
   constructor(){
     //	string. Must be universally unique across all mods.
@@ -6,7 +9,7 @@ export class ModDescriptor {
     this.name = null;
     // string. Description displayed in the list of Mods
     this.description = null;
-    // string. Author(s) displayed in the list of Mods
+     // string. Author(s) displayed in the list of Mods
     this.author = null;
     // string. Should be changed each time a new version of the mod is published. This will help with compatibility checks.
     this.version = null;
