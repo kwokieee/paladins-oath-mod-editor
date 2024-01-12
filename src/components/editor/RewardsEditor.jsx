@@ -10,7 +10,7 @@ export default function RewardsEditor({ moduleDescriptor }) {
       return <>Loading...</>;
     }
   
-    const rewardData = RewardData.fromJson(moduleDescriptor);
+    const rewardData = RewardData.FromJson(moduleDescriptor);
     if( ! rewardData ){
       return <>Invalid or corrupted data</>;
     }

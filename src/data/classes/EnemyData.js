@@ -132,7 +132,7 @@ export class EnemyData {
     return out;
   }
 
-  static fromJson(json){
+  static FromJson(json){
     const data = new EnemyData();
 
     data.guid = json.guid;
@@ -142,21 +142,21 @@ export class EnemyData {
     data.armor = json.armor;
     data.isElusive = !!json.isElusive && !!json.elusiveData;
     if( data.isElusive ){
-      data.elusiveData = EnemyElusiveData.fromJson(json.elusiveData);
+      data.elusiveData = EnemyElusiveData.FromJson(json.elusiveData);
     }
     data.fortification = FindEnumByValue(GameValues.Fortification, json.fortification);
     data.xpGain = json.xpGain;
     data.reputationGain = json.reputationGain;
     data.reputationGainBonusWhenRampaging = json.reputationGainBonusWhenRampaging;
     data.challengeRating = json.challengeRating;
-    data.attacks = !!json.attacks ? json.attacks.map(atk => EnemyAttackData.fromJson(atk)) : [];
+    data.attacks = !!json.attacks ? json.attacks.map(atk => EnemyAttackData.FromJson(atk)) : [];
     data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindEnumByValue(GameValues.EnemyType, atk)) : [];
     data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
     data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
     data.portraitSprite = json.portraitSprite;
     data.fullBodySprite = json.fullBodySprite;
     data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;
-    data.tileData = EnemyTileData.fromJson(json.tileData);
+    data.tileData = EnemyTileData.FromJson(json.tileData);
 
     return data.isValid() ? data : null;
   }

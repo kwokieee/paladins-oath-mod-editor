@@ -43,7 +43,7 @@ export class RewardData {
     return out;
   }
 
-  static fromJson(json){
+  static FromJson(json){
     const data = new RewardData();
 
     data.guid = json.guid;

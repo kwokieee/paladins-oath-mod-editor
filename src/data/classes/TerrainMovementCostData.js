@@ -33,7 +33,7 @@ export class TerrainMovementCostData {
   }
 
   // Returns null if json doesn't produce valid data.
-  static fromJson(json){
+  static FromJson(json){
     const data = new TerrainMovementCostData();
 
     data.timeOfDay = FindEnumByValue(GameValues.TimeOfDay, json.timeOfDay);

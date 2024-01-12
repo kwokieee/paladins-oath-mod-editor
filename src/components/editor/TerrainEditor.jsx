@@ -10,7 +10,7 @@ export default function TerrainEditor({ moduleDescriptor }) {
       return <>Loading...</>;
     }
   
-    const terrainData = TerrainData.fromJson(moduleDescriptor);
+    const terrainData = TerrainData.FromJson(moduleDescriptor);
     if( ! terrainData ){
       return <>Invalid or corrupted data</>;
     }

@@ -23,7 +23,7 @@ export class EnemyTileData {
   }
 
   // Returns null if json doesn't produce valid data.
-  static fromJson(json){
+  static FromJson(json){
     const data = new EnemyTileData();
 
     data.tileNormalSprite = json.tileNormalSprite;
