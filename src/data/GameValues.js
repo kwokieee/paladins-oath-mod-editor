@@ -585,6 +585,32 @@ export const GameValues = {
       name: "OR",
     },
   },
+  EnemyType: {
+    enemy_type_vermling: {
+      value: "enemy_type_vermling",
+      name: "Vermling",
+    },
+    enemy_type_guardian: {
+      value: "enemy_type_guardian",
+      name: "Guardian",
+    },
+    enemy_type_arcanum: {
+      value: "enemy_type_arcanum",
+      name: "Arcanum",
+    },
+    enemy_type_abomination: {
+      value: "enemy_type_abomination",
+      name: "Abomination",
+    },
+    enemy_type_abyssal: {
+      value: "enemy_type_abyssal",
+      name: "Abyssal",
+    },
+    enemy_type_ancient: {
+      value: "enemy_type_ancient",
+      name: "Ancient",
+    },
+  }
 };
 
 // Returns the value data or null if not found

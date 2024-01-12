@@ -12,7 +12,7 @@ export class EnemyData {
     this.name = null;
     // int >= 0 [default=1]. If > 0, the enemy will be added to draw piles.
     this.numInstancesInDeck = 1;
-    // GameResources.EnemyType
+    // EnemyType
     this.enemyType = null;
     // int > 0 [default=1].
     this.armor = 1;
@@ -71,7 +71,7 @@ export class EnemyData {
     if( this.summoningAttacks.length > 0 ){
       for( let i = 0; i < this.summoningAttacks.length; i++ ){
         const summonType = this.summoningAttacks[i];
-        if( ! summonType || ! FindResourceById(GameResources.EnemyType, summonType.id) ){
+        if( ! summonType || ! FindEnumByValue(GameValues.EnemyType, summonType.value) ){
           return false;
         }
       }
@@ -109,7 +109,7 @@ export class EnemyData {
     out.guid = this.guid;
     out.name = this.name;
     out.numInstancesInDeck = this.numInstancesInDeck;
-    out.enemyType = this.enemyType.id;
+    out.enemyType = this.enemyType.value;
     out.armor = this.armor;
     out.isElusive = this.isElusive;
     if( this.isElusive ){
@@ -138,7 +138,7 @@ export class EnemyData {
     data.guid = json.guid;
     data.name = json.name;
     data.numInstancesInDeck = json.numInstancesInDeck;
-    data.enemyType = FindResourceById(GameResources.EnemyType, json.enemyType);
+    data.enemyType = FindEnumByValue(GameValues.EnemyType, json.enemyType);
     data.armor = json.armor;
     data.isElusive = !!json.isElusive && !!json.elusiveData;
     if( data.isElusive ){
@@ -150,7 +150,7 @@ export class EnemyData {
     data.reputationGainBonusWhenRampaging = json.reputationGainBonusWhenRampaging;
     data.challengeRating = json.challengeRating;
     data.attacks = !!json.attacks ? json.attacks.map(atk => EnemyAttackData.fromJson(atk)) : [];
-    data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindResourceById(GameResources.EnemyType, atk)) : [];
+    data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindEnumByValue(GameValues.EnemyType, atk)) : [];
     data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
     data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
     data.portraitSprite = json.portraitSprite;

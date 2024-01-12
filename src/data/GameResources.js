@@ -1311,50 +1311,6 @@ export const GameResources = {
       properties: {},
     },
   },
-  EnemyType: {
-    enemy_type_vermling: {
-      id: "enemy_type_vermling",
-      name: "Vermling",
-      image:
-        "https://static.wikia.nocookie.net/paladinsoath/images/3/3c/Apterix.png/revision/latest/scale-to-width-down/165",
-      properties: {},
-    },
-    enemy_type_guardian: {
-      id: "enemy_type_guardian",
-      name: "Guardian",
-      image:
-        "https://static.wikia.nocookie.net/paladinsoath/images/f/f9/Crystalisk.png/revision/latest/scale-to-width-down/165",
-      properties: {},
-    },
-    enemy_type_arcanum: {
-      id: "enemy_type_arcanum",
-      name: "Arcanum",
-      image:
-        "https://static.wikia.nocookie.net/paladinsoath/images/f/f5/Apparition.png/revision/latest/scale-to-width-down/165",
-      properties: {},
-    },
-    enemy_type_abomination: {
-      id: "enemy_type_abomination",
-      name: "Abomination",
-      image:
-        "https://static.wikia.nocookie.net/paladinsoath/images/2/21/Abherration.png/revision/latest/scale-to-width-down/165",
-      properties: {},
-    },
-    enemy_type_abyssal: {
-      id: "enemy_type_abyssal",
-      name: "Abyssal",
-      image:
-        "https://static.wikia.nocookie.net/paladinsoath/images/4/4b/Abyss_sentry.png/revision/latest/scale-to-width-down/165",
-      properties: {},
-    },
-    enemy_type_ancient: {
-      id: "enemy_type_ancient",
-      name: "Ancient",
-      image:
-        "https://static.wikia.nocookie.net/paladinsoath/images/2/23/Azureus.png/revision/latest/scale-to-width-down/165",
-      properties: {},
-    },
-  },
   Enemy: {
     enemy_apterix: {
       id: "enemy_apterix",
