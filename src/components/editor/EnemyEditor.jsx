@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ResourcePicker from '../resourcePicker/ResourcePicker';
-import { GameResources } from '../../data/GameResources';
 import { useModInfo } from '../../hooks/useModInfo';
+import {EnemyData} from '../../data/classes/EnemyData';
 
 export default function EnemyEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -33,13 +33,22 @@ export default function EnemyEditor({ moduleDescriptor }) {
     setIsEditingEnemyType(!isEditingEnemyType);
   };
 
+  if( ! moduleDescriptor ){
+    return <>Loading...</>;
+  }
+
+  const enemyData = EnemyData.fromJson(moduleDescriptor);
+  if( ! enemyData ){
+    return <>Invalid or corrupted data</>;
+  }
+  
   return (
     <div>
       <h5>GUID</h5>
       <input
         type='text'
         placeholder={'string. guid, unique only within the mod. Will be turned into GUID \'mod:\'+$yourModId+\':\'+$guid\''}
-        defaultValue={moduleDescriptor?.guid} 
+        defaultValue={enemyData.guid} 
       />
 
       <hr />
@@ -48,7 +57,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='text'
         placeholder={'string. Enemy name (not localized)'}
-        defaultValue={moduleDescriptor?.name}
+        defaultValue={enemyData.name}
       />
 
       <hr />
@@ -57,12 +66,12 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type="number"
         placeholder="int >= 0 [default=1]. If > 0, the enemy will be added to draw piles."
-        defaultValue={moduleDescriptor?.numInstancesInDeck}
+        defaultValue={enemyData.numInstancesInDeck}
       />
 
       <hr />
 
-      <h5>Enemy type: {GameResources['EnemyType'][moduleDescriptor?.enemyType]['name']}</h5>
+      <h5>Enemy type: {enemyData.enemyType.name}</h5>
       <button style={{ marginBottom: 10 }} onClick={onEditEnemyType}>Edit</button>
       {isEditingEnemyType && <ResourcePicker resourceType={'EnemyType'} />}
 
@@ -73,17 +82,17 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='number'
         placeholder={'int > 0'}
-        defaultValue={moduleDescriptor?.armor}
+        defaultValue={enemyData.armor}
       />
 
       <hr />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <input
           type='checkbox'
-          checked={moduleDescriptor?.isElusive}
+          checked={enemyData.isElusive}
           placeholder={'(Optional) bool [default=false]. If true, MUST specify elusive data.'}
         />
-        <h5>Is Elusive</h5>
+        <h5>Elusive</h5>
       </div>
 
       <hr />
@@ -95,7 +104,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
           <input
             type='number'
             placeholder={'int > 0'}
-            defaultValue={moduleDescriptor?.elusiveData.armorIfBlocked}
+            defaultValue={enemyData.elusiveData?.armorIfBlocked}
           />
         </>
       )}
@@ -106,7 +115,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='number'
         placeholder={'(Optional) Fortification::int [default=NotFortified(2)]. Enum value'}
-        defaultValue={moduleDescriptor?.fortification}
+        defaultValue={enemyData.fortification.name}
       />
 
       <hr />
@@ -115,7 +124,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='number'
         placeholder={'int >= 0. How much XP gained when defeating the enemy in battle.'}
-        defaultValue={moduleDescriptor?.elusiveData.xpGain}
+        defaultValue={enemyData.xpGain}
       />
 
       <hr />
@@ -124,7 +133,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='number'
         placeholder={'(Optional) int >= 0 [default=0]. How much reputation gained when defeating the enemy in battle.'}
-        defaultValue={moduleDescriptor?.reputationGain}
+        defaultValue={enemyData.reputationGain}
       />
 
       <hr />
@@ -133,7 +142,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='number'
         placeholder={'(Optional) int >= 0 [default=1]. How much additional reputation gained when defeating the enemy in battle when it is rampaging.'}
-        defaultValue={moduleDescriptor?.reputationGainBonusWhenRampaging}
+        defaultValue={enemyData.reputationGainBonusWhenRampaging}
       />
 
       <hr />
@@ -142,58 +151,53 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <input
         type='number'
         placeholder={'(Optional) int [1-10] [default=1]. How difficult is the enemy. Used for balancing when drawing randomly and for generating Battle Tale. Check the Wiki for example ratings.'}
-        defaultValue={moduleDescriptor?.challengeRating}
+        defaultValue={enemyData.challengeRating}
       />
 
       <hr />
 
       <h5>Attacks</h5>
-      {moduleDescriptor?.attacks.map((attack, index) => (
+      {enemyData.attacks.map((attack, index) => (
         <div key={index}>
           <hr />
-          <p>Element: {attack.element}</p>
-          <p>Attack type: {attack.attackType}</p>
+          <p>Element: {attack.element.name}</p>
+          <p>Attack type: {attack.attackType.name}</p>
           <p>Attack value: {attack.value}</p>
-          <p>Attack modifiers:</p>
-          {attack.attackModifiers.map((attackModifier, index) => (
-            <div key={index}>
-              <p>{attackModifier}</p>
-            </div>
-          ))}
+          <p>Attack modifier(s): {attack.attackModifiers.map((attackModifier) => attackModifier.name).join(',')}</p>
         </div>
       ))}
 
       <hr />
 
       <h5>Summoning attacks</h5>
-      {moduleDescriptor?.summoningAttacks.length === 0
+      {enemyData.summoningAttacks.length === 0
         ? <p>No summoning attacks</p>
         : moduleDescriptor?.summoningAttacks.map((summoningAttack, index) => (
         <div key={index}>
           <hr />
-          <p>{summoningAttack}</p>
+          <p>{summoningAttack.name}</p>
         </div>
       ))}
 
       <hr />
 
       <h5>Immunities</h5>
-      {moduleDescriptor?.immunities.length === 0
+      {enemyData.immunities.length === 0
         ? <p>No immunities</p>
         : moduleDescriptor?.immunities.map((immunity, index) => (
         <div key={index}>
-          <p>{immunity}</p>
+          <p>{immunity.name}</p>
         </div>
       ))}
 
       <hr />
 
       <h5>Resistances</h5>
-      {moduleDescriptor?.resistances.length === 0
+      {enemyData.resistances.length === 0
         ? <p>No resistances</p>
         : moduleDescriptor?.resistances.map((resistance, index) => (
         <div key={index}>
-          <p>{resistance}</p>
+          <p>{resistance.name}</p>
         </div>
       ))}
 

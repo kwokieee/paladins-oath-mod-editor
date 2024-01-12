@@ -2637,3 +2637,9 @@ export const GameResources = {
     },
   },
 };
+
+// Returns the resource data or null if not found
+export const FindResourceById = (resourcesDict, resourceIdToFind) => {
+  const foundValue = Object.values(resourcesDict).find(res => res.id === resourceIdToFind);
+  return foundValue === undefined ? null : foundValue;
+}

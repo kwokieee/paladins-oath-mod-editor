@@ -576,3 +576,9 @@ export const GameValues = {
     },
   },
 };
+
+// Returns the value data or null if not found
+export const FindEnumByValue = (valuesDict, valueToFind) => {
+  const foundValue = Object.values(valuesDict).find(val => val.value === valueToFind);
+  return foundValue === undefined ? null : foundValue;
+}
