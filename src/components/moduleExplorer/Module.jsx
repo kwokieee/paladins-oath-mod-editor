@@ -8,7 +8,7 @@ export default function Module({ name, type }) {
   };
 
   return (
-    <p style={{ fontSize: 12, textAlign: 'left', margin: '2 auto' }} onClick={onClickModule}>
+    <p style={{ fontSize: 12, textAlign: 'left', marginLeft: 10 }} onClick={onClickModule}>
       {name}
     </p>
   );
