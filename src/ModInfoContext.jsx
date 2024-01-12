@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 import { unzip, getTextContentOfFile } from './utils';
+import {ModDescriptor} from './data/classes/ModDescriptor';
 
 export const ModInfoContext = createContext(null);
 
@@ -36,7 +37,8 @@ export function ModInfoProvider({ children }) {
     }
 
     const textContent = await getTextContentOfFile(modJsonFilePath, files);
-    const modDescriptor = JSON.parse(textContent);
+    const modDescriptor = ModDescriptor.FromJson(JSON.parse(textContent));
+
     setModDescriptor(modDescriptor);
   };
 
