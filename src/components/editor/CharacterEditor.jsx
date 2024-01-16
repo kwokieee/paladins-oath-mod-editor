@@ -178,22 +178,28 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <div>
         <h5>Levels</h5>
-        {characterData.levels.map((level, index) => level.requiredXp !== 0 && (
-          <div key={index}>
-            <hr />
-            <p>XP required to reach this level: {level.requiredXp}</p>
-            <p>Rewards given on reaching this level: {level?.rewardsLevelUp ?? 'Invalid reward on level up'}</p>
-          </div>
-        ))}
+        {characterData.levels.map(
+          (level, index) =>
+            level.requiredXp !== 0 && (
+              <div key={index}>
+                <hr />
+                <p>XP required to reach this level: {level.requiredXp}</p>
+                <p>
+                  Rewards given on reaching this level:{' '}
+                  {level?.rewardsLevelUp ?? 'Invalid reward on level up'}
+                </p>
+              </div>
+            ),
+        )}
       </div>
-      
+
       <hr />
 
       <h5>Inane blessings:</h5>
       <p>
-      {characterData.inaneBlessings.length === 0
-        ? "None"
-        : characterData.inaneBlessings.map((blessing, index) => blessing.name).join(', ')}
+        {characterData.inaneBlessings.length === 0
+          ? 'None'
+          : characterData.inaneBlessings.map((blessing, index) => blessing.name).join(', ')}
       </p>
       <button style={{ marginBottom: 10 }} onClick={onEditInaneBlessings}>
         Edit
@@ -204,10 +210,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h5>Inane cards:</h5>
       <p>
-      {characterData.inaneCards.length === 0
-        ? "None"
-        : (characterData.inaneCards.map((card, index) => card.name).join(', '))
-      }
+        {characterData.inaneCards.length === 0
+          ? 'None'
+          : characterData.inaneCards.map((card, index) => card.name).join(', ')}
       </p>
       <button style={{ marginBottom: 10 }} onClick={onEditInaneCards}>
         Edit
@@ -218,10 +223,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h5>Unique cards:</h5>
       <p>
-      {characterData.uniqueCardsInfo.length === 0
-        ? "None"
-        : (characterData.uniqueCardsInfo.map((card, index) => card.name).join(', '))
-      }
+        {characterData.uniqueCardsInfo.length === 0
+          ? 'None'
+          : characterData.uniqueCardsInfo.map((card, index) => card.name).join(', ')}
       </p>
       <button style={{ marginBottom: 10 }} onClick={onEditUniqueCards}>
         Edit
@@ -232,10 +236,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h5>Personal Oaths:</h5>
       <p>
-      {characterData.personalOaths.length === 0
-        ? "None"
-        : (characterData.personalOaths.map((oath, index) => card.name).join(', '))
-      }
+        {characterData.personalOaths.length === 0
+          ? 'None'
+          : characterData.personalOaths.map((oath, index) => card.name).join(', ')}
       </p>
       <button style={{ marginBottom: 10 }} onClick={onEditPersonalOaths}>
         Edit
@@ -257,7 +260,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h5>Number of points required to heal 1 wound</h5>
       <input
         type="number"
-        placeholder={'(Optional) int > 0 [default=1]. How many Healing points are required to heal 1 wound on this character.'}
+        placeholder={
+          '(Optional) int > 0 [default=1]. How many Healing points are required to heal 1 wound on this character.'
+        }
         defaultValue={characterData.numPointsRequiredPerWound}
       />
 
@@ -266,7 +271,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h5>Default exploration distance</h5>
       <input
         type="number"
-        placeholder={'(Optional) int > 0 [default=1]. How many hexes away from exploration spot can the character explore.'}
+        placeholder={
+          '(Optional) int > 0 [default=1]. How many hexes away from exploration spot can the character explore.'
+        }
         defaultValue={characterData.defaultExplorationDistance}
       />
 
@@ -275,7 +282,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h5>Default exploration movement cost</h5>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=2]. How many movement points does it cost to explore (by default).'}
+        placeholder={
+          '(Optional) int >= 0 [default=2]. How many movement points does it cost to explore (by default).'
+        }
         defaultValue={characterData.defaultExplorationMovementCost}
       />
 
@@ -322,40 +331,42 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h6>Cards</h6>
       <p>
-      {characterData.dummyPlayerStartingBoons.cards.length === 0
-        ? "None"
-        : (characterData.dummyPlayerStartingBoons.cards.map((card, index) => card.name).join(', '))
-      }
+        {characterData.dummyPlayerStartingBoons.cards.length === 0
+          ? 'None'
+          : characterData.dummyPlayerStartingBoons.cards.map((card, index) => card.name).join(', ')}
       </p>
 
       <hr />
 
       <h6>Followers</h6>
       <p>
-      {characterData.dummyPlayerStartingBoons.followers.length === 0
-        ? "None"
-        : (characterData.dummyPlayerStartingBoons.followers.map((follower, index) => follower.name).join(', '))
-      }
+        {characterData.dummyPlayerStartingBoons.followers.length === 0
+          ? 'None'
+          : characterData.dummyPlayerStartingBoons.followers
+              .map((follower, index) => follower.name)
+              .join(', ')}
       </p>
 
       <hr />
 
       <h6>Blessings</h6>
       <p>
-      {characterData.dummyPlayerStartingBoons.blessings.length === 0
-        ? "None"
-        : (characterData.dummyPlayerStartingBoons.blessings.map((blessing, index) => blessing.name).join(', '))
-      }
+        {characterData.dummyPlayerStartingBoons.blessings.length === 0
+          ? 'None'
+          : characterData.dummyPlayerStartingBoons.blessings
+              .map((blessing, index) => blessing.name)
+              .join(', ')}
       </p>
 
       <hr />
 
       <h6>Crystals in inventory</h6>
       <p>
-      {characterData.dummyPlayerStartingBoons.crystalsInInventory.length === 0
-        ? "None"
-        : (characterData.dummyPlayerStartingBoons.crystalsInInventory.map((crystal, index) => crystal.name).join(', '))
-      }
+        {characterData.dummyPlayerStartingBoons.crystalsInInventory.length === 0
+          ? 'None'
+          : characterData.dummyPlayerStartingBoons.crystalsInInventory
+              .map((crystal, index) => crystal.name)
+              .join(', ')}
       </p>
 
       <hr />
@@ -363,7 +374,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Armor bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int [default=0]. Can be negative. Increase/Reduce character armor.'}
+        placeholder={
+          '(Optional) int [default=0]. Can be negative. Increase/Reduce character armor.'
+        }
         defaultValue={characterData.dummyPlayerStartingBoons.armorBonus}
       />
 
@@ -372,7 +385,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Hand size bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int [default=0]. Can be negative. Increase/Reduce character hand size.'}
+        placeholder={
+          '(Optional) int [default=0]. Can be negative. Increase/Reduce character hand size.'
+        }
         defaultValue={characterData.dummyPlayerStartingBoons.handSizeBonus}
       />
 
@@ -381,7 +396,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Reputation bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int [default=0]. Can be negative. Increase/Reduce character reputation.'}
+        placeholder={
+          '(Optional) int [default=0]. Can be negative. Increase/Reduce character reputation.'
+        }
         defaultValue={characterData.dummyPlayerStartingBoons.handSizeBonus}
       />
 
@@ -390,7 +407,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Follower slots bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the \'units\' to it too).'}
+        placeholder={
+          "(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too)."
+        }
         defaultValue={characterData.dummyPlayerStartingBoons.handSizeBonus}
       />
 
@@ -401,40 +420,42 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h6>Cards</h6>
       <p>
-      {characterData.startingBoons.cards.length === 0
-        ? "None"
-        : (characterData.startingBoons.cards.map((card, index) => card.name).join(', '))
-      }
+        {characterData.startingBoons.cards.length === 0
+          ? 'None'
+          : characterData.startingBoons.cards.map((card, index) => card.name).join(', ')}
       </p>
 
       <hr />
 
       <h6>Followers</h6>
       <p>
-      {characterData.startingBoons.followers.length === 0
-        ? "None"
-        : (characterData.startingBoons.followers.map((follower, index) => follower.name).join(', '))
-      }
+        {characterData.startingBoons.followers.length === 0
+          ? 'None'
+          : characterData.startingBoons.followers
+              .map((follower, index) => follower.name)
+              .join(', ')}
       </p>
 
       <hr />
 
       <h6>Blessings</h6>
       <p>
-      {characterData.startingBoons.blessings.length === 0
-        ? "None"
-        : (characterData.startingBoons.blessings.map((blessing, index) => blessing.name).join(', '))
-      }
+        {characterData.startingBoons.blessings.length === 0
+          ? 'None'
+          : characterData.startingBoons.blessings
+              .map((blessing, index) => blessing.name)
+              .join(', ')}
       </p>
 
       <hr />
 
       <h6>Crystals in inventory</h6>
       <p>
-      {characterData.startingBoons.crystalsInInventory.length === 0
-        ? "None"
-        : (characterData.startingBoons.crystalsInInventory.map((crystal, index) => crystal.name).join(', '))
-      }
+        {characterData.startingBoons.crystalsInInventory.length === 0
+          ? 'None'
+          : characterData.startingBoons.crystalsInInventory
+              .map((crystal, index) => crystal.name)
+              .join(', ')}
       </p>
 
       <hr />
@@ -442,7 +463,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Armor bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int [default=0]. Can be negative. Increase/Reduce character armor.'}
+        placeholder={
+          '(Optional) int [default=0]. Can be negative. Increase/Reduce character armor.'
+        }
         defaultValue={characterData.startingBoons.armorBonus}
       />
 
@@ -451,7 +474,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Hand size bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int [default=0]. Can be negative. Increase/Reduce character hand size.'}
+        placeholder={
+          '(Optional) int [default=0]. Can be negative. Increase/Reduce character hand size.'
+        }
         defaultValue={characterData.startingBoons.handSizeBonus}
       />
 
@@ -460,7 +485,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Reputation bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int [default=0]. Can be negative. Increase/Reduce character reputation.'}
+        placeholder={
+          '(Optional) int [default=0]. Can be negative. Increase/Reduce character reputation.'
+        }
         defaultValue={characterData.startingBoons.handSizeBonus}
       />
 
@@ -469,7 +496,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Follower slots bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the \'units\' to it too).'}
+        placeholder={
+          "(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too)."
+        }
         defaultValue={characterData.startingBoons.handSizeBonus}
       />
 
@@ -478,10 +507,11 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h6>Mana</h6>
       <p>
-      {characterData.roundBoons.mana.length === 0
-        ? "None"
-        : (characterData.roundBoons.mana.map((mana, index) => `Color: ${mana.color.name};Form: ${mana.form.name}`).join(', '))
-      }
+        {characterData.roundBoons.mana.length === 0
+          ? 'None'
+          : characterData.roundBoons.mana
+              .map((mana, index) => `Color: ${mana.color.name};Form: ${mana.form.name}`)
+              .join(', ')}
       </p>
 
       <hr />
@@ -489,7 +519,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Reputation bonus</h6>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the \'units\' to it too).'}
+        placeholder={
+          "(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too)."
+        }
         defaultValue={characterData.roundBoons.reputationBonus}
       />
 
@@ -498,7 +530,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Movement points</h6>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the \'units\' to it too).'}
+        placeholder={
+          "(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too)."
+        }
         defaultValue={characterData.roundBoons.movementPoints}
       />
 
@@ -507,7 +541,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Healing points</h6>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the \'units\' to it too).'}
+        placeholder={
+          "(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too)."
+        }
         defaultValue={characterData.roundBoons.healingPoints}
       />
 
@@ -516,12 +552,13 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <h6>Leadership points</h6>
       <input
         type="number"
-        placeholder={'(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the \'units\' to it too).'}
+        placeholder={
+          "(Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too)."
+        }
         defaultValue={characterData.roundBoons.leadershipPoints}
       />
 
       <hr />
-
     </div>
   );
 }

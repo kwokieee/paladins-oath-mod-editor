@@ -11,7 +11,10 @@ export default function ResourcePicker({ resourceType, preselected }) {
     return (
       <div>
         {Object.entries(GameResources.Card).map(([card, cardDetails], index) => (
-          <div key={index} style={{ display: 'inline-block', paddingLeft: 15, paddingRight: 15, marginBottom: 15 }}>
+          <div
+            key={index}
+            style={{ display: 'inline-block', paddingLeft: 15, paddingRight: 15, marginBottom: 15 }}
+          >
             <img src={cardDetails.image} alt={cardDetails.name} referrerPolicy="no-referrer" />
             <p>{cardDetails.name}</p>
           </div>

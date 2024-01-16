@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import {TerrainData} from '../../data/classes/TerrainData';
+import { TerrainData } from '../../data/classes/TerrainData';
 
 export default function TerrainEditor({ moduleDescriptor }) {
-    useEffect(() => {
-      console.log(moduleDescriptor);
-    }, [moduleDescriptor]);
-  
-    if( ! moduleDescriptor ){
-      return <>Loading...</>;
-    }
-  
-    const terrainData = TerrainData.FromJson(moduleDescriptor);
-    if( ! terrainData ){
-      return <>Invalid or corrupted data</>;
-    }
-  
+  useEffect(() => {
+    console.log(moduleDescriptor);
+  }, [moduleDescriptor]);
+
+  if (!moduleDescriptor) {
+    return <>Loading...</>;
+  }
+
+  const terrainData = TerrainData.FromJson(moduleDescriptor);
+  if (!terrainData) {
+    return <>Invalid or corrupted data</>;
+  }
+
   return (
     <>
       <div>
@@ -26,8 +26,14 @@ export default function TerrainEditor({ moduleDescriptor }) {
           <h5>Tile Sprites</h5>
           <p>{terrainData.tileSprites.join('')}</p>
           <h5>Movement Cost</h5>
-          <p>Day: {terrainData.movementCostDay.allowMovement?terrainData.movementCostDay.cost:'X'}</p>
-          <p>Night: {terrainData.movementCostNight.allowMovement?terrainData.movementCostNight.cost:'X'}</p>
+          <p>
+            Day:{' '}
+            {terrainData.movementCostDay.allowMovement ? terrainData.movementCostDay.cost : 'X'}
+          </p>
+          <p>
+            Night:{' '}
+            {terrainData.movementCostNight.allowMovement ? terrainData.movementCostNight.cost : 'X'}
+          </p>
         </div>
       </div>
     </>

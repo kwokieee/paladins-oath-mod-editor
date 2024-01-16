@@ -20,7 +20,7 @@ export class EnemyElusiveData {
   }
 
   // Returns null if json doesn't produce valid data.
-  static FromJson(json){
+  static FromJson(json) {
     const data = new EnemyElusiveData();
 
     data.armorIfBlocked = json.armorIfBlocked;

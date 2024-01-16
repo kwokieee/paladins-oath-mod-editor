@@ -1,5 +1,4 @@
 import { GameResources, FindResourceById } from '../GameResources';
-import { GameValues, FindEnumByValue } from '../GameValues';
 import { CharacterLevelData } from './CharacterLevelData';
 import { CrusadeStartingBoonsData } from './CrusadeStartingBoonsData';
 import { CrusadeRoundBoonsData } from './CrusadeRoundBoonsData';
@@ -37,7 +36,7 @@ export class CharacterData {
     // (Optional) List<Card::GUID> [default=EMPTY]. Display purpose only, shows which cards are unique to this character (compared to other characters). Those cards should appear in the list of inaneCards too.
     this.uniqueCardsInfo = [];
     // (Optional) List<Oath::GUID> [default=EMPTY]. List of Oaths that are unique to this character (Oaths that are marked as 'character specific').
-    this.personalOaths = [];  // TODO: support loading local mod GUIDs
+    this.personalOaths = []; // TODO: support loading local mod GUIDs
     // (Optional) int > 0 [default=1]. How many Ambient mana can the character use.
     this.defaultAllowedAmbientDie = 1;
     // (Optional) int > 0 [default=1]. How many Healing points are required to heal 1 wound on this character.

@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import {RewardData} from '../../data/classes/RewardData';
+import { RewardData } from '../../data/classes/RewardData';
 
 export default function RewardsEditor({ moduleDescriptor }) {
-    useEffect(() => {
-      console.log(moduleDescriptor);
-    }, [moduleDescriptor]);
-  
-    if( ! moduleDescriptor ){
-      return <>Loading...</>;
-    }
-  
-    const rewardData = RewardData.FromJson(moduleDescriptor);
-    if( ! rewardData ){
-      return <>Invalid or corrupted data</>;
-    }
-  
+  useEffect(() => {
+    console.log(moduleDescriptor);
+  }, [moduleDescriptor]);
+
+  if (!moduleDescriptor) {
+    return <>Loading...</>;
+  }
+
+  const rewardData = RewardData.FromJson(moduleDescriptor);
+  if (!rewardData) {
+    return <>Invalid or corrupted data</>;
+  }
+
   return (
     <div>
       <h5>GUID</h5>

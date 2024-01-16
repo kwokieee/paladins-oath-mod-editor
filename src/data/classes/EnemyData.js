@@ -85,10 +85,10 @@ export class EnemyData {
         return false;
       }
     }
-    if( ! this.portraitSprite ) return false;
-    if( ! this.fullBodySprite ) return false;
-    if( ! this.fullBodyOutlineSprite ) return false;
-    if( ! this.tileData || ! this.tileData.isValid() ) return false;
+    if (!this.portraitSprite) return false;
+    if (!this.fullBodySprite) return false;
+    if (!this.fullBodyOutlineSprite) return false;
+    if (!this.tileData || !this.tileData.isValid()) return false;
     return true;
   }
 
@@ -112,19 +112,19 @@ export class EnemyData {
     out.reputationGain = this.reputationGain;
     out.reputationGainBonusWhenRampaging = this.reputationGainBonusWhenRampaging;
     out.challengeRating = this.challengeRating;
-    out.attacks = this.attacks.map(atk => atk.toJson());
-    out.summoningAttacks = this.summoningAttacks.map(atk => atk.value);
-    out.immunities = this.immunities.map(immunity => immunity.value);
-    out.resistances = this.resistances.map(res => res.value);
+    out.attacks = this.attacks.map((atk) => atk.toJson());
+    out.summoningAttacks = this.summoningAttacks.map((atk) => atk.value);
+    out.immunities = this.immunities.map((immunity) => immunity.value);
+    out.resistances = this.resistances.map((res) => res.value);
     out.portraitSprite = this.portraitSprite;
     out.fullBodySprite = this.fullBodySprite;
     out.fullBodyOutlineSprite = this.fullBodyOutlineSprite;
-    out.tileData = this.tileData.toJson();    
+    out.tileData = this.tileData.toJson();
 
     return out;
   }
 
-  static FromJson(json){
+  static FromJson(json) {
     const data = new EnemyData();
 
     data.guid = json.guid;
@@ -141,10 +141,16 @@ export class EnemyData {
     data.reputationGain = json.reputationGain;
     data.reputationGainBonusWhenRampaging = json.reputationGainBonusWhenRampaging;
     data.challengeRating = json.challengeRating;
-    data.attacks = !!json.attacks ? json.attacks.map(atk => EnemyAttackData.FromJson(atk)) : [];
-    data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindEnumByValue(GameValues.EnemyType, atk)) : [];
-    data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
-    data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
+    data.attacks = json.attacks ? json.attacks.map((atk) => EnemyAttackData.FromJson(atk)) : [];
+    data.summoningAttacks = json.summoningAttacks
+      ? json.summoningAttacks.map((atk) => FindEnumByValue(GameValues.EnemyType, atk))
+      : [];
+    data.immunities = json.immunities
+      ? json.immunities.map((immunity) => FindEnumByValue(GameValues.Immunity, immunity))
+      : [];
+    data.resistances = json.resistances
+      ? json.resistances.map((res) => FindEnumByValue(GameValues.Element, res))
+      : [];
     data.portraitSprite = json.portraitSprite;
     data.fullBodySprite = json.fullBodySprite;
     data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;

@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import {MapSectionData} from '../../data/classes/MapSectionData';
+import { MapSectionData } from '../../data/classes/MapSectionData';
 
 export default function MapSectionEditor({ moduleDescriptor }) {
-    useEffect(() => {
-      console.log(moduleDescriptor);
-    }, [moduleDescriptor]);
-  
-    if( ! moduleDescriptor ){
-      return <>Loading...</>;
-    }
-  
-    const sectionData = MapSectionData.FromJson(moduleDescriptor);
-    if( ! sectionData ){
-      return <>Invalid or corrupted data</>;
-    }
-  
+  useEffect(() => {
+    console.log(moduleDescriptor);
+  }, [moduleDescriptor]);
+
+  if (!moduleDescriptor) {
+    return <>Loading...</>;
+  }
+
+  const sectionData = MapSectionData.FromJson(moduleDescriptor);
+  if (!sectionData) {
+    return <>Invalid or corrupted data</>;
+  }
+
   return (
     <>
       <div>
