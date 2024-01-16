@@ -104,7 +104,7 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <input
         type="text"
         placeholder={'string. Backstory of the paladin.'}
-        defaultValue={characterData.guid}
+        defaultValue={characterData.description}
       />
 
       <hr />
@@ -501,6 +501,8 @@ export default function CharacterEditor({ moduleDescriptor }) {
         }
         defaultValue={characterData.startingBoons.handSizeBonus}
       />
+
+      <hr />
 
       <h5>Round boons</h5>
       <hr />

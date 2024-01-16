@@ -106,7 +106,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <hr />
 
-      {moduleDescriptor?.isElusive && (
+      {enemyData.isElusive && (
         <>
           <h5>Elusive data</h5>
           <h6>Armor if blocked</h6>
