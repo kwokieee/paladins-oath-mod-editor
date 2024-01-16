@@ -32,7 +32,7 @@ export class CharacterLevelData {
     const data = new CharacterLevelData();
 
     data.requiredXp = json.requiredXp;
-    if (json.rewardsLeveUp) {
+    if (json.rewardsLevelUp) {
       data.rewardsLevelUp = FindEnumByValue(GameValues.Rewards, json.rewardsLevelUp);
     }
 
