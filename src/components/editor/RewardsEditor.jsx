@@ -62,7 +62,7 @@ export default function RewardsEditor({ moduleDescriptor }) {
         rewardData.rewardOptions.map((reward, index) => (
           <div key={index}>
             <hr />
-            <p>{reward}</p>
+            <p>{reward.name}</p>
           </div>
         ))
       )}
