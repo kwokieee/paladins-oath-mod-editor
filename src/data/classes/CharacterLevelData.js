@@ -10,8 +10,9 @@ export class CharacterLevelData {
 
   isValid() {
     if (this.requiredXp < 0) return false;
-    if (this.rewardsLeveUp && !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value))
-      return false;
+    // TODO: support checking against local mod GUIDs
+    // if (this.rewardsLeveUp && !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value))
+    //   return false;
     return true;
   }
 
@@ -33,7 +34,8 @@ export class CharacterLevelData {
 
     data.requiredXp = json.requiredXp;
     if (json.rewardsLevelUp) {
-      data.rewardsLevelUp = FindEnumByValue(GameValues.Rewards, json.rewardsLevelUp);
+      // TODO: support checking against local mod GUIDs
+      // data.rewardsLevelUp = FindEnumByValue(GameValues.Rewards, json.rewardsLevelUp);
     }
 
     return data.isValid() ? data : null;

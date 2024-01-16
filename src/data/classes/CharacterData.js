@@ -1,4 +1,5 @@
 import { GameResources, FindResourceById } from '../GameResources';
+import { GameValues, FindEnumByValue } from '../GameValues';
 import { CharacterLevelData } from './CharacterLevelData';
 import { CrusadeStartingBoonsData } from './CrusadeStartingBoonsData';
 import { CrusadeRoundBoonsData } from './CrusadeRoundBoonsData';
@@ -36,7 +37,7 @@ export class CharacterData {
     // (Optional) List<Card::GUID> [default=EMPTY]. Display purpose only, shows which cards are unique to this character (compared to other characters). Those cards should appear in the list of inaneCards too.
     this.uniqueCardsInfo = [];
     // (Optional) List<Oath::GUID> [default=EMPTY]. List of Oaths that are unique to this character (Oaths that are marked as 'character specific').
-    this.personalOaths = [];
+    this.personalOaths = [];  // TODO: support loading local mod GUIDs
     // (Optional) int > 0 [default=1]. How many Ambient mana can the character use.
     this.defaultAllowedAmbientDie = 1;
     // (Optional) int > 0 [default=1]. How many Healing points are required to heal 1 wound on this character.
@@ -88,17 +89,17 @@ export class CharacterData {
     }
     for (let i = 0; i < this.uniqueCardsInfo.length; i++) {
       const card = this.uniqueCardsInfo[i];
-      // TODO: will need to account for mod specific resources
       if (!card || !FindResourceById(GameResources.Card, card.id)) {
         return false;
       }
     }
-    for (let i = 0; i < this.personalOaths.length; i++) {
-      const oath = this.personalOaths[i];
-      if (!oath || !FindResourceById(GameResources.Oath, oath.id)) {
-        return false;
-      }
-    }
+    // TODO: will need to account for mod specific resources
+    // for (let i = 0; i < this.personalOaths.length; i++) {
+    //   const oath = this.personalOaths[i];
+    //   if (!oath || !FindResourceById(GameResources.Oath, oath.id)) {
+    //     return false;
+    //   }
+    // }
     if (this.defaultAllowedAmbientDie <= 0) return false;
     if (this.numPointsRequiredPerWound <= 0) return false;
     if (this.defaultExplorationDistance <= 0) return false;
@@ -177,9 +178,10 @@ export class CharacterData {
     data.uniqueCardsInfo = json.uniqueCardsInfo
       ? json.uniqueCardsInfo.map((card) => FindResourceById(GameResources.Card, card))
       : [];
-    data.personalOaths = json.personalOaths
-      ? json.personalOaths.map((oath) => FindResourceById(GameResources.Oath, oath))
-      : [];
+    data.personalOaths = [];
+    // data.personalOaths = json.personalOaths
+    //   ? json.personalOaths.map((oath) => FindResourceById(GameResources.Oath, oath))
+    //   : [];
     data.defaultAllowedAmbientDie = json.defaultAllowedAmbientDie;
     data.numPointsRequiredPerWound = json.numPointsRequiredPerWound;
     data.defaultExplorationDistance = json.defaultExplorationDistance;

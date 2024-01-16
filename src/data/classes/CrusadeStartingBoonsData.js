@@ -12,7 +12,7 @@ export class CrusadeStartingBoonsData {
     // (Optional) List<ManaColor::GUID> [default=EMPTY]. List of mana crystals the character will start with.
     this.crystalsInInventory = [];
     // (Optional) int [default=0]. Can be negative. Increase/Reduce character armor.
-    this.armor = 0;
+    this.armorBonus = 0;
     // (Optional) int [default=0]. Can be negative. Increase/Reduce character hand size.
     this.handSizeBonus = 0;
     // (Optional) int [default=0]. Can be negative. Increase/Reduce character reputation.
@@ -24,22 +24,23 @@ export class CrusadeStartingBoonsData {
   isValid() {
     for (let i = 0; i < this.cards.length; i++) {
       const card = this.cards[i];
-      if (!card || !FindResourceById(GameResources.Card, card.value)) {
+      if (!card || !FindResourceById(GameResources.Card, card.id)) {
         return false;
       }
     }
     for (let i = 0; i < this.followers.length; i++) {
       const follower = this.followers[i];
-      if (!follower || !FindResourceById(GameResources.Follower, follower.value)) {
+      if (!follower || !FindResourceById(GameResources.Follower, follower.id)) {
         return false;
       }
     }
-    for (let i = 0; i < this.blessings.length; i++) {
-      const blessing = this.blessings[i];
-      if (!blessing || !FindResourceById(GameResources.Blessing, blessing.value)) {
-        return false;
-      }
-    }
+    // TODO: uncomment when all blessings are included in data
+    // for (let i = 0; i < this.blessings.length; i++) {
+    //   const blessing = this.blessings[i];
+    //   if (!blessing || !FindResourceById(GameResources.Blessing, blessing.id)) {
+    //     return false;
+    //   }
+    // }
     for (let i = 0; i < this.crystalsInInventory.length; i++) {
       const crystal = this.crystalsInInventory[i];
       if (!crystal || !FindEnumByValue(GameValues.ManaColor, crystal.value)) {
@@ -104,7 +105,7 @@ export class CrusadeStartingBoonsData {
         }
       });
     }
-    data.armor = json.armor;
+    data.armorBonus = json.armorBonus;
     data.handSizeBonus = json.handSizeBonus;
     data.reputationBonus = json.reputationBonus;
     data.followerSlotsBonus = json.followerSlotsBonus;
