@@ -2088,6 +2088,15 @@ export const GameResources = {
         followerType: "Basic",
       },
     },
+    unit_wyvaar: {
+      id: "unit_wyvaar",
+      name: "Wyvaar",
+      image:
+        "https://static.wikia.nocookie.net/paladinsoath/images/6/64/Wyvar.png/revision/latest/scale-to-width-down/280",
+      properties: {
+        followerType: "Basic",
+      },
+    },
     unit_pyromancer: {
       id: "unit_pyromancer",
       name: "Pyromancer",
@@ -2589,6 +2598,27 @@ export const GameResources = {
       name: "Death Ward",
       image:
         "https://static.wikia.nocookie.net/paladinsoath/images/8/88/Skill_death_ward.png/revision/latest/scale-to-width-down/100",
+      properties: {},
+    },
+    skill_mithril_scimitars: {
+      id: "skill_mithril_scimitars",
+      name: "Mithril Scimitars",
+      image:
+        "https://static.wikia.nocookie.net/paladinsoath/images/4/4f/Skill_mithril_scimitars.png/revision/latest/scale-to-width-down/100",
+      properties: {},
+    },
+    skill_mithril_armor: {
+      id: "skill_mithril_armor",
+      name: "Mithril Armor",
+      image:
+        "https://static.wikia.nocookie.net/paladinsoath/images/d/dd/Skill_mithril_armor.png/revision/latest/scale-to-width-down/100",
+      properties: {},
+    },
+    skill_wukong_staff: {
+      id: "skill_wukong_staff",
+      name: "Wukong Staff",
+      image:
+        "https://static.wikia.nocookie.net/paladinsoath/images/2/23/Skill_wukong_staff.png/revision/latest/scale-to-width-down/100",
       properties: {},
     },
   },

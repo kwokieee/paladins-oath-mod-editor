@@ -610,6 +610,40 @@ export const GameValues = {
       value: "enemy_type_ancient",
       name: "Ancient",
     },
+  },
+  Oath: {
+    oath_vengeance: {
+      value: "oath_vengeance",
+      name: "Vengeance",
+    },
+    oath_devotion: {
+      value: "oath_devotion",
+      name: "Devotion",
+    },
+    oath_conquest: {
+      value: "oath_conquest",
+      name: "Conquest",
+    },
+    oath_guidance: {
+      value: "oath_guidance",
+      name: "Guidance",
+    },
+    oath_abundance: {
+      value: "oath_abundance",
+      name: "Abundance",
+    },
+    oath_piety: {
+      value: "oath_piety",
+      name: "Piety",
+    },
+    oath_way_of_the_drow: {
+      value: "oath_way_of_the_drow",
+      name: "Way of the Drow",
+    },
+    oath_way_of_the_sun: {
+      value: "oath_way_of_the_sun",
+      name: "Way of the Sun",
+    },
   }
 };
 
