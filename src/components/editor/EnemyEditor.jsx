@@ -47,7 +47,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
     return <>Loading...</>;
   }
 
-  const enemyData = EnemyData.fromJson(moduleDescriptor);
+  const enemyData = EnemyData.FromJson(moduleDescriptor);
   if (!enemyData) {
     return <>Invalid or corrupted data</>;
   }

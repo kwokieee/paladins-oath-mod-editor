@@ -169,7 +169,7 @@ export class CharacterData {
     data.tileDefaultSprite = json.tileDefaultSprite;
     data.tileOccupiedSprite = json.tileOccupiedSprite;
     data.ownershipTokenMapPropSprite = json.ownershipTokenMapPropSprite;
-    data.levels = json.levels.map((level) => CharacterLevelData.fromJson(level));
+    data.levels = json.levels.map((level) => CharacterLevelData.FromJson(level));
     data.inaneBlessings = json.inaneBlessings.map((blessing) =>
       FindResourceById(GameResources.Blessing, blessing),
     );
@@ -188,13 +188,13 @@ export class CharacterData {
     data.starterHandSize = json.starterHandSize;
     data.starterFollowerSlotCount = json.starterFollowerSlotCount;
     data.starterReputation = json.starterReputation;
-    data.dummyPlayerStartingBoons = CrusadeStartingBoonsData.fromJson(
+    data.dummyPlayerStartingBoons = CrusadeStartingBoonsData.FromJson(
       json.dummyPlayerStartingBoons,
     );
     data.startingBoons = json.startingBoons
-      ? CrusadeStartingBoonsData.fromJson(json.startingBoons)
+      ? CrusadeStartingBoonsData.FromJson(json.startingBoons)
       : null;
-    data.roundBoons = json.roundBoons ? CrusadeRoundBoonsData.fromJson(json.roundBoons) : null;
+    data.roundBoons = json.roundBoons ? CrusadeRoundBoonsData.FromJson(json.roundBoons) : null;
 
     return data.isValid() ? data : null;
   }

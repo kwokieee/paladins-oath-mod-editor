@@ -1,4 +1,20 @@
+import { useEffect } from 'react';
+import {RewardData} from '../../data/classes/RewardData';
+
 export default function RewardsEditor({ moduleDescriptor }) {
+    useEffect(() => {
+      console.log(moduleDescriptor);
+    }, [moduleDescriptor]);
+  
+    if( ! moduleDescriptor ){
+      return <>Loading...</>;
+    }
+  
+    const rewardData = RewardData.FromJson(moduleDescriptor);
+    if( ! rewardData ){
+      return <>Invalid or corrupted data</>;
+    }
+  
   return (
     <div>
       <h5>GUID</h5>
@@ -7,7 +23,7 @@ export default function RewardsEditor({ moduleDescriptor }) {
         placeholder={
           "string. guid, unique only within the mod. Will be turned into GUID 'mod:'+$yourModId+':'+$guid'"
         }
-        defaultValue={moduleDescriptor?.guid}
+        defaultValue={rewardData.guid}
       />
 
       <hr />
@@ -18,7 +34,7 @@ export default function RewardsEditor({ moduleDescriptor }) {
         placeholder={
           'string. Reward name (not localized) to be displayed when the rewards are distributed.'
         }
-        defaultValue={moduleDescriptor?.name}
+        defaultValue={rewardData.name}
       />
 
       <hr />
@@ -29,7 +45,7 @@ export default function RewardsEditor({ moduleDescriptor }) {
         placeholder={
           '(Optional) int (AND=0 | OR=1) [default=AND(0)]. Determines how the reward options are given to the player.'
         }
-        defaultValue={moduleDescriptor?.guid}
+        defaultValue={rewardData.guid}
       />
 
       <hr />
@@ -38,12 +54,12 @@ export default function RewardsEditor({ moduleDescriptor }) {
       <input
         type="text"
         placeholder={'string. Enemy name (not localized)'}
-        defaultValue={moduleDescriptor?.name}
+        defaultValue={rewardData.name}
       />
-      {moduleDescriptor?.rewardOptions.length === 0 ? (
+      {rewardData.rewardOptions.length === 0 ? (
         <p>No rewards selected</p>
       ) : (
-        moduleDescriptor?.rewardOptions.map((reward, index) => (
+        rewardData.rewardOptions.map((reward, index) => (
           <div key={index}>
             <hr />
             <p>{reward}</p>

@@ -27,7 +27,7 @@ export class ManaData {
   }
 
   // Returns null if json doesn't form valid data
-  static fromJson(json) {
+  static FromJson(json) {
     const data = new ManaData();
 
     if (json.color) {

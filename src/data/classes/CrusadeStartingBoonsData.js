@@ -69,7 +69,7 @@ export class CrusadeStartingBoonsData {
   }
 
   // Returns null if json doesn't form valid data
-  static fromJson(json) {
+  static FromJson(json) {
     const data = new CrusadeStartingBoonsData();
 
     if (json.cards) {
