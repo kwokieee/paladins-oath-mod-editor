@@ -1,0 +1,41 @@
+import { GameValues, FindEnumByValue } from '../../data/GameValues';
+
+export class CharacterLevelData {
+  constructor() {
+    // int >= 0. At which XP this level up will be given.
+    this.requiredXp = 0;
+    // (Optional) Rewards::GUID [default=EMPTY]. ID of the rewards information to be given when leveling up. Don't specify if you don't want to give a reward at that level.
+    this.rewardsLevelUp = null;
+  }
+
+  isValid() {
+    if (this.requiredXp < 0) return false;
+    if (this.rewardsLeveUp && !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value))
+      return false;
+    return true;
+  }
+
+  // Throw if data is not valid
+  toJson() {
+    if (!this.isValid()) throw new Error('Invalid Character Level');
+
+    const out = {};
+
+    out.requiredXp = this.requiredXp;
+    out.rewardsLevelUp = this.rewardsLevelUp.value;
+
+    return out;
+  }
+
+  // Returns null if json doesn't form valid data
+  static fromJson(json) {
+    const data = new CharacterLevelData();
+
+    data.requiredXp = json.requiredXp;
+    if (json.rewardsLeveUp) {
+      data.rewardsLevelUp = FindEnumByValue(GameValues.Rewards, json.rewardsLevelUp);
+    }
+
+    return data.isValid() ? data : null;
+  }
+}
