@@ -34,13 +34,12 @@ export class CrusadeStartingBoonsData {
         return false;
       }
     }
-    // TODO: uncomment when all blessings are included in data
-    // for (let i = 0; i < this.blessings.length; i++) {
-    //   const blessing = this.blessings[i];
-    //   if (!blessing || !FindResourceById(GameResources.Blessing, blessing.id)) {
-    //     return false;
-    //   }
-    // }
+    for (let i = 0; i < this.blessings.length; i++) {
+      const blessing = this.blessings[i];
+      if (!blessing || !FindResourceById(GameResources.Blessing, blessing.id)) {
+        return false;
+      }
+    }
     for (let i = 0; i < this.crystalsInInventory.length; i++) {
       const crystal = this.crystalsInInventory[i];
       if (!crystal || !FindEnumByValue(GameValues.ManaColor, crystal.value)) {
