@@ -44,7 +44,8 @@ export class EnemyData {
     if (!this.guid) return false;
     if (!this.name) return false;
     if (this.numInstancesInDeck <= 0) return false;
-    if (!this.enemyType) return false;
+    if (!this.enemyType || !FindResourceById(GameResources.EnemyType, this.enemyType.id))
+      return false;
     if (this.armor <= 0) return false;
     if (this.isElusive && (!this.elusiveData || !this.elusiveData.isValid())) return false;
     if (!this.fortification) return false;
@@ -52,37 +53,29 @@ export class EnemyData {
     if (this.reputationGain < 0) return false;
     if (this.reputationGainBonusWhenRampaging < 0) return false;
     if (this.challengeRating < 1 || this.challengeRating > 10) return false;
-    if (this.attacks.length > 0) {
-      for (let i = 0; i < this.attacks.length; i++) {
-        const atk = this.attacks[i];
-        if (!atk || !atk.isValid()) {
-          return false;
-        }
+    for (let i = 0; i < this.attacks.length; i++) {
+      const atk = this.attacks[i];
+      if (!atk || !atk.isValid()) {
+        return false;
       }
     }
-    if (this.summoningAttacks.length > 0) {
-      for (let i = 0; i < this.summoningAttacks.length; i++) {
-        const summonType = this.summoningAttacks[i];
-        if (!summonType || !FindResourceById(GameResources.EnemyType, summonType.value)) {
-          return false;
-        }
+    for (let i = 0; i < this.summoningAttacks.length; i++) {
+      const summonType = this.summoningAttacks[i];
+      if (!summonType || !FindResourceById(GameResources.EnemyType, summonType.id)) {
+        return false;
       }
     }
     if (this.attacks.length === 0 && this.summoningAttacks.length === 0) return false;
-    if (this.immunities.length > 0) {
-      for (let i = 0; i < this.immunities.length; i++) {
-        const immunity = this.immunities[i];
-        if (!immunity || !FindEnumByValue(GameValues.Immunity, immunity.value)) {
-          return false;
-        }
+    for (let i = 0; i < this.immunities.length; i++) {
+      const immunity = this.immunities[i];
+      if (!immunity || !FindEnumByValue(GameValues.Immunity, immunity.value)) {
+        return false;
       }
     }
-    if (this.resistances.length > 0) {
-      for (let i = 0; i < this.resistances.length; i++) {
-        const resistance = this.resistances[i];
-        if (!resistance || !FindEnumByValue(GameValues.Element, resistance.value)) {
-          return false;
-        }
+    for (let i = 0; i < this.resistances.length; i++) {
+      const resistance = this.resistances[i];
+      if (!resistance || !FindEnumByValue(GameValues.Element, resistance.value)) {
+        return false;
       }
     }
     return true;
@@ -97,7 +90,7 @@ export class EnemyData {
     out.guid = this.guid;
     out.name = this.name;
     out.numInstancesInDeck = this.numInstancesInDeck;
-    out.enemyType = this.enemyType.value;
+    out.enemyType = this.enemyType.id;
     out.armor = this.armor;
     out.isElusive = this.isElusive;
     if (this.isElusive) {
@@ -108,7 +101,8 @@ export class EnemyData {
     out.reputationGain = this.reputationGain;
     out.reputationGainBonusWhenRampaging = this.reputationGainBonusWhenRampaging;
     out.challengeRating = this.challengeRating;
-    out.summoningAttacks = this.summoningAttacks.map((atk) => atk.value);
+    out.attacks = this.attacks.map((atk) => atk.toJson());
+    out.summoningAttacks = this.summoningAttacks.map((atk) => atk.id);
     out.immunities = this.immunities.map((immunity) => immunity.value);
     out.resistances = this.resistances.map((res) => res.value);
 
