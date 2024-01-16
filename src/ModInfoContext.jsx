@@ -46,10 +46,7 @@ export function ModInfoProvider({ children }) {
     if (!name) {
       return null;
     }
-    const textContent = await getTextContentOfFile(
-      `${pathRoot}/${name}/mod.json`,
-      moduleFiles,
-    );
+    const textContent = await getTextContentOfFile(`${pathRoot}/${name}/mod.json`, moduleFiles);
     const moduleDescriptor = JSON.parse(textContent);
     return moduleDescriptor;
   };
@@ -65,7 +62,7 @@ export function ModInfoProvider({ children }) {
     setSelectedModule(name);
     setSelectedModuleType(type);
     setIsSwitchingModule(false);
-  }
+  };
 
   const value = {
     loadModFromZipFile,
