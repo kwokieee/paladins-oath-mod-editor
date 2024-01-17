@@ -217,7 +217,7 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <button style={{ marginBottom: 10 }} onClick={onEditInaneCards}>
         Edit
       </button>
-      {isEditingInaneCards && <ResourcePicker resourceType={'Card'} />}
+      {isEditingInaneCards && <ResourcePicker resourceType={'Card'} selected={characterData.inaneCards} />}
 
       <hr />
 
