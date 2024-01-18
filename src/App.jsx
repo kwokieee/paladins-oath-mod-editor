@@ -28,6 +28,7 @@ export default function App() {
           style={{
             width: '80%',
             minWidth: '80%',
+            maxWidth: '80%',
             overflow: 'scroll',
             height: '100vh',
             paddingRight: 30,
@@ -40,6 +41,7 @@ export default function App() {
             display: 'flex',
             alignItems: 'center',
             flexDirection: 'column',
+            minWidth: '20%',
             width: '20%',
             maxWidth: '20%',
             height: '100vh',

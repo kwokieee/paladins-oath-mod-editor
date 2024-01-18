@@ -13,9 +13,21 @@ export default function Editor() {
   const { selectedModuleType, selectedModuleDescriptor, isSwitchingModule } = useModInfo();
 
   if (isSwitchingModule) {
-    return <>Loading...</>;
+    return <p style={{ textAlign: 'center', verticalAlign: 'middle' }}>Loading...</p>;
   } else if (selectedModuleType === '' || !selectedModuleDescriptor) {
-    return <>No module selected</>;
+    return (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <p style={{ textAlign: 'center', verticalAlign: 'middle' }}>No module selected</p>
+      </div>
+    );
   } else if (selectedModuleType === 'rewardsMods') {
     return <RewardsEditor moduleDescriptor={selectedModuleDescriptor} />;
   } else if (selectedModuleType === 'oathMods') {

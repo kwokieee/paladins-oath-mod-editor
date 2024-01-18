@@ -1,7 +1,8 @@
 #root {
   flex: 1;
   max-height: 100vh;
-  overflow: auto;
-  padding: 2rem;
+  overflow: hidden;
+  padding-right: 2rem;
+  padding-left: 2rem;
   text-align: center;
 }

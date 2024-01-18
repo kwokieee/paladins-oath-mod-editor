@@ -1,3 +1,4 @@
+import './ModuleGroup.css';
 import { useState } from 'react';
 import Module from './Module';
 
