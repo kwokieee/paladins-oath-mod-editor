@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useModInfo } from '../../hooks/useModInfo';
 import { CharacterData } from '../../data/classes/CharacterData';
 import ResourcePicker from '../resourcePicker/ResourcePicker';
+import Card from '../Card';
+import { getCardsWithCounts } from '../../utils';
 
 export default function CharacterEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -75,6 +77,8 @@ export default function CharacterEditor({ moduleDescriptor }) {
   if (!characterData) {
     return <>Invalid or corrupted data</>;
   }
+
+  const selectedInaneCardsWithCounts = getCardsWithCounts(characterData.inaneCards);
 
   return (
     <div>
@@ -212,12 +216,27 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <p>
         {characterData.inaneCards.length === 0
           ? 'None'
-          : characterData.inaneCards.map((card, index) => card.name).join(', ')}
+          : Object.values(selectedInaneCardsWithCounts).map((cardDetails) => (
+              <Card
+                key={cardDetails.id}
+                id={cardDetails.id}
+                name={cardDetails.name}
+                image={cardDetails.image}
+                count={cardDetails.count}
+              />
+            ))}
       </p>
       <button style={{ marginBottom: 10 }} onClick={onEditInaneCards}>
         Edit
       </button>
-      {isEditingInaneCards && <ResourcePicker resourceType={'Card'} selected={characterData.inaneCards} />}
+      {isEditingInaneCards && (
+        <ResourcePicker
+          resourceType={'Card'}
+          selected={characterData.inaneCards}
+          // Might have some bugs displaying the change in state here since we're modifying a class's attribute
+          handleSubmit={(selectedInaneCards) => (characterData.inaneCards = selectedInaneCards)}
+        />
+      )}
 
       <hr />
 
