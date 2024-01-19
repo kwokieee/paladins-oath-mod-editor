@@ -1,3 +1,4 @@
+import './Card.css';
 import { useState } from 'react';
 
 export default function Card({
@@ -32,7 +33,13 @@ export default function Card({
         aspectRatio: '0.485',
       }}
     >
-      <img onClick={handleClick} src={image} alt={name} referrerPolicy="no-referrer" />
+      <img
+        className="cardImage"
+        onClick={handleClick}
+        src={image}
+        alt={name}
+        referrerPolicy="no-referrer"
+      />
       {count ? (
         <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
           {modifiable && <button onClick={handleDecreaseCount}>{'<'}</button>}
