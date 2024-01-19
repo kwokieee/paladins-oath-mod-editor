@@ -1,54 +1,13 @@
-import { useEffect } from 'react';
 import { GameResources } from '../../data/GameResources';
 import { GameValues } from '../../data/GameValues';
+import CardPicker from './CardPicker';
 
-export default function ResourcePicker({ resourceType, selected }) {
-  useEffect(() => {
-    console.log(resourceType);
-  }, [resourceType]);
-
+/**
+ * handleSubmit should be a function that takes in the selected resources
+ */
+export default function ResourcePicker({ resourceType, selected, handleSubmit }) {
   if (resourceType === 'Card') {
-    const selectedCardsWithCounts = selected.reduce((acc, curr) => {
-      if (!acc[curr.id]) {
-        acc[curr.id] = { ...curr, count: 1 };
-      } else {
-        acc[curr.id].count++;
-      }
-      return acc;
-    }, {});
-    return (
-      <div>
-        {/* Show the selected cards first, then mod specific cards, then vanilla game cards */}
-        {/* Cards should have multi-selectable. Selected cards should be displayed along with their multiplicity, and options to increase and decrease */}
-        <h4>Selected</h4>
-        {
-          Object.values(selectedCardsWithCounts)
-          .map((cardDetails, index) => (
-            <div
-              key={cardDetails.id}
-              style={{ display: 'inline-block', paddingLeft: 15, paddingRight: 15, marginBottom: 15, overflow: 'hidden' }}
-            >
-              <img src={cardDetails.image} alt={cardDetails.name} referrerPolicy="no-referrer" />
-              <p style={{ overflow: 'clip' }}>{cardDetails.name}</p>
-              <p style={{ overflow: 'clip' }}>Quantity: {cardDetails.count}</p>
-            </div>
-          ))
-        }
-        {/* On selecting available cards, the card shifts to the selected pile with a multiplicity of 1 */}
-        <h4>Available</h4>
-        {Object.values(GameResources.Card)
-          .filter((cardDetails) => !selected.some(selectedCard => selectedCard.id === cardDetails.id))
-          .map((cardDetails, index) => (
-          <div
-            key={cardDetails.id}
-            style={{ display: 'inline-block', paddingLeft: 15, paddingRight: 15, marginBottom: 15 }}
-          >
-            <img src={cardDetails.image} alt={cardDetails.name} referrerPolicy="no-referrer" />
-            <p>{cardDetails.name}</p>
-          </div>
-        ))}
-      </div>
-    );
+    return <CardPicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (resourceType === 'MapSection') {
     return (
       <div>
