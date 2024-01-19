@@ -27,3 +27,14 @@ export const createObjectURL = async (path, zip) => {
   let blob = new Blob([buffer.buffer]);
   return URL.createObjectURL(blob);
 };
+
+export const getCardsWithCounts = (cards) => {
+  return cards.reduce((acc, currCard) => {
+    if (!acc[currCard.id]) {
+      acc[currCard.id] = { ...currCard, count: 1 };
+    } else {
+      acc[currCard.id].count++;
+    }
+    return acc;
+  }, {});
+};
