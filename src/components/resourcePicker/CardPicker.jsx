@@ -71,7 +71,9 @@ export default function CardPicker({ selected, handleSubmit }) {
   return (
     <div>
       {/* TODO: Show the selected cards first, then mod specific cards, then vanilla game cards */}
+      <hr />
       <h4>Selected</h4>
+      <hr />
       {cards.map(
         (cardDetails) =>
           cardDetails.isSelected && (
@@ -84,7 +86,9 @@ export default function CardPicker({ selected, handleSubmit }) {
             />
           ),
       )}
+      <hr />
       <h4>Available</h4>
+      <hr />
       {cards.map(
         (cardDetails) =>
           !cardDetails.isSelected && (
