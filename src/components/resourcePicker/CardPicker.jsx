@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getCardsWithCounts } from '../../utils';
 import { GameResources } from '../../data/GameResources';
 import Card from '../Card';
-import { Box, Modal, Pagination, Tabs, Tab, Typography } from '@mui/material';
+import { Box, Modal, Pagination, Tabs, Tab, Typography, Button } from '@mui/material';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -204,26 +204,39 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
                 ),
             )}
           </Box>
-        </Box>
-        {/* <button
-            onClick={() =>
-              handleSubmit(
-                cards
-                  .filter((cardDetails) => cardDetails.isSelected)
-                  .flatMap((cardDetails) => {
-                    const card = {
-                      id: cardDetails.id,
-                      name: cardDetails.name,
-                      image: cardDetails.image,
-                      properties: cardDetails.properties,
-                    };
-                    return Array(cardDetails.count).fill(card);
-                  }),
-              )
-            }
+          <Box
+            sx={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 1,
+              bgcolor: 'darkgray',
+              height: '5%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            Done
-          </button> */}
+            <Button
+              onClick={() =>
+                handleSubmit(
+                  cards
+                    .filter((cardDetails) => cardDetails.isSelected)
+                    .flatMap((cardDetails) => {
+                      const card = {
+                        id: cardDetails.id,
+                        name: cardDetails.name,
+                        image: cardDetails.image,
+                        properties: cardDetails.properties,
+                      };
+                      return Array(cardDetails.count).fill(card);
+                    }),
+                )
+              }
+            >
+              Done
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Modal>
   );
