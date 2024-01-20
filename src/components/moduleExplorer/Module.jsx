@@ -1,5 +1,5 @@
-import './Module.css';
 import { useModInfo } from '../../hooks/useModInfo';
+import { Box } from '@mui/material';
 
 export default function Module({ name, type }) {
   const { switchSelectedModuleTo } = useModInfo();
@@ -8,10 +8,10 @@ export default function Module({ name, type }) {
   };
 
   return (
-    <div className="file">
+    <Box sx={{ '&:hover': { cursor: 'pointer' } }}>
       <p style={{ fontSize: 12, textAlign: 'left', marginLeft: 10 }} onClick={onClickModule}>
         {name}
       </p>
-    </div>
+    </Box>
   );
 }
