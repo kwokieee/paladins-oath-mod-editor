@@ -2,8 +2,19 @@ import { useState } from 'react';
 import { getCardsWithCounts } from '../../utils';
 import { GameResources } from '../../data/GameResources';
 import Card from '../Card';
+import { Box, Modal, Pagination, Tabs, Tab, Typography } from '@mui/material';
 
-export default function CardPicker({ selected, handleSubmit }) {
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div role="tabpanel" hidden={value !== index} {...other}>
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+export default function CardPicker({ selected, handleSubmit, isEditing }) {
   const selectedCards = Object.values(getCardsWithCounts(selected));
   const [cards, setCards] = useState(
     Object.values(GameResources.Card).map((cardDetails) => {
@@ -17,6 +28,11 @@ export default function CardPicker({ selected, handleSubmit }) {
       return cardDetails;
     }),
   );
+  const [currentTab, setCurrentTab] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setCurrentTab(newValue);
+  };
 
   const selectCard = (id) => {
     return () => {
@@ -69,85 +85,146 @@ export default function CardPicker({ selected, handleSubmit }) {
   };
 
   return (
-    <div>
-      <div>
-        {/* TODO: Show the selected cards first, then mod specific cards, then vanilla game cards */}
-        <hr />
-        <h3>Selected</h3>
-        <hr />
-        {cards.map(
-          (cardDetails) =>
-            cardDetails.isSelected && (
-              <Card
-                key={cardDetails.id}
-                {...cardDetails}
-                handleClick={deselectCard(cardDetails.id)}
-                modifiable
-                handleMultiplicityChange={handleMultiplicityChange(cardDetails.id)}
-              />
-            ),
-        )}
-        <hr />
-        <h3>Available</h3>
-        <hr />
-        <h4>Actions</h4>
-        {cards.map(
-          (cardDetails) =>
-            !cardDetails.isSelected &&
-            cardDetails.properties.cardType == 'Action' && (
-              <Card
-                key={cardDetails.id}
-                {...cardDetails}
-                handleClick={selectCard(cardDetails.id)}
-              />
-            ),
-        )}
-        <hr />
-        <h4>Spells</h4>
-        {cards.map(
-          (cardDetails) =>
-            !cardDetails.isSelected &&
-            cardDetails.properties.cardType == 'Spell' && (
-              <Card
-                key={cardDetails.id}
-                {...cardDetails}
-                handleClick={selectCard(cardDetails.id)}
-              />
-            ),
-        )}
-        <hr />
-        <h4>Relics</h4>
-        {cards.map(
-          (cardDetails) =>
-            !cardDetails.isSelected &&
-            cardDetails.properties.cardType == 'Relic' && (
-              <Card
-                key={cardDetails.id}
-                {...cardDetails}
-                handleClick={selectCard(cardDetails.id)}
-              />
-            ),
-        )}
-      </div>
-      <button
-        onClick={() =>
-          handleSubmit(
-            cards
-              .filter((cardDetails) => cardDetails.isSelected)
-              .flatMap((cardDetails) => {
-                const card = {
-                  id: cardDetails.id,
-                  name: cardDetails.name,
-                  image: cardDetails.image,
-                  properties: cardDetails.properties,
-                };
-                return Array(cardDetails.count).fill(card);
-              }),
-          )
-        }
+    <Modal
+      open={isEditing}
+      onClose={() =>
+        handleSubmit(
+          cards
+            .filter((cardDetails) => cardDetails.isSelected)
+            .flatMap((cardDetails) => {
+              const card = {
+                id: cardDetails.id,
+                name: cardDetails.name,
+                image: cardDetails.image,
+                properties: cardDetails.properties,
+              };
+              return Array(cardDetails.count).fill(card);
+            }),
+        )
+      }
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '80%',
+          height: '80%',
+          bgcolor: 'darkgrey',
+          border: '2px solid #fff',
+          boxShadow: 24,
+          display: 'flex',
+        }}
       >
-        Done
-      </button>
-    </div>
+        <Box sx={{ backgroundColor: 'darkgray', width: '85%', height: '100%', overflow: 'auto' }}>
+          <Tabs
+            value={currentTab}
+            onChange={handleTabChange}
+            sx={{
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              bgcolor: 'grey',
+            }}
+          >
+            <Tab label="Actions" />
+            <Tab label="Spells" />
+            <Tab label="Relics" />
+          </Tabs>
+          <Box>
+            <CustomTabPanel value={currentTab} index={0}>
+              {cards.map(
+                (cardDetails) =>
+                  !cardDetails.isSelected &&
+                  cardDetails.properties.cardType == 'Action' && (
+                    <Card
+                      key={cardDetails.id}
+                      {...cardDetails}
+                      handleClick={selectCard(cardDetails.id)}
+                    />
+                  ),
+              )}
+            </CustomTabPanel>
+            <CustomTabPanel value={currentTab} index={1}>
+              {cards.map(
+                (cardDetails) =>
+                  !cardDetails.isSelected &&
+                  cardDetails.properties.cardType == 'Spell' && (
+                    <Card
+                      key={cardDetails.id}
+                      {...cardDetails}
+                      handleClick={selectCard(cardDetails.id)}
+                    />
+                  ),
+              )}
+            </CustomTabPanel>
+            <CustomTabPanel value={currentTab} index={2}>
+              {cards.map(
+                (cardDetails) =>
+                  !cardDetails.isSelected &&
+                  cardDetails.properties.cardType == 'Relic' && (
+                    <Card
+                      key={cardDetails.id}
+                      {...cardDetails}
+                      handleClick={selectCard(cardDetails.id)}
+                    />
+                  ),
+              )}
+            </CustomTabPanel>
+          </Box>
+        </Box>
+        <Box sx={{ backgroundColor: 'slategray', width: '15%', height: '100%', overflow: 'auto' }}>
+          <Box
+            sx={{
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              bgcolor: 'darkgray',
+              height: '5%',
+            }}
+          >
+            <Typography textAlign={'center'}>Selected</Typography>
+          </Box>
+          <Box sx={{ p: 2 }}>
+            {cards.map(
+              (cardDetails) =>
+                cardDetails.isSelected && (
+                  <>
+                    <Card
+                      key={cardDetails.id}
+                      {...cardDetails}
+                      handleClick={deselectCard(cardDetails.id)}
+                      modifiable
+                      handleMultiplicityChange={handleMultiplicityChange(cardDetails.id)}
+                      isCollapsed
+                    />
+                    <hr />
+                  </>
+                ),
+            )}
+          </Box>
+        </Box>
+        {/* <button
+            onClick={() =>
+              handleSubmit(
+                cards
+                  .filter((cardDetails) => cardDetails.isSelected)
+                  .flatMap((cardDetails) => {
+                    const card = {
+                      id: cardDetails.id,
+                      name: cardDetails.name,
+                      image: cardDetails.image,
+                      properties: cardDetails.properties,
+                    };
+                    return Array(cardDetails.count).fill(card);
+                  }),
+              )
+            }
+          >
+            Done
+          </button> */}
+      </Box>
+    </Modal>
   );
 }

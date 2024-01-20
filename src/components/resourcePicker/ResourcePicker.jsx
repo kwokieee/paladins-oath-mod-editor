@@ -5,9 +5,9 @@ import CardPicker from './CardPicker';
 /**
  * handleSubmit should be a function that takes in the selected resources
  */
-export default function ResourcePicker({ resourceType, selected, handleSubmit }) {
+export default function ResourcePicker({ resourceType, selected, handleSubmit, isEditing }) {
   if (resourceType === 'Card') {
-    return <CardPicker selected={selected} handleSubmit={handleSubmit} />;
+    return <CardPicker selected={selected} handleSubmit={handleSubmit} isEditing={isEditing} />;
   } else if (resourceType === 'MapSection') {
     return (
       <div>

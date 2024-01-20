@@ -1,3 +1,4 @@
+import { Box, Button, Typography } from '@mui/material';
 import './Card.css';
 import { useState } from 'react';
 
@@ -7,6 +8,7 @@ export default function Card({
   image,
   count,
   modifiable = false,
+  isCollapsed = false,
   handleClick,
   handleMultiplicityChange,
 }) {
@@ -20,6 +22,25 @@ export default function Card({
     handleMultiplicityChange(count + 1);
   };
 
+  if (isCollapsed) {
+    return (
+      <Box>
+        <Typography fontSize={10}>{name}</Typography>
+        {count ? (
+          <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            {modifiable && (
+              <Button onClick={handleDecreaseCount} disabled={count <= 1}>
+                {'-'}
+              </Button>
+            )}
+            <Typography fontSize={10}>x{count}</Typography>
+            {modifiable && <Button onClick={handleIncreaseCount}>{'+'}</Button>}
+          </Box>
+        ) : null}
+      </Box>
+    );
+  }
+
   return (
     <div
       key={id}
@@ -27,31 +48,30 @@ export default function Card({
         display: 'inline-block',
         paddingLeft: 15,
         paddingRight: 15,
-        marginBottom: 15,
-        overflow: 'auto',
         width: 200,
-        aspectRatio: '0.485',
+        height: 290,
       }}
     >
-      <img
-        className="cardImage"
-        onClick={handleClick}
-        src={image}
-        alt={name}
-        referrerPolicy="no-referrer"
-      />
-      {count ? (
-        <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-          {modifiable && (
-            <button onClick={handleDecreaseCount} disabled={count <= 1}>
-              {'-'}
-            </button>
-          )}
-          <p style={{ overflow: 'auto' }}>x{count}</p>
-          {modifiable && <button onClick={handleIncreaseCount}>{'+'}</button>}
-        </div>
-      ) : null}
-      <h5 style={{ overflow: 'auto' }}>{name}</h5>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <img
+          className="cardImage"
+          onClick={handleClick}
+          src={image}
+          alt={name}
+          referrerPolicy="no-referrer"
+        />
+        {count ? (
+          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            {modifiable && (
+              <button onClick={handleDecreaseCount} disabled={count <= 1}>
+                {'-'}
+              </button>
+            )}
+            <p style={{ overflow: 'auto' }}>x{count}</p>
+            {modifiable && <button onClick={handleIncreaseCount}>{'+'}</button>}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

@@ -240,6 +240,7 @@ export default function CharacterEditor({ moduleDescriptor }) {
             characterData.inaneCards = selectedInaneCards;
             setIsEditingInaneCards(false);
           }}
+          isEditing={isEditingInaneCards}
         />
       )}
 
