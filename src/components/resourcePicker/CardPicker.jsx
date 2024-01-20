@@ -142,6 +142,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
                       key={cardDetails.id}
                       {...cardDetails}
                       handleClick={selectCard(cardDetails.id)}
+                      isSelectable
                     />
                   ),
               )}
@@ -155,6 +156,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
                       key={cardDetails.id}
                       {...cardDetails}
                       handleClick={selectCard(cardDetails.id)}
+                      isSelectable
                     />
                   ),
               )}
@@ -168,6 +170,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
                       key={cardDetails.id}
                       {...cardDetails}
                       handleClick={selectCard(cardDetails.id)}
+                      isSelectable
                     />
                   ),
               )}
@@ -181,12 +184,15 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
               top: 0,
               zIndex: 1,
               bgcolor: 'darkgray',
-              height: '5%',
+              height: '6%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <Typography textAlign={'center'}>Selected</Typography>
           </Box>
-          <Box sx={{ p: 2 }}>
+          <Box>
             {cards.map(
               (cardDetails) =>
                 cardDetails.isSelected && (
@@ -195,9 +201,10 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
                       key={cardDetails.id}
                       {...cardDetails}
                       handleClick={deselectCard(cardDetails.id)}
-                      modifiable
                       handleMultiplicityChange={handleMultiplicityChange(cardDetails.id)}
+                      isModifiable
                       isCollapsed
+                      isSelectable
                     />
                     <hr />
                   </>
