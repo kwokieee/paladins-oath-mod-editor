@@ -74,11 +74,13 @@ export default function CharacterEditor({ moduleDescriptor }) {
   }
 
   const characterData = CharacterData.FromJson(moduleDescriptor);
+
   if (!characterData) {
     return <>Invalid or corrupted data</>;
   }
 
-  const selectedInaneCardsWithCounts = getCardsWithCounts(characterData.inaneCards);
+  const [inaneCards, setInaneCards] = useState(characterData.inaneCards);
+  const selectedInaneCardsWithCounts = getCardsWithCounts(inaneCards);
 
   return (
     <div>
@@ -214,7 +216,7 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <h5>Inane cards:</h5>
       <p>
-        {characterData.inaneCards.length === 0
+        {inaneCards.length === 0
           ? 'None'
           : Object.values(selectedInaneCardsWithCounts).map((cardDetails) => (
               <Card
@@ -232,9 +234,12 @@ export default function CharacterEditor({ moduleDescriptor }) {
       {isEditingInaneCards && (
         <ResourcePicker
           resourceType={'Card'}
-          selected={characterData.inaneCards}
-          // Might have some bugs displaying the change in state here since we're modifying a class's attribute
-          handleSubmit={(selectedInaneCards) => (characterData.inaneCards = selectedInaneCards)}
+          selected={inaneCards}
+          handleSubmit={(selectedInaneCards) => {
+            setInaneCards(selectedInaneCards);
+            characterData.inaneCards = selectedInaneCards;
+            setIsEditingInaneCards(false);
+          }}
         />
       )}
 

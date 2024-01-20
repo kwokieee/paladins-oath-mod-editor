@@ -42,9 +42,13 @@ export default function Card({
       />
       {count ? (
         <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
-          {modifiable && <button onClick={handleDecreaseCount}>{'<'}</button>}
+          {modifiable && (
+            <button onClick={handleDecreaseCount} disabled={count <= 1}>
+              {'-'}
+            </button>
+          )}
           <p style={{ overflow: 'auto' }}>x{count}</p>
-          {modifiable && <button onClick={handleIncreaseCount}>{'>'}</button>}
+          {modifiable && <button onClick={handleIncreaseCount}>{'+'}</button>}
         </div>
       ) : null}
       <h5 style={{ overflow: 'auto' }}>{name}</h5>
