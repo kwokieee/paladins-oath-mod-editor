@@ -12,7 +12,6 @@ export default function Card({
   handleClick,
   handleMultiplicityChange,
 }) {
-  useState(count);
   const handleDecreaseCount = () => {
     if (count === 1) return;
     handleMultiplicityChange(count - 1);
@@ -23,7 +22,7 @@ export default function Card({
 
   if (isCollapsed) {
     return (
-      <Box>
+      <div>
         <div title="Click to remove card">
           <Typography
             onClick={handleClick}
@@ -38,6 +37,8 @@ export default function Card({
           <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
             {isModifiable && (
               <Button
+                variant='text'
+                disableRipple
                 onClick={handleDecreaseCount}
                 size="small"
                 sx={{ px: 0 }}
@@ -48,13 +49,13 @@ export default function Card({
             )}
             <Typography fontSize={10}>x{count}</Typography>
             {isModifiable && (
-              <Button size="small" onClick={handleIncreaseCount}>
+              <Button variant='text' disableRipple size="small" onClick={handleIncreaseCount}>
                 {'+'}
               </Button>
             )}
           </Box>
         ) : null}
-      </Box>
+      </div>
     );
   }
 
@@ -90,12 +91,12 @@ export default function Card({
         {count ? (
           <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
             {isModifiable && (
-              <button onClick={handleDecreaseCount} disabled={count <= 1}>
+              <Button onClick={handleDecreaseCount} disabled={count <= 1}>
                 {'-'}
-              </button>
+              </Button>
             )}
             <p style={{ overflow: 'auto' }}>x{count}</p>
-            {isModifiable && <button onClick={handleIncreaseCount}>{'+'}</button>}
+            {isModifiable && <Button onClick={handleIncreaseCount}>{'+'}</Button>}
           </div>
         ) : null}
       </div>

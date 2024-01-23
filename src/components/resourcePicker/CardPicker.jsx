@@ -9,7 +9,7 @@ function CustomTabPanel(props) {
 
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 3, backgroundColor: '#B7A99A' }}>{children}</Box>}
     </div>
   );
 }
@@ -29,6 +29,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
     }),
   );
   const [currentTab, setCurrentTab] = useState(0);
+  const [isShowingCard, setIsShowingCard] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
@@ -112,12 +113,13 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
           width: '80%',
           height: '80%',
           bgcolor: 'darkgrey',
-          border: '2px solid #fff',
+          borderRadius: '10px',
+          border: '2px solid #37281d',
           boxShadow: 24,
           display: 'flex',
         }}
       >
-        <Box sx={{ backgroundColor: 'darkgray', width: '85%', height: '100%', overflow: 'auto' }}>
+        <Box sx={{ backgroundColor: 'primary', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px', width: '85%', height: '100%', overflow: 'auto' }}>
           <Tabs
             value={currentTab}
             onChange={handleTabChange}
@@ -125,8 +127,10 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
               position: 'sticky',
               top: 0,
               zIndex: 1,
-              bgcolor: 'grey',
+              bgcolor: '#504538',
             }}
+            variant='fullWidth'
+            centered
           >
             <Tab label="Actions" />
             <Tab label="Spells" />
@@ -177,14 +181,17 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
             </CustomTabPanel>
           </Box>
         </Box>
-        <Box sx={{ backgroundColor: 'slategray', width: '15%', height: '100%', overflow: 'auto' }}>
+        <Box sx={{ backgroundColor: 'slategray', borderTopRightRadius: '10px', borderBottomRightRadius: '10px', width: '15%', height: '100%', overflow: 'auto' }}>
           <Box
             sx={{
               position: 'sticky',
               top: 0,
               zIndex: 1,
               bgcolor: 'darkgray',
-              height: '6%',
+              borderWidth: '2px',
+              borderColor: 'black',
+              boxShadow: 5,
+              height: '8%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -192,11 +199,13 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
           >
             <Typography textAlign={'center'}>Selected</Typography>
           </Box>
-          <Box>
+          <Box sx={{ mt: 1 }}>
             {cards.map(
               (cardDetails) =>
                 cardDetails.isSelected && (
-                  <>
+                  <div key={cardDetails.id} onMouseEnter={() => setIsShowingCard(true)} onMouseLeave={() => setIsShowingCard(false)}>
+                    {isShowingCard && (<img src={cardDetails.image} style={{ position: 'absolute', right: 120, bottom: 0, zIndex: 10 }} alt={name} referrerPolicy='no-referrer' />)}
+                    <hr style={{ marginTop: 0 }} />
                     <Card
                       key={cardDetails.id}
                       {...cardDetails}
@@ -206,8 +215,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
                       isCollapsed
                       isSelectable
                     />
-                    <hr />
-                  </>
+                  </div>
                 ),
             )}
           </Box>
@@ -217,7 +225,8 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
               bottom: 0,
               zIndex: 1,
               bgcolor: 'darkgray',
-              height: '5%',
+              boxShadow: 5,
+              height: '8%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',

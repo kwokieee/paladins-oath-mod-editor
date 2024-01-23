@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ResourcePicker from '../resourcePicker/ResourcePicker';
 import { useModInfo } from '../../hooks/useModInfo';
 import { EnemyData } from '../../data/classes/EnemyData';
+import { Button } from '@mui/material';
 
 export default function EnemyEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -84,9 +85,9 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <hr />
 
       <h5>Enemy type: {enemyData.enemyType.name}</h5>
-      <button style={{ marginBottom: 10 }} onClick={onEditEnemyType}>
+      <Button style={{ marginBottom: 10 }} onClick={onEditEnemyType}>
         Edit
-      </button>
+      </Button>
       {isEditingEnemyType && <ResourcePicker resourceType={'EnemyType'} />}
 
       <hr />

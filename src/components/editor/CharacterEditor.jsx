@@ -4,6 +4,7 @@ import { CharacterData } from '../../data/classes/CharacterData';
 import ResourcePicker from '../resourcePicker/ResourcePicker';
 import Card from '../Card';
 import { getCardsWithCounts } from '../../utils';
+import { Button } from '@mui/material';
 
 export default function CharacterEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -207,9 +208,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
           ? 'None'
           : characterData.inaneBlessings.map((blessing, index) => blessing.name).join(', ')}
       </p>
-      <button style={{ marginBottom: 10 }} onClick={onEditInaneBlessings}>
+      <Button style={{ marginBottom: 10 }} onClick={onEditInaneBlessings}>
         Edit
-      </button>
+      </Button>
       {isEditingInaneBlessings && <ResourcePicker resourceType={'Blessing'} />}
 
       <hr />
@@ -228,9 +229,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
               />
             ))}
       </p>
-      <button style={{ marginBottom: 10 }} onClick={onEditInaneCards}>
+      <Button style={{ marginBottom: 10 }} onClick={onEditInaneCards}>
         Edit
-      </button>
+      </Button>
       {isEditingInaneCards && (
         <ResourcePicker
           resourceType={'Card'}
@@ -252,9 +253,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
           ? 'None'
           : characterData.uniqueCardsInfo.map((card, index) => card.name).join(', ')}
       </p>
-      <button style={{ marginBottom: 10 }} onClick={onEditUniqueCards}>
+      <Button style={{ marginBottom: 10 }} onClick={onEditUniqueCards}>
         Edit
-      </button>
+      </Button>
       {isEditingUniqueCards && <ResourcePicker resourceType={'Card'} />}
 
       <hr />
@@ -265,9 +266,9 @@ export default function CharacterEditor({ moduleDescriptor }) {
           ? 'None'
           : characterData.personalOaths.map((oath, index) => card.name).join(', ')}
       </p>
-      <button style={{ marginBottom: 10 }} onClick={onEditPersonalOaths}>
+      <Button style={{ marginBottom: 10 }} onClick={onEditPersonalOaths}>
         Edit
-      </button>
+      </Button>
       {/* TODO: Access to oath modules created by player */}
       {/* {isEditingPersonalOaths && <ResourcePicker resourceType={'Oath'} />} */}
 
