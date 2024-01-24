@@ -114,7 +114,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
           height: '80%',
           bgcolor: 'darkgrey',
           borderRadius: '10px',
-          border: '2px solid #37281d',
+          border: '3px solid #37281d',
           boxShadow: 24,
           display: 'flex',
         }}
@@ -213,8 +213,6 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
               top: 0,
               zIndex: 1,
               bgcolor: 'darkgray',
-              borderWidth: '2px',
-              borderColor: 'black',
               boxShadow: 5,
               height: '8%',
               display: 'flex',
