@@ -59,7 +59,11 @@ export default function App() {
               marginTop: 10,
             }}
           >
-            <Button color='primary' onClick={onSaveModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
+            <Button
+              color="primary"
+              onClick={onSaveModButtonClicked}
+              style={{ width: '100%', marginBottom: 5 }}
+            >
               Export
             </Button>
             <input
@@ -108,7 +112,7 @@ export default function App() {
           onChange={handleFileSelected}
           accept=".zip"
         />
-        <Button color='primary' onClick={onLoadModButtonClicked} style={{ marginBottom: 5 }}>
+        <Button color="primary" onClick={onLoadModButtonClicked} style={{ marginBottom: 5 }}>
           Import existing mod
         </Button>
         <Button onClick={onNewModButtonClicked}>New mod</Button>

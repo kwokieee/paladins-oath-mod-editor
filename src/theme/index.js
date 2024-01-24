@@ -6,10 +6,10 @@ const themeOptions = {
   components: {
     MuiButton: {
       defaultProps: {
-        variant: 'contained'
-      }
+        variant: 'contained',
+      },
     },
-  }
+  },
 };
 
 const theme = createTheme(themeOptions);

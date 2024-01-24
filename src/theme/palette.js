@@ -111,8 +111,8 @@ const COMMON = {
 const palette = {
   ...COMMON,
   background: {
-    default: GREY[400]
-  }
+    default: GREY[400],
+  },
 };
 
 export default palette;

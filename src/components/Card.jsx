@@ -37,7 +37,7 @@ export default function Card({
           <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
             {isModifiable && (
               <Button
-                variant='text'
+                variant="text"
                 disableRipple
                 onClick={handleDecreaseCount}
                 size="small"
@@ -49,7 +49,7 @@ export default function Card({
             )}
             <Typography fontSize={10}>x{count}</Typography>
             {isModifiable && (
-              <Button variant='text' disableRipple size="small" onClick={handleIncreaseCount}>
+              <Button variant="text" disableRipple size="small" onClick={handleIncreaseCount}>
                 {'+'}
               </Button>
             )}
