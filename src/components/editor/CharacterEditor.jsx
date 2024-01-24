@@ -4,7 +4,7 @@ import { CharacterData } from '../../data/classes/CharacterData';
 import ResourcePicker from '../resourcePicker/ResourcePicker';
 import Card from '../Card';
 import { getCardsWithCounts } from '../../utils';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 export default function CharacterEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -81,7 +81,10 @@ export default function CharacterEditor({ moduleDescriptor }) {
   }
 
   const [inaneCards, setInaneCards] = useState(characterData.inaneCards);
+  const [uniqueCards, setUniqueCards] = useState(characterData.uniqueCardsInfo);
+
   const selectedInaneCardsWithCounts = getCardsWithCounts(inaneCards);
+  const selectedUniqueCardsWithCounts = getCardsWithCounts(characterData.uniqueCardsInfo);
 
   return (
     <div>
@@ -216,19 +219,21 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <hr />
 
       <h5>Inane cards:</h5>
-      <p>
-        {inaneCards.length === 0
-          ? 'None'
-          : Object.values(selectedInaneCardsWithCounts).map((cardDetails) => (
-              <Card
-                key={cardDetails.id}
-                id={cardDetails.id}
-                name={cardDetails.name}
-                image={cardDetails.image}
-                count={cardDetails.count}
-              />
-            ))}
-      </p>
+      <Box>
+        {inaneCards.length === 0 ? (
+          <p>None</p>
+        ) : (
+          Object.values(selectedInaneCardsWithCounts).map((cardDetails) => (
+            <Card
+              key={cardDetails.id}
+              id={cardDetails.id}
+              name={cardDetails.name}
+              image={cardDetails.image}
+              count={cardDetails.count}
+            />
+          ))
+        )}
+      </Box>
       <Button style={{ marginBottom: 10 }} onClick={onEditInaneCards}>
         Edit
       </Button>
@@ -247,16 +252,37 @@ export default function CharacterEditor({ moduleDescriptor }) {
 
       <hr />
 
-      <h5>Unique cards:</h5>
-      <p>
-        {characterData.uniqueCardsInfo.length === 0
-          ? 'None'
-          : characterData.uniqueCardsInfo.map((card, index) => card.name).join(', ')}
-      </p>
+      <h5>Unique inane cards:</h5>
+      <Box>
+        {uniqueCards.length === 0 ? (
+          <p>None</p>
+        ) : (
+          Object.values(selectedUniqueCardsWithCounts).map((cardDetails) => (
+            <Card
+              key={cardDetails.id}
+              id={cardDetails.id}
+              name={cardDetails.name}
+              image={cardDetails.image}
+              count={cardDetails.count}
+            />
+          ))
+        )}
+      </Box>
       <Button style={{ marginBottom: 10 }} onClick={onEditUniqueCards}>
         Edit
       </Button>
-      {isEditingUniqueCards && <ResourcePicker resourceType={'Card'} />}
+      {isEditingUniqueCards && (
+        <ResourcePicker
+          resourceType={'Card'}
+          selected={uniqueCards}
+          handleSubmit={(selectedUniqueCards) => {
+            setUniqueCards(selectedUniqueCards);
+            characterData.uniqueCardsInfo = selectedUniqueCards;
+            setIsEditingUniqueCards(false);
+          }}
+          isEditing={isEditingUniqueCards}
+        />
+      )}
 
       <hr />
 
