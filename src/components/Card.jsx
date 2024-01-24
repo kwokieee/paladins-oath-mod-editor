@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useState } from 'react';
 
 export default function Card({
   id,
