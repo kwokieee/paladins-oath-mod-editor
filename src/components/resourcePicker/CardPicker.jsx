@@ -29,7 +29,7 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
     }),
   );
   const [currentTab, setCurrentTab] = useState(0);
-  const [isShowingCard, setIsShowingCard] = useState(false);
+  const [selectedCardUrl, setSelectedCardUrl] = useState('');
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
@@ -119,7 +119,16 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
           display: 'flex',
         }}
       >
-        <Box sx={{ backgroundColor: 'primary', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px', width: '85%', height: '100%', overflow: 'auto' }}>
+        <Box
+          sx={{
+            backgroundColor: 'primary',
+            borderTopLeftRadius: '10px',
+            borderBottomLeftRadius: '10px',
+            width: '85%',
+            height: '100%',
+            overflow: 'auto',
+          }}
+        >
           <Tabs
             value={currentTab}
             onChange={handleTabChange}
@@ -129,14 +138,21 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
               zIndex: 1,
               bgcolor: '#504538',
             }}
-            variant='fullWidth'
+            variant="fullWidth"
             centered
           >
             <Tab label="Actions" />
             <Tab label="Spells" />
             <Tab label="Relics" />
           </Tabs>
-          <Box>
+          <Box sx={{ transform: 'rotate(0deg)' }}>
+            {selectedCardUrl && (
+              <img
+                src={selectedCardUrl}
+                style={{ position: 'fixed', right: 0, top: 0, zIndex: 10 }}
+                referrerPolicy="no-referrer"
+              />
+            )}
             <CustomTabPanel value={currentTab} index={0}>
               {cards.map(
                 (cardDetails) =>
@@ -181,7 +197,16 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
             </CustomTabPanel>
           </Box>
         </Box>
-        <Box sx={{ backgroundColor: 'slategray', borderTopRightRadius: '10px', borderBottomRightRadius: '10px', width: '15%', height: '100%', overflow: 'auto' }}>
+        <Box
+          sx={{
+            backgroundColor: 'slategray',
+            borderTopRightRadius: '10px',
+            borderBottomRightRadius: '10px',
+            width: '15%',
+            height: '100%',
+            overflow: 'auto',
+          }}
+        >
           <Box
             sx={{
               position: 'sticky',
@@ -203,8 +228,11 @@ export default function CardPicker({ selected, handleSubmit, isEditing }) {
             {cards.map(
               (cardDetails) =>
                 cardDetails.isSelected && (
-                  <div key={cardDetails.id} onMouseEnter={() => setIsShowingCard(true)} onMouseLeave={() => setIsShowingCard(false)}>
-                    {isShowingCard && (<img src={cardDetails.image} style={{ position: 'absolute', right: 120, bottom: 0, zIndex: 10 }} alt={name} referrerPolicy='no-referrer' />)}
+                  <div
+                    key={cardDetails.id}
+                    onMouseEnter={() => setSelectedCardUrl(cardDetails.image)}
+                    onMouseLeave={() => setSelectedCardUrl('')}
+                  >
                     <hr style={{ marginTop: 0 }} />
                     <Card
                       key={cardDetails.id}
