@@ -1,6 +1,7 @@
 import { GameResources } from '../../data/GameResources';
 import { GameValues } from '../../data/GameValues';
 import CardPicker from './CardPicker';
+import BlessingPicker from './BlessingPicker';
 
 /**
  * handleSubmit should be a function that takes in the selected resources
@@ -105,20 +106,7 @@ export default function ResourcePicker({ resourceType, selected, handleSubmit, i
       </div>
     );
   } else if (resourceType === 'Blessing') {
-    return (
-      <div>
-        {Object.entries(GameResources.Blessing).map(([blessing, blessingDetails], index) => (
-          <div key={index} style={{ display: 'inline-block' }}>
-            <p>{blessingDetails.name}</p>
-            <img
-              src={blessingDetails.image}
-              alt={blessingDetails.name}
-              referrerPolicy="no-referrer"
-            />
-          </div>
-        ))}
-      </div>
-    );
+    return <BlessingPicker selected={selected} handleSubmit={handleSubmit} isEditing={isEditing} />;
   } else {
     return (
       <div>

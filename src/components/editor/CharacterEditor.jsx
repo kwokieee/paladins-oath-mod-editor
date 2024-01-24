@@ -5,6 +5,7 @@ import ResourcePicker from '../resourcePicker/ResourcePicker';
 import Card from '../Card';
 import { getCardsWithCounts } from '../../utils';
 import { Box, Button } from '@mui/material';
+import Blessing from '../Blessing';
 
 export default function CharacterEditor({ moduleDescriptor }) {
   const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -80,6 +81,7 @@ export default function CharacterEditor({ moduleDescriptor }) {
     return <>Invalid or corrupted data</>;
   }
 
+  const [inaneBlessings, setInaneBlessings] = useState(characterData.inaneBlessings);
   const [inaneCards, setInaneCards] = useState(characterData.inaneCards);
   const [uniqueCards, setUniqueCards] = useState(characterData.uniqueCardsInfo);
 
@@ -206,15 +208,35 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <hr />
 
       <h5>Inane blessings:</h5>
-      <p>
-        {characterData.inaneBlessings.length === 0
-          ? 'None'
-          : characterData.inaneBlessings.map((blessing, index) => blessing.name).join(', ')}
-      </p>
+      <Box>
+        {inaneBlessings.length === 0 ? (
+          <p>None</p>
+        ) : (
+          Object.values(inaneBlessings).map((blessingDetails) => (
+            <Blessing
+              key={blessingDetails.id}
+              id={blessingDetails.id}
+              name={blessingDetails.name}
+              image={blessingDetails.image}
+            />
+          ))
+        )}
+      </Box>
       <Button style={{ marginBottom: 10 }} onClick={onEditInaneBlessings}>
         Edit
       </Button>
-      {isEditingInaneBlessings && <ResourcePicker resourceType={'Blessing'} />}
+      {isEditingInaneBlessings && (
+        <ResourcePicker
+          resourceType={'Blessing'}
+          selected={inaneBlessings}
+          handleSubmit={(selectedInaneBlessings) => {
+            setInaneBlessings(selectedInaneBlessings);
+            characterData.inaneBlessings = selectedInaneBlessings;
+            setIsEditingInaneBlessings(false);
+          }}
+          isEditing={isEditingInaneBlessings}
+        />
+      )}
 
       <hr />
 
