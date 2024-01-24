@@ -134,7 +134,7 @@ export class CharacterData {
     out.levels = this.levels.map((level) => level.toJson());
     out.inaneBlessings = this.inaneBlessings.map((blessing) => blessing.id);
     out.inaneCards = this.inaneCards.map((card) => card.id);
-    out.uniqueCardsInfo = this.uniqueCardsInfo.map((card) => card.id);
+    out.uniqueInaneCardsInfo = this.uniqueCardsInfo.map((card) => card.id);
     out.personalOaths = this.personalOaths.map((oath) => oath.id);
     out.defaultAllowedAmbientDie = this.defaultAllowedAmbientDie;
     out.numPointsRequiredPerWound = this.numPointsRequiredPerWound;
@@ -174,8 +174,8 @@ export class CharacterData {
       FindResourceById(GameResources.Blessing, blessing),
     );
     data.inaneCards = json.inaneCards.map((card) => FindResourceById(GameResources.Card, card));
-    data.uniqueCardsInfo = json.uniqueCardsInfo
-      ? json.uniqueCardsInfo.map((card) => FindResourceById(GameResources.Card, card))
+    data.uniqueCardsInfo = json.uniqueInaneCardsInfo
+      ? json.uniqueInaneCardsInfo.map((card) => FindResourceById(GameResources.Card, card))
       : [];
     data.personalOaths = [];
     // data.personalOaths = json.personalOaths
