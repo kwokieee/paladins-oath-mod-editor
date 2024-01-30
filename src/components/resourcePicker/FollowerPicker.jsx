@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getResourceWithCounts } from '../../utils';
 import { GameResources } from '../../data/GameResources';
-import { Card } from '../resources/Card';
+import { Follower } from '../resources/Follower';
 import { Box, Modal, Tabs, Tab, Typography, Button } from '@mui/material';
 
 function CustomTabPanel(props) {
@@ -14,36 +14,38 @@ function CustomTabPanel(props) {
   );
 }
 
-export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
-  const selectedCards = Object.values(getResourceWithCounts(selected));
-  const [cards, setCards] = useState(
-    Object.values(GameResources.Card).map((cardDetails) => {
-      const selectedCard = selectedCards.find((selectedCard) => selectedCard.id === cardDetails.id);
-      if (selectedCard) {
-        cardDetails.isSelected = true;
-        cardDetails.count = selectedCard.count;
+export const FollowerPicker = ({ selected, handleSubmit, isEditing }) => {
+  const selectedFollowers = Object.values(getResourceWithCounts(selected));
+  const [followers, setFollowers] = useState(
+    Object.values(GameResources.Follower).map((followerDetails) => {
+      const selectedFollower = selectedFollowers.find(
+        (selectedFollower) => selectedFollower.id === followerDetails.id,
+      );
+      if (selectedFollower) {
+        followerDetails.isSelected = true;
+        followerDetails.count = selectedFollower.count;
       } else {
-        cardDetails.isSelected = false;
+        followerDetails.isSelected = false;
       }
-      return cardDetails;
+      return followerDetails;
     }),
   );
   const [currentTab, setCurrentTab] = useState(0);
-  const [selectedCardUrl, setSelectedCardUrl] = useState('');
+  const [selectedFollowerUrl, setSelectedFollowerUrl] = useState('');
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
   };
 
-  const selectCard = (id) => {
+  const selectFollower = (id) => {
     return () => {
-      setCards(
-        cards.map((cardDetails) => {
-          if (cardDetails.id !== id) {
-            return cardDetails;
+      setFollowers(
+        followers.map((followerDetails) => {
+          if (followerDetails.id !== id) {
+            return followerDetails;
           }
           return {
-            ...cardDetails,
+            ...followerDetails,
             isSelected: true,
             count: 1,
           };
@@ -52,15 +54,15 @@ export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
     };
   };
 
-  const deselectCard = (id) => {
+  const deselectFollower = (id) => {
     return () => {
-      setCards(
-        cards.map((cardDetails) => {
-          if (cardDetails.id !== id) {
-            return cardDetails;
+      setFollowers(
+        followers.map((followerDetails) => {
+          if (followerDetails.id !== id) {
+            return followerDetails;
           }
           return {
-            ...cardDetails,
+            ...followerDetails,
             isSelected: false,
             count: undefined,
           };
@@ -71,13 +73,13 @@ export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
 
   const handleMultiplicityChange = (id) => {
     return (newCount) => {
-      setCards(
-        cards.map((cardDetails) => {
-          if (cardDetails.id !== id) {
-            return cardDetails;
+      setFollowers(
+        followers.map((followerDetails) => {
+          if (followerDetails.id !== id) {
+            return followerDetails;
           }
           return {
-            ...cardDetails,
+            ...followerDetails,
             count: newCount,
           };
         }),
@@ -90,16 +92,16 @@ export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
       open={isEditing}
       onClose={() =>
         handleSubmit(
-          cards
-            .filter((cardDetails) => cardDetails.isSelected)
-            .flatMap((cardDetails) => {
-              const card = {
-                id: cardDetails.id,
-                name: cardDetails.name,
-                image: cardDetails.image,
-                properties: cardDetails.properties,
+          followers
+            .filter((followerDetails) => followerDetails.isSelected)
+            .flatMap((followerDetails) => {
+              const follower = {
+                id: followerDetails.id,
+                name: followerDetails.name,
+                image: followerDetails.image,
+                properties: followerDetails.properties,
               };
-              return Array(cardDetails.count).fill(card);
+              return Array(followerDetails.count).fill(follower);
             }),
         )
       }
@@ -141,55 +143,40 @@ export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
             variant="fullWidth"
             centered
           >
-            <Tab label="Actions" />
-            <Tab label="Spells" />
-            <Tab label="Relics" />
+            <Tab label="Basic" />
+            <Tab label="Elite" />
           </Tabs>
           <Box sx={{ transform: 'rotate(0deg)' }}>
-            {selectedCardUrl && (
+            {selectedFollowerUrl && (
               <img
-                src={selectedCardUrl}
+                src={selectedFollowerUrl}
                 style={{ position: 'fixed', right: 0, top: 0, zIndex: 10 }}
                 referrerPolicy="no-referrer"
               />
             )}
             <CustomTabPanel value={currentTab} index={0}>
-              {cards.map(
-                (cardDetails) =>
-                  !cardDetails.isSelected &&
-                  cardDetails.properties.cardType == 'Action' && (
-                    <Card
-                      key={cardDetails.id}
-                      {...cardDetails}
-                      handleClick={selectCard(cardDetails.id)}
+              {followers.map(
+                (followerDetails) =>
+                  !followerDetails.isSelected &&
+                  followerDetails.properties.followerType == 'Basic' && (
+                    <Follower
+                      key={followerDetails.id}
+                      {...followerDetails}
+                      handleClick={selectFollower(followerDetails.id)}
                       isSelectable
                     />
                   ),
               )}
             </CustomTabPanel>
             <CustomTabPanel value={currentTab} index={1}>
-              {cards.map(
-                (cardDetails) =>
-                  !cardDetails.isSelected &&
-                  cardDetails.properties.cardType == 'Spell' && (
-                    <Card
-                      key={cardDetails.id}
-                      {...cardDetails}
-                      handleClick={selectCard(cardDetails.id)}
-                      isSelectable
-                    />
-                  ),
-              )}
-            </CustomTabPanel>
-            <CustomTabPanel value={currentTab} index={2}>
-              {cards.map(
-                (cardDetails) =>
-                  !cardDetails.isSelected &&
-                  cardDetails.properties.cardType == 'Relic' && (
-                    <Card
-                      key={cardDetails.id}
-                      {...cardDetails}
-                      handleClick={selectCard(cardDetails.id)}
+              {followers.map(
+                (followerDetails) =>
+                  !followerDetails.isSelected &&
+                  followerDetails.properties.followerType == 'Elite' && (
+                    <Follower
+                      key={followerDetails.id}
+                      {...followerDetails}
+                      handleClick={selectFollower(followerDetails.id)}
                       isSelectable
                     />
                   ),
@@ -223,20 +210,20 @@ export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
             <Typography textAlign={'center'}>Selected</Typography>
           </Box>
           <Box sx={{ mt: 1 }}>
-            {cards.map(
-              (cardDetails) =>
-                cardDetails.isSelected && (
+            {followers.map(
+              (followerDetails) =>
+                followerDetails.isSelected && (
                   <div
-                    key={cardDetails.id}
-                    onMouseEnter={() => setSelectedCardUrl(cardDetails.image)}
-                    onMouseLeave={() => setSelectedCardUrl('')}
+                    key={followerDetails.id}
+                    onMouseEnter={() => setSelectedFollowerUrl(followerDetails.image)}
+                    onMouseLeave={() => setSelectedFollowerUrl('')}
                   >
                     <hr style={{ marginTop: 0 }} />
-                    <Card
-                      key={cardDetails.id}
-                      {...cardDetails}
-                      handleClick={deselectCard(cardDetails.id)}
-                      handleMultiplicityChange={handleMultiplicityChange(cardDetails.id)}
+                    <Follower
+                      key={followerDetails.id}
+                      {...followerDetails}
+                      handleClick={deselectFollower(followerDetails.id)}
+                      handleMultiplicityChange={handleMultiplicityChange(followerDetails.id)}
                       isModifiable
                       isCollapsed
                       isSelectable
@@ -261,16 +248,16 @@ export const CardPicker = ({ selected, handleSubmit, isEditing }) => {
             <Button
               onClick={() =>
                 handleSubmit(
-                  cards
-                    .filter((cardDetails) => cardDetails.isSelected)
-                    .flatMap((cardDetails) => {
-                      const card = {
-                        id: cardDetails.id,
-                        name: cardDetails.name,
-                        image: cardDetails.image,
-                        properties: cardDetails.properties,
+                  followers
+                    .filter((followerDetails) => followerDetails.isSelected)
+                    .flatMap((followerDetails) => {
+                      const follower = {
+                        id: followerDetails.id,
+                        name: followerDetails.name,
+                        image: followerDetails.image,
+                        properties: followerDetails.properties,
                       };
-                      return Array(cardDetails.count).fill(card);
+                      return Array(followerDetails.count).fill(follower);
                     }),
                 )
               }

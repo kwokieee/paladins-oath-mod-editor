@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 
-export default function Card({
+export const Card = ({
   id,
   name,
   image,
@@ -10,7 +10,7 @@ export default function Card({
   isSelectable = false,
   handleClick,
   handleMultiplicityChange,
-}) {
+}) => {
   const handleDecreaseCount = () => {
     if (count === 1) return;
     handleMultiplicityChange(count - 1);
@@ -101,4 +101,4 @@ export default function Card({
       </div>
     </div>
   );
-}
+};

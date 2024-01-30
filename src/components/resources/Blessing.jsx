@@ -1,13 +1,13 @@
 import { Box, Typography } from '@mui/material';
 
-export default function Blessing({
+export const Blessing = ({
   id,
   name,
   image,
   isSelectable = false,
   isCollapsed = false,
   handleClick,
-}) {
+}) => {
   if (isCollapsed) {
     return (
       <Box
@@ -62,4 +62,4 @@ export default function Blessing({
       </div>
     </div>
   );
-}
+};

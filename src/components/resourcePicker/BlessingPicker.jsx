@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { GameResources } from '../../data/GameResources';
 import { Box, Modal, Typography, Button } from '@mui/material';
-import Blessing from '../Blessing';
+import { Blessing } from '../resources/Blessing';
 
-export default function BlessingPicker({ selected, handleSubmit, isEditing }) {
+export const BlessingPicker = ({ selected, handleSubmit, isEditing }) => {
   const [blessings, setBlessings] = useState(
     Object.values(GameResources.Blessing).map((blessingDetails) => {
       const selectedBlessing = selected.find(
@@ -186,4 +186,4 @@ export default function BlessingPicker({ selected, handleSubmit, isEditing }) {
       </Box>
     </Modal>
   );
-}
+};

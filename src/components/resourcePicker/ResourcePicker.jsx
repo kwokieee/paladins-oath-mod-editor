@@ -1,6 +1,7 @@
 import { GameResources } from '../../data/GameResources';
-import CardPicker from './CardPicker';
-import BlessingPicker from './BlessingPicker';
+import { CardPicker } from './CardPicker';
+import { BlessingPicker } from './BlessingPicker';
+import { FollowerPicker } from './FollowerPicker';
 
 /**
  * handleSubmit should be a function that takes in the selected resources
@@ -65,20 +66,7 @@ export const ResourcePicker = ({ resourceType, selected, handleSubmit, isEditing
       </div>
     );
   } else if (resourceType === 'Follower') {
-    return (
-      <div>
-        {Object.entries(GameResources.Follower).map(([follower, followerDetails], index) => (
-          <div key={index} style={{ display: 'inline-block' }}>
-            <p>{followerDetails.name}</p>
-            <img
-              src={followerDetails.image}
-              alt={followerDetails.name}
-              referrerPolicy="no-referrer"
-            />
-          </div>
-        ))}
-      </div>
-    );
+    return <FollowerPicker selected={selected} handleSubmit={handleSubmit} isEditing={isEditing} />;
   } else if (resourceType === 'Scoring') {
     return (
       <div>

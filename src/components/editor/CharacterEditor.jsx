@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { ResourcePicker } from '../resourcePicker/ResourcePicker';
-import Card from '../Card';
-import { getCardsWithCounts } from '../../utils';
+import { Card } from '../resources/Card';
+import { Blessing } from '../resources/Blessing';
+import { getResourceWithCounts } from '../../utils';
 import { Box, Button } from '@mui/material';
-import Blessing from '../Blessing';
 
 export const CharacterEditor = observer(({ moduleDescriptor }) => {
   // const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
@@ -65,11 +65,6 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
     setIsEditingPersonalOaths(!isEditingPersonalOaths);
   };
 
-  // useEffect(() => {
-  //   console.log(moduleDescriptor);
-  //   loadImages();
-  // }, [moduleDescriptor]);
-
   const characterData = moduleDescriptor?.data;
   if (!moduleDescriptor || !characterData) {
     return <>Invalid or corrupted data</>;
@@ -79,8 +74,8 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
   const [inaneCards, setInaneCards] = useState(characterData.inaneCards);
   const [uniqueCards, setUniqueCards] = useState(characterData.uniqueCardsInfo);
 
-  const selectedInaneCardsWithCounts = getCardsWithCounts(inaneCards);
-  const selectedUniqueCardsWithCounts = getCardsWithCounts(characterData.uniqueCardsInfo);
+  const selectedInaneCardsWithCounts = getResourceWithCounts(inaneCards);
+  const selectedUniqueCardsWithCounts = getResourceWithCounts(characterData.uniqueCardsInfo);
 
   return (
     <div>
