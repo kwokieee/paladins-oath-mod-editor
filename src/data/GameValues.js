@@ -44,23 +44,23 @@ export const GameValues = {
     },
     Paralyze: {
       value: 2,
-      name: 'None',
+      name: 'Paralyze',
     },
     Assassin: {
       value: 3,
-      name: 'None',
+      name: 'Assassin',
     },
     Brutal: {
       value: 4,
-      name: 'None',
+      name: 'Brutal',
     },
     Swift: {
       value: 5,
-      name: 'None',
+      name: 'Swift',
     },
     Cumbersome: {
       value: 6,
-      name: 'None',
+      name: 'Cumbersome',
     },
   },
   TurnPhase: {
