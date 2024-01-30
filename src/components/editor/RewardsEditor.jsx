@@ -34,23 +34,30 @@ export const RewardsEditor = observer(({ moduleDescriptor }) => {
 
       <h5>Combo type</h5>
       <p>Determines how the reward options are given to the player.</p>
-      <ValuePicker valueType="RewardComboType" selected={rewardData.comboType} />
+      <ValuePicker
+        valueType="RewardComboType"
+        selected={rewardData.comboType}
+        handleSubmit={(newRewardComboType) => (rewardData.comboType = newRewardComboType)}
+      />
 
       <hr />
 
       <h5>Reward options</h5>
-      {/* Multiselect */}
       {rewardData.rewardOptions.length === 0 ? (
         <p>No rewards selected</p>
       ) : (
         <div>
+          <ValuePicker
+            valueType="Reward"
+            selected={rewardData.rewardOptions}
+            handleSubmit={(newRewardOptions) => (rewardData.rewardOptions = newRewardOptions)}
+          />
           {rewardData.rewardOptions.map((reward, index) => (
             <div key={index}>
               <hr />
               <p>{reward.name}</p>
             </div>
           ))}
-          <ValuePicker valueType="Reward" selected={rewardData.rewardOptions} />
         </div>
       )}
 
