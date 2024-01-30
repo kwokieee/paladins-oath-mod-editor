@@ -1,14 +1,9 @@
-import { RewardData } from '../../data/classes/RewardData';
-import ValuePicker from '../ValuePicker';
+import { observer } from 'mobx-react-lite';
+import { ValuePicker } from '../valuePicker/ValuePicker';
 
-export default function RewardsEditor({ moduleDescriptor }) {
-  if (!moduleDescriptor) {
-    return <>Loading...</>;
-  }
-
-  const rewardData = RewardData.FromJson(moduleDescriptor);
-
-  if (!rewardData) {
+export const RewardsEditor = observer(({ moduleDescriptor }) => {
+  const rewardData = moduleDescriptor?.data;
+  if (!moduleDescriptor || !rewardData) {
     return <>Invalid or corrupted data</>;
   }
 
@@ -32,6 +27,7 @@ export default function RewardsEditor({ moduleDescriptor }) {
           'string. Reward name (not localized) to be displayed when the rewards are distributed.'
         }
         defaultValue={rewardData.name}
+        onChange={(e) => (rewardData.name = e.target.value)}
       />
 
       <hr />
@@ -61,4 +57,4 @@ export default function RewardsEditor({ moduleDescriptor }) {
       <hr />
     </div>
   );
-}
+});

@@ -1,55 +1,15 @@
-import { useEffect, useState } from 'react';
-import ResourcePicker from '../resourcePicker/ResourcePicker';
-import { useModInfo } from '../../hooks/useModInfo';
-import { EnemyData } from '../../data/classes/EnemyData';
-import { Button } from '@mui/material';
+import { observer } from 'mobx-react-lite';
+import { ValuePicker } from '../valuePicker/ValuePicker';
+import { Box, Checkbox, Typography } from '@mui/material';
 
-export default function EnemyEditor({ moduleDescriptor }) {
-  const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
-  const [isEditingEnemyType, setIsEditingEnemyType] = useState(false);
-  const [portraitSprite, setPortraitSprite] = useState('');
-  const [fullBodySprite, setFullBodySprite] = useState('');
-  const [fullBodyOutlineSprite, setFullBodyOutlineSprite] = useState('');
-  const [tileNormalSprite, setTileNormalSprite] = useState('');
-  const [tileOutlinedSprite, setTileOutlinedSprite] = useState('');
-
-  const loadImages = async () => {
-    const portraitSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.portraitSprite}`,
-    );
-    setPortraitSprite(portraitSprite);
-    const fullBodySprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullBodySprite}`,
-    );
-    setFullBodySprite(fullBodySprite);
-    const fullBodyOutlineSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullBodyOutlineSprite}`,
-    );
-    setFullBodyOutlineSprite(fullBodyOutlineSprite);
-    const tileNormalSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileData?.tileNormalSprite}`,
-    );
-    setTileNormalSprite(tileNormalSprite);
-    const tileOutlinedSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileData?.tileOutlinedSprite}`,
-    );
-    setTileOutlinedSprite(tileOutlinedSprite);
+export const EnemyEditor = observer(({ moduleDescriptor }) => {
+  const handleFileSelected = (e) => {
+    const imageFile = e.target.files[0];
+    console.log(imageFile);
   };
 
-  useEffect(() => {
-    console.log(moduleDescriptor);
-    loadImages();
-  }, [moduleDescriptor]);
-  const onEditEnemyType = () => {
-    setIsEditingEnemyType(!isEditingEnemyType);
-  };
-
-  if (!moduleDescriptor) {
-    return <>Loading...</>;
-  }
-
-  const enemyData = EnemyData.FromJson(moduleDescriptor);
-  if (!enemyData) {
+  const enemyData = moduleDescriptor?.data;
+  if (!moduleDescriptor || !enemyData) {
     return <>Invalid or corrupted data</>;
   }
 
@@ -71,6 +31,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
         type="text"
         placeholder={'string. Enemy name (not localized)'}
         defaultValue={enemyData.name}
+        onChange={(e) => (enemyData.name = e.target.value)}
       />
 
       <hr />
@@ -80,29 +41,38 @@ export default function EnemyEditor({ moduleDescriptor }) {
         type="number"
         placeholder="int >= 0 [default=1]. If > 0, the enemy will be added to draw piles."
         defaultValue={enemyData.numInstancesInDeck}
+        onChange={(e) => (enemyData.numInstancesInDeck = Number(e.target.value))}
       />
 
       <hr />
 
-      <h5>Enemy type: {enemyData.enemyType.name}</h5>
-      <Button style={{ marginBottom: 10 }} onClick={onEditEnemyType}>
-        Edit
-      </Button>
-      {isEditingEnemyType && <ResourcePicker resourceType={'EnemyType'} />}
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography sx={{ mr: 1 }}>Enemy type:</Typography>
+        <ValuePicker
+          valueType={'EnemyType'}
+          selected={enemyData.enemyType}
+          handleSubmit={(newEnemyType) => (enemyData.enemyType = newEnemyType)}
+        />
+      </Box>
 
       <hr />
 
       <h5>Armor</h5>
-      <input type="number" placeholder={'int > 0'} defaultValue={enemyData.armor} />
+      <input
+        type="number"
+        placeholder={'int > 0'}
+        defaultValue={enemyData.armor}
+        onChange={(e) => (enemyData.armor = Number(e.target.value))}
+      />
 
       <hr />
+
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <input
-          type="checkbox"
-          checked={enemyData.isElusive}
-          placeholder={'(Optional) bool [default=false]. If true, MUST specify elusive data.'}
+        <Checkbox
+          checked={!!enemyData.isElusive}
+          onChange={() => (enemyData.isElusive = !enemyData.isElusive)}
         />
-        <h5>Elusive</h5>
+        <h5>Is this enemy elusive?</h5>
       </div>
 
       <hr />
@@ -115,18 +85,20 @@ export default function EnemyEditor({ moduleDescriptor }) {
             type="number"
             placeholder={'int > 0'}
             defaultValue={enemyData.elusiveData?.armorIfBlocked}
+            onChange={(e) => (enemyData.elusiveData.armorIfBlocked = Number(e.target.value))}
           />
+          <hr />
         </>
       )}
 
-      <hr />
-
-      <h5>Fortification</h5>
-      <input
-        type="number"
-        placeholder={'(Optional) Fortification::int [default=NotFortified(2)]. Enum value'}
-        defaultValue={enemyData.fortification.name}
-      />
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography sx={{ mr: 1 }}>Fortification:</Typography>
+        <ValuePicker
+          valueType={'Fortification'}
+          selected={enemyData.fortification}
+          handleSubmit={(newFortification) => (enemyData.fortification = newFortification)}
+        />
+      </Box>
 
       <hr />
 
@@ -135,6 +107,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
         type="number"
         placeholder={'int >= 0. How much XP gained when defeating the enemy in battle.'}
         defaultValue={enemyData.xpGain}
+        onChange={(e) => (enemyData.xpGain = Number(e.target.value))}
       />
 
       <hr />
@@ -146,6 +119,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
           '(Optional) int >= 0 [default=0]. How much reputation gained when defeating the enemy in battle.'
         }
         defaultValue={enemyData.reputationGain}
+        onChange={(e) => (enemyData.reputationGain = Number(e.target.value))}
       />
 
       <hr />
@@ -157,6 +131,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
           '(Optional) int >= 0 [default=1]. How much additional reputation gained when defeating the enemy in battle when it is rampaging.'
         }
         defaultValue={enemyData.reputationGainBonusWhenRampaging}
+        onChange={(e) => (enemyData.reputationGainBonusWhenRampaging = Number(e.target.value))}
       />
 
       <hr />
@@ -168,6 +143,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
           '(Optional) int [1-10] [default=1]. How difficult is the enemy. Used for balancing when drawing randomly and for generating Battle Tale. Check the Wiki for example ratings.'
         }
         defaultValue={enemyData.challengeRating}
+        onChange={(e) => (enemyData.challengeRating = Number(e.target.value))}
       />
 
       <hr />
@@ -192,13 +168,18 @@ export default function EnemyEditor({ moduleDescriptor }) {
       {enemyData.summoningAttacks.length === 0 ? (
         <p>No summoning attacks</p>
       ) : (
-        moduleDescriptor?.summoningAttacks.map((summoningAttack, index) => (
+        enemyData.summoningAttacks.map((summoningAttack, index) => (
           <div key={index}>
             <hr />
             <p>{summoningAttack.name}</p>
           </div>
         ))
       )}
+      <ValuePicker
+        valueType={'EnemyType'}
+        selected={enemyData.enemyType}
+        handleSubmit={(newEnemyType) => (enemyData.enemyType = newEnemyType)}
+      />
 
       <hr />
 
@@ -206,7 +187,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       {enemyData.immunities.length === 0 ? (
         <p>No immunities</p>
       ) : (
-        moduleDescriptor?.immunities.map((immunity, index) => (
+        enemyData.immunities.map((immunity, index) => (
           <div key={index}>
             <p>{immunity.name}</p>
           </div>
@@ -219,7 +200,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       {enemyData.resistances.length === 0 ? (
         <p>No resistances</p>
       ) : (
-        moduleDescriptor?.resistances.map((resistance, index) => (
+        enemyData.resistances.map((resistance, index) => (
           <div key={index}>
             <p>{resistance.name}</p>
           </div>
@@ -228,10 +209,10 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <hr />
 
-      <div>
+      {/* <div>
         <h5>Portrait sprite</h5>
         {portraitSprite && <img src={portraitSprite} width={300} height={300} />}
-        <input type="file" accept="image/png" />
+        <input type="file" accept="image/png" onChange={handleFileSelected} />
       </div>
 
       <hr />
@@ -239,7 +220,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <div>
         <h5>Full body sprite</h5>
         {fullBodySprite && <img src={fullBodySprite} width={300} height={300} />}
-        <input type="file" accept="image/png" />
+        <input type="file" accept="image/png" onChange={handleFileSelected} />
       </div>
 
       <hr />
@@ -247,7 +228,7 @@ export default function EnemyEditor({ moduleDescriptor }) {
       <div>
         <h5>Full body outline sprite</h5>
         {fullBodyOutlineSprite && <img src={fullBodyOutlineSprite} width={300} height={300} />}
-        <input type="file" accept="image/png" />
+        <input type="file" accept="image/png" onChange={handleFileSelected} />
       </div>
 
       <hr />
@@ -257,13 +238,13 @@ export default function EnemyEditor({ moduleDescriptor }) {
 
       <h5>Tile sprite</h5>
       {tileNormalSprite && <img src={tileNormalSprite} width={256} height={384} />}
-      <input type="file" accept="image/png" />
+      <input type="file" accept="image/png" onChange={handleFileSelected} />
 
       <hr />
 
       <h5>Tile outlined sprite</h5>
       {tileOutlinedSprite && <img src={tileOutlinedSprite} width={256} height={384} />}
-      <input type="file" accept="image/png" />
+      <input type="file" accept="image/png" onChange={handleFileSelected} /> */}
     </div>
   );
-}
+});

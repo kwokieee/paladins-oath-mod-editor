@@ -1,12 +1,8 @@
-import { OathData } from '../../data/classes/OathData';
+import { observer } from 'mobx-react-lite';
 
-export default function OathEditor({ moduleDescriptor }) {
-  if (!moduleDescriptor) {
-    return <>Loading...</>;
-  }
-
-  const oathData = OathData.FromJson(moduleDescriptor);
-  if (!oathData) {
+export const OathEditor = observer(({ moduleDescriptor }) => {
+  const oathData = moduleDescriptor?.data;
+  if (!moduleDescriptor || !oathData) {
     return <>Invalid or corrupted data</>;
   }
 
@@ -196,4 +192,4 @@ export default function OathEditor({ moduleDescriptor }) {
       </div>
     </div>
   );
-}
+});

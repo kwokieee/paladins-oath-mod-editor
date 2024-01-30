@@ -1,14 +1,13 @@
+import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { useModInfo } from '../../hooks/useModInfo';
-import { CharacterData } from '../../data/classes/CharacterData';
-import ResourcePicker from '../resourcePicker/ResourcePicker';
+import { ResourcePicker } from '../resourcePicker/ResourcePicker';
 import Card from '../Card';
 import { getCardsWithCounts } from '../../utils';
 import { Box, Button } from '@mui/material';
 import Blessing from '../Blessing';
 
-export default function CharacterEditor({ moduleDescriptor }) {
-  const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
+export const CharacterEditor = observer(({ moduleDescriptor }) => {
+  // const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
   const [isEditingInaneBlessings, setIsEditingInaneBlessings] = useState(false);
   const [isEditingInaneCards, setIsEditingInaneCards] = useState(false);
   const [isEditingUniqueCards, setIsEditingUniqueCards] = useState(false);
@@ -22,36 +21,36 @@ export default function CharacterEditor({ moduleDescriptor }) {
   const [tileOccupiedSprite, setTileOccupiedSprite] = useState('');
   const [ownershipTokenMapPropSprite, setOwnershipTokenMapPropSprite] = useState('');
 
-  const loadImages = async () => {
-    const portraitSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.portraitSprite}`,
-    );
-    setPortraitSprite(portraitSprite);
-    const medallionSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.medallionSprite}`,
-    );
-    setMedallionSprite(medallionSprite);
-    const figurineSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.figurineSprite}`,
-    );
-    setFigurineSprite(figurineSprite);
-    const fullbodySprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullbodySprite}`,
-    );
-    setFullbodySprite(fullbodySprite);
-    const tileDefaultSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileDefaultSprite}`,
-    );
-    setTileDefaultSprite(tileDefaultSprite);
-    const tileOccupiedSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileOccupiedSprite}`,
-    );
-    setTileOccupiedSprite(tileOccupiedSprite);
-    const ownershipTokenMapPropSprite = await getUrlForFile(
-      `${pathRoot}/${selectedModule}/${moduleDescriptor?.ownershipTokenMapPropSprite}`,
-    );
-    setOwnershipTokenMapPropSprite(ownershipTokenMapPropSprite);
-  };
+  // const loadImages = async () => {
+  //   const portraitSprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.portraitSprite}`,
+  //   );
+  //   setPortraitSprite(portraitSprite);
+  //   const medallionSprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.medallionSprite}`,
+  //   );
+  //   setMedallionSprite(medallionSprite);
+  //   const figurineSprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.figurineSprite}`,
+  //   );
+  //   setFigurineSprite(figurineSprite);
+  //   const fullbodySprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullbodySprite}`,
+  //   );
+  //   setFullbodySprite(fullbodySprite);
+  //   const tileDefaultSprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileDefaultSprite}`,
+  //   );
+  //   setTileDefaultSprite(tileDefaultSprite);
+  //   const tileOccupiedSprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileOccupiedSprite}`,
+  //   );
+  //   setTileOccupiedSprite(tileOccupiedSprite);
+  //   const ownershipTokenMapPropSprite = await getUrlForFile(
+  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.ownershipTokenMapPropSprite}`,
+  //   );
+  //   setOwnershipTokenMapPropSprite(ownershipTokenMapPropSprite);
+  // };
 
   const onEditInaneBlessings = () => {
     setIsEditingInaneBlessings(!isEditingInaneBlessings);
@@ -66,18 +65,13 @@ export default function CharacterEditor({ moduleDescriptor }) {
     setIsEditingPersonalOaths(!isEditingPersonalOaths);
   };
 
-  useEffect(() => {
-    console.log(moduleDescriptor);
-    loadImages();
-  }, [moduleDescriptor]);
+  // useEffect(() => {
+  //   console.log(moduleDescriptor);
+  //   loadImages();
+  // }, [moduleDescriptor]);
 
-  if (!moduleDescriptor) {
-    return <>Loading...</>;
-  }
-
-  const characterData = CharacterData.FromJson(moduleDescriptor);
-
-  if (!characterData) {
+  const characterData = moduleDescriptor?.data;
+  if (!moduleDescriptor || !characterData) {
     return <>Invalid or corrupted data</>;
   }
 
@@ -637,4 +631,4 @@ export default function CharacterEditor({ moduleDescriptor }) {
       <hr />
     </div>
   );
-}
+});

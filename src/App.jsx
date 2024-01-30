@@ -1,28 +1,40 @@
 import './App.css';
 import { useRef } from 'react';
-import Editor from './components/editor/Editor';
-import ModuleExplorer from './components/moduleExplorer/ModuleExplorer';
-import { useModInfo } from './hooks/useModInfo';
+import { Editor } from './components/editor/Editor';
+import { ModuleExplorer } from './components/moduleExplorer/ModuleExplorer';
+import { useModInfoStore } from './hooks/useModInfoStore';
 import { Box, Button, Typography } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 
-export default function App() {
+export const App = observer(() => {
   const fileInput = useRef();
-  const { modDescriptor, loadModFromZipFile } = useModInfo();
-  const onLoadModButtonClicked = () => {
+  const modInfoStore = useModInfoStore();
+  const onImportModButtonClicked = () => {
     fileInput.current.click();
   };
   const onNewModButtonClicked = () => {
+    // TODO
     console.log('new mod');
   };
-  const onSaveModButtonClicked = () => {
+  const onExportModButtonClicked = () => {
+    // TODO
     console.log('save mod');
+    console.log(modInfoStore);
   };
   const handleFileSelected = async () => {
     const zipFile = fileInput.current.files[0];
-    await loadModFromZipFile(zipFile);
+    try {
+      // await loadModFromZipFile(zipFile);
+      await modInfoStore.loadModFrom(zipFile);
+    } catch (e) {
+      // TODO: Show error message in snackbar
+      console.error('Failed to load mod from zip file');
+      console.error(e);
+    }
   };
 
-  if (modDescriptor) {
+  if (modInfoStore.hasMod) {
+    console.log(modInfoStore);
     return (
       <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box
@@ -48,8 +60,8 @@ export default function App() {
             height: '100vh',
           }}
         >
-          <h2>{modDescriptor.name}</h2>
-          <ModuleExplorer modDescriptor={modDescriptor} />
+          <h2>{modInfoStore?.modDescriptor?.name}</h2>
+          <ModuleExplorer />
           <Box
             style={{
               display: 'flex',
@@ -61,7 +73,7 @@ export default function App() {
           >
             <Button
               color="primary"
-              onClick={onSaveModButtonClicked}
+              onClick={onExportModButtonClicked}
               style={{ width: '100%', marginBottom: 5 }}
             >
               Export
@@ -74,7 +86,7 @@ export default function App() {
               onChange={handleFileSelected}
               accept=".zip"
             />
-            <Button onClick={onLoadModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
+            <Button onClick={onImportModButtonClicked} style={{ width: '100%', marginBottom: 5 }}>
               Import
             </Button>
             <Button onClick={onNewModButtonClicked} style={{ width: '100%' }}>
@@ -112,11 +124,11 @@ export default function App() {
           onChange={handleFileSelected}
           accept=".zip"
         />
-        <Button color="primary" onClick={onLoadModButtonClicked} style={{ marginBottom: 5 }}>
+        <Button color="primary" onClick={onImportModButtonClicked} style={{ marginBottom: 5 }}>
           Import existing mod
         </Button>
         <Button onClick={onNewModButtonClicked}>New mod</Button>
       </Box>
     </Box>
   );
-}
+});

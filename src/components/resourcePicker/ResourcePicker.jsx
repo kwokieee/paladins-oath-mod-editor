@@ -1,12 +1,11 @@
 import { GameResources } from '../../data/GameResources';
-import { GameValues } from '../../data/GameValues';
 import CardPicker from './CardPicker';
 import BlessingPicker from './BlessingPicker';
 
 /**
  * handleSubmit should be a function that takes in the selected resources
  */
-export default function ResourcePicker({ resourceType, selected, handleSubmit, isEditing }) {
+export const ResourcePicker = ({ resourceType, selected, handleSubmit, isEditing }) => {
   if (resourceType === 'Card') {
     return <CardPicker selected={selected} handleSubmit={handleSubmit} isEditing={isEditing} />;
   } else if (resourceType === 'MapSection') {
@@ -52,16 +51,6 @@ export default function ResourcePicker({ resourceType, selected, handleSubmit, i
             />
           </div>
         ))}
-      </div>
-    );
-  } else if (resourceType === 'EnemyType') {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <select>
-          {Object.entries(GameValues.EnemyType).map(([enemyType, enemyTypeDetails], index) => (
-            <option key={index}>{enemyTypeDetails.name}</option>
-          ))}
-        </select>
       </div>
     );
   } else if (resourceType === 'Enemy') {
@@ -114,4 +103,4 @@ export default function ResourcePicker({ resourceType, selected, handleSubmit, i
       </div>
     );
   }
-}
+};

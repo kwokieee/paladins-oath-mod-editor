@@ -1,7 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { MapSectionData } from '../../data/classes/MapSectionData';
 
-export default function MapSectionEditor({ moduleDescriptor }) {
+export const MapSectionEditor = observer(({ moduleDescriptor }) => {
   useEffect(() => {
     console.log(moduleDescriptor);
   }, [moduleDescriptor]);
@@ -39,4 +40,4 @@ export default function MapSectionEditor({ moduleDescriptor }) {
       </div>
     </>
   );
-}
+});

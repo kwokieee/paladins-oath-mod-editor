@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react';
-import RewardsEditor from './RewardsEditor';
-import OathEditor from './OathEditor';
-import CharacterEditor from './CharacterEditor';
-import EnemyEditor from './EnemyEditor';
-import TerrainEditor from './TerrainEditor';
-import MapSectionEditor from './MapSectionEditor';
-import ScenarioEditor from './ScenarioEditor';
-import ScenarioExtensionEditor from './ScenarioExtensionEditor';
-import { useModInfo } from '../../hooks/useModInfo';
+import { RewardsEditor } from './RewardsEditor';
+import { OathEditor } from './OathEditor';
+import { CharacterEditor } from './CharacterEditor';
+import { EnemyEditor } from './EnemyEditor';
+import { TerrainEditor } from './TerrainEditor';
+import { MapSectionEditor } from './MapSectionEditor';
+import { ScenarioEditor } from './ScenarioEditor';
+import { ScenarioExtensionEditor } from './ScenarioExtensionEditor';
+import { useModuleStore } from '../../hooks/useModuleStore';
+import { ModuleTypes } from '../../data/moduleTypes';
+import { observer } from 'mobx-react-lite';
 
-export default function Editor() {
-  const { selectedModuleType, selectedModuleDescriptor, isSwitchingModule } = useModInfo();
+export const Editor = observer(() => {
+  const moduleStore = useModuleStore();
 
-  if (isSwitchingModule) {
+  if (moduleStore.isSwitchingModule) {
     return <p style={{ textAlign: 'center', verticalAlign: 'middle' }}>Loading...</p>;
-  } else if (selectedModuleType === '' || !selectedModuleDescriptor) {
+  }
+
+  if (moduleStore.hasNoModuleSelected()) {
     return (
       <div
         style={{
@@ -28,23 +31,27 @@ export default function Editor() {
         <p style={{ textAlign: 'center', verticalAlign: 'middle' }}>No module selected</p>
       </div>
     );
-  } else if (selectedModuleType === 'rewardsMods') {
-    return <RewardsEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'oathMods') {
-    return <OathEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'characterMods') {
-    return <CharacterEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'enemyMods') {
-    return <EnemyEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'terrainMods') {
-    return <TerrainEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'mapSectionMods') {
-    return <MapSectionEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'scenarioMods') {
-    return <ScenarioEditor moduleDescriptor={selectedModuleDescriptor} />;
-  } else if (selectedModuleType === 'scenarioExtensionMods') {
-    return <ScenarioExtensionEditor moduleDescriptor={selectedModuleDescriptor} />;
   }
+  const selectedModuleDescriptor = moduleStore.getModuleDescriptorFor(moduleStore.selectedModule);
 
-  return <>Invalid module type detected</>;
-}
+  switch (moduleStore.selectedModuleType) {
+    case ModuleTypes.rewards:
+      return <RewardsEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.oath:
+      return <OathEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.character:
+      return <CharacterEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.enemy:
+      return <EnemyEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.terrain:
+      return <TerrainEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.mapSection:
+      return <MapSectionEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.scenario:
+      return <ScenarioEditor moduleDescriptor={selectedModuleDescriptor} />;
+    case ModuleTypes.scenarioExtension:
+      return <ScenarioExtensionEditor moduleDescriptor={selectedModuleDescriptor} />;
+    default:
+      return <>Invalid module type detected</>;
+  }
+});

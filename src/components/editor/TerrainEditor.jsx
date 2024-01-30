@@ -1,7 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { TerrainData } from '../../data/classes/TerrainData';
 
-export default function TerrainEditor({ moduleDescriptor }) {
+export const TerrainEditor = observer(({ moduleDescriptor }) => {
   useEffect(() => {
     console.log(moduleDescriptor);
   }, [moduleDescriptor]);
@@ -38,4 +39,4 @@ export default function TerrainEditor({ moduleDescriptor }) {
       </div>
     </>
   );
-}
+});

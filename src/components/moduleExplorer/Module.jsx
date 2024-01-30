@@ -1,10 +1,10 @@
-import { useModInfo } from '../../hooks/useModInfo';
+import { useModuleStore } from '../../hooks/useModuleStore';
 import { Box } from '@mui/material';
 
 export default function Module({ name, type }) {
-  const { switchSelectedModuleTo } = useModInfo();
+  const moduleStore = useModuleStore();
   const onClickModule = () => {
-    switchSelectedModuleTo(name, type);
+    moduleStore.changeSelectedModuleTo(type, name);
   };
 
   return (
