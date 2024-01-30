@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { ManaData } from './ManaData';
 
 export class CrusadeRoundBoonsData {
@@ -12,6 +13,7 @@ export class CrusadeRoundBoonsData {
     this.healingPoints = 0;
     // (Optional) int >= 0 [default=0]. Gain leadership points every round.
     this.leadershipPoints = 0;
+    makeAutoObservable(this);
   }
 
   isValid() {

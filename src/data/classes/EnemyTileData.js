@@ -1,9 +1,12 @@
+import { makeAutoObservable } from 'mobx';
+
 export class EnemyTileData {
   constructor() {
     // "string. local file path in mod enemy folder. PNG, 512x768, Outline (10px; 0,0,0), Using the map token base.
     this.tileNormalSprite = null;
     // string. local file path in mod enemy folder. PNG, 512x768, Outline (5px; 0,255,33), outlined version of Normal.
     this.tileOutlinedSprite = null;
+    makeAutoObservable(this);
   }
 
   isValid() {

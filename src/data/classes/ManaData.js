@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../../data/GameValues';
 
 export class ManaData {
@@ -6,6 +7,7 @@ export class ManaData {
     this.color = GameValues.ManaColor.mana_red;
     // ManaForm::int. Form of the mana (crystal, token, ...)
     this.form = GameValues.ManaForm.Crystal;
+    makeAutoObservable(this);
   }
 
   isValid() {

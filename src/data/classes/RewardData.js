@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../GameValues';
 
 export class RewardData {
@@ -10,6 +11,7 @@ export class RewardData {
     this.comboType = GameValues.RewardComboType.combo_and;
     // List<RewardData>. List of rewards to give to the player. Cannot be empty.
     this.rewardOptions = [];
+    makeAutoObservable(this);
   }
 
   isValid() {

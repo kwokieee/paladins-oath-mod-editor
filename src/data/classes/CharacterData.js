@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameResources, FindResourceById } from '../GameResources';
 import { CharacterLevelData } from './CharacterLevelData';
 import { CrusadeStartingBoonsData } from './CrusadeStartingBoonsData';
@@ -59,6 +60,7 @@ export class CharacterData {
     this.startingBoons = null;
     // (Optional) CrusadeRoundBoons [default=EMPTY]. Boons the character receives every round  (ex: crystals, followers, blessings, reputation, movement)
     this.roundBoons = null;
+    makeAutoObservable(this);
   }
 
   isValid() {

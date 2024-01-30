@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../GameValues';
 
 export class TerrainMovementCostData {
@@ -8,6 +9,7 @@ export class TerrainMovementCostData {
     this.allowMovement = true;
     // int >= 0. Cost to enter this terrain. Ignored when 'allowMovement' is false.
     this.cost = 0;
+    makeAutoObservable(this);
   }
 
   isValid() {

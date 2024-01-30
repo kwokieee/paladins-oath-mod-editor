@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../../data/GameValues';
 import { GameResources, FindResourceById } from '../GameResources';
 
@@ -19,6 +20,7 @@ export class CrusadeStartingBoonsData {
     this.reputationBonus = 0;
     // (Optional) int >= 0 [default=0]. Increase starting number of unit slots (will add the 'units' to it too).
     this.followerSlotsBonus = 0;
+    makeAutoObservable(this);
   }
 
   isValid() {

@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues } from '../GameValues';
 import { TerrainMovementCostData } from './TerrainMovementCostData';
 
@@ -13,6 +14,7 @@ export class TerrainData {
     this.movementCostDay = null;
     // TerrainMovementCostData
     this.movementCostNight = null;
+    makeAutoObservable(this);
   }
 
   isValid() {

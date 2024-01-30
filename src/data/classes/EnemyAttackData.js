@@ -1,4 +1,5 @@
 import { GameValues, FindEnumByValue } from '../../data/GameValues';
+import { makeAutoObservable } from 'mobx';
 
 export class EnemyAttackData {
   constructor() {
@@ -10,6 +11,7 @@ export class EnemyAttackData {
     this.value = 1;
     // (Optional) List<AttackModifier::int> [default=EMPTY]. List of modifier enum values (Poison, Cumbersome, ...)
     this.attackModifiers = [];
+    makeAutoObservable(this);
   }
 
   isValid() {

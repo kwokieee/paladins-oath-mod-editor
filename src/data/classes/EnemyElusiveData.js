@@ -1,7 +1,10 @@
+import { makeAutoObservable } from 'mobx';
+
 export class EnemyElusiveData {
   constructor() {
     // int > 0.
     this.armorIfBlocked = 1;
+    makeAutoObservable(this);
   }
 
   isValid() {

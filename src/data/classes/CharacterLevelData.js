@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../../data/GameValues';
 
 export class CharacterLevelData {
@@ -6,6 +7,7 @@ export class CharacterLevelData {
     this.requiredXp = 0;
     // (Optional) Rewards::GUID [default=EMPTY]. ID of the rewards information to be given when leveling up. Don't specify if you don't want to give a reward at that level.
     this.rewardsLevelUp = null;
+    makeAutoObservable(this);
   }
 
   isValid() {

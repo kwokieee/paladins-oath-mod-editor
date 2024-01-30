@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../GameValues';
 import { GameResources, FindResourceById } from '../GameResources';
 
@@ -11,6 +12,7 @@ export class MapHexData {
     this.rampagingEnemyType = null;
     // (Optional) Enemy::GUID [default=NONE]. Enemy showing up on this hex. Either specify 'rampagingEnemyType' or 'rampagingEnemy' but not both.
     this.rampagingEnemy = null;
+    makeAutoObservable(this);
   }
 
   isValid() {

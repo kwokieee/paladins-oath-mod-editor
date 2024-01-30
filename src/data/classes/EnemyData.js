@@ -2,6 +2,7 @@ import { EnemyElusiveData } from './EnemyElusiveData';
 import { EnemyAttackData } from './EnemyAttackData';
 import { EnemyTileData } from './EnemyTileData';
 import { GameValues, FindEnumByValue } from '../GameValues';
+import { makeAutoObservable } from 'mobx';
 
 export class EnemyData {
   constructor() {
@@ -45,6 +46,7 @@ export class EnemyData {
     this.fullBodyOutlineSprite = null;
     // EnemyTileData. Info to represent the enemy on the map.
     this.tileData = null;
+    makeAutoObservable(this);
   }
 
   isValid() {
@@ -116,6 +118,7 @@ export class EnemyData {
     out.summoningAttacks = this.summoningAttacks.map((atk) => atk.value);
     out.immunities = this.immunities.map((immunity) => immunity.value);
     out.resistances = this.resistances.map((res) => res.value);
+    // TODO: Write data for image files
     out.portraitSprite = this.portraitSprite;
     out.fullBodySprite = this.fullBodySprite;
     out.fullBodyOutlineSprite = this.fullBodyOutlineSprite;
@@ -125,6 +128,7 @@ export class EnemyData {
   }
 
   static FromJson(json) {
+    console.log(2);
     const data = new EnemyData();
 
     data.guid = json.guid;
@@ -151,6 +155,7 @@ export class EnemyData {
     data.resistances = json.resistances
       ? json.resistances.map((res) => FindEnumByValue(GameValues.Element, res))
       : [];
+    // TODO: Populate raw data of image files
     data.portraitSprite = json.portraitSprite;
     data.fullBodySprite = json.fullBodySprite;
     data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;

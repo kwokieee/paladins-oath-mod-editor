@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { CrusadeStartingBoonsData } from './CrusadeStartingBoonsData';
 import { CrusadeRoundBoonsData } from './CrusadeRoundBoonsData';
 
@@ -15,6 +16,7 @@ export class OathData {
     this.roundBoons = null;
     // (Optional) bool [default=false]. Set to true if the oath can only be used by a specific character (that character data should include it).
     this.isCharacterSpecific = false;
+    makeAutoObservable(this);
   }
 
   isValid() {

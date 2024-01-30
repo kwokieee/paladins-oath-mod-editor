@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../GameValues';
 import { MapHexData } from './MapHexData';
 
@@ -13,6 +14,7 @@ export class MapSectionData {
     this.sectionType = GameValues.MapSectionType.Regular;
     // 7 hexes for the map
     this.hexes = [];
+    makeAutoObservable(this);
   }
 
   isValid() {

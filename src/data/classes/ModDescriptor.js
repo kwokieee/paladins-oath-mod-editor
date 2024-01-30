@@ -1,3 +1,5 @@
+import { makeAutoObservable } from 'mobx';
+
 // Must be provided with the mod. 256x256 image.
 const MOD_PREVIEW_IMAGE_NAME = 'mod_preview.jpg';
 
@@ -29,6 +31,7 @@ export class ModDescriptor {
     this.scenarioMods = [];
     // (Optional) List<string>. List of folder names that contain scenario extensions modding data. One folder per scenario extension mod.
     this.scenarioExtensionMods = [];
+    makeAutoObservable(this);
   }
 
   isValid() {
