@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ResourcePicker } from '../resourcePicker/ResourcePicker';
 import { Card } from '../resources/Card';
 import { Blessing } from '../resources/Blessing';
@@ -269,7 +269,7 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
       <p>
         {characterData.personalOaths.length === 0
           ? 'None'
-          : characterData.personalOaths.map((oath, index) => card.name).join(', ')}
+          : characterData.personalOaths.map((oath) => card.name).join(', ')}
       </p>
       <Button style={{ marginBottom: 10 }} onClick={onEditPersonalOaths}>
         Edit

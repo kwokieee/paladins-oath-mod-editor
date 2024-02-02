@@ -104,7 +104,7 @@ export const App = observer(() => {
         flexDirection: 'column',
       }}
     >
-      <Typography style={{ fontSize: 32 }}>Paladin's Oath Mod Editor</Typography>
+      <Typography style={{ fontSize: 32 }}>{`Paladin's Oath Mod Editor`}</Typography>
       <Box
         style={{
           display: 'flex',
