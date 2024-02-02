@@ -10,11 +10,6 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
   const tileNormalFileInput = useRef();
   const tileOutlinedFileInput = useRef();
 
-  const handleFileSelected = (file) => {
-    const imageFile = e.target.files[0];
-    console.log(imageFile);
-  };
-
   const enemyData = moduleDescriptor?.data;
   if (!moduleDescriptor || !enemyData) {
     return <>Invalid or corrupted data</>;

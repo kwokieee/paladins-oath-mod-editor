@@ -51,7 +51,7 @@ export class MapHexData {
     return out;
   }
 
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new MapHexData();
 
     data.terrain = FindResourceById(GameResources.Terrain, json.terrain);

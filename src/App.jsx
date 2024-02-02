@@ -22,7 +22,6 @@ export const App = observer(() => {
   const handleFileSelected = async () => {
     const zipFile = fileInput.current.files[0];
     try {
-      // await loadModFromZipFile(zipFile);
       await modInfoStore.loadModFrom(zipFile);
     } catch (e) {
       // TODO: Show error message in snackbar

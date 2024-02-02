@@ -138,14 +138,14 @@ export class EnemyData {
     data.armor = json.armor;
     data.isElusive = !!json.isElusive && !!json.elusiveData;
     if (data.isElusive) {
-      data.elusiveData = EnemyElusiveData.FromJson(json.elusiveData);
+      data.elusiveData = EnemyElusiveData.LoadDataFrom(json.elusiveData);
     }
     data.fortification = FindEnumByValue(GameValues.Fortification, json.fortification);
     data.xpGain = json.xpGain;
     data.reputationGain = json.reputationGain;
     data.reputationGainBonusWhenRampaging = json.reputationGainBonusWhenRampaging;
     data.challengeRating = json.challengeRating;
-    data.attacks = json.attacks ? json.attacks.map((atk) => EnemyAttackData.FromJson(atk)) : [];
+    data.attacks = json.attacks ? json.attacks.map((atk) => EnemyAttackData.LoadDataFrom(atk)) : [];
     data.summoningAttacks = json.summoningAttacks
       ? json.summoningAttacks.map((atk) => FindEnumByValue(GameValues.EnemyType, atk))
       : [];

@@ -29,7 +29,7 @@ export class ManaData {
   }
 
   // Returns null if json doesn't form valid data
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new ManaData();
 
     if (json.color) {

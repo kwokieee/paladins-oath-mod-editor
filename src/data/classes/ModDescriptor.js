@@ -67,7 +67,7 @@ export class ModDescriptor {
     return out;
   }
 
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new ModDescriptor();
 
     data.guid = json.guid;

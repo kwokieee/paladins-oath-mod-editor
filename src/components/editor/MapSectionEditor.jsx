@@ -11,7 +11,7 @@ export const MapSectionEditor = observer(({ moduleDescriptor }) => {
     return <>Loading...</>;
   }
 
-  const sectionData = MapSectionData.FromJson(moduleDescriptor);
+  const sectionData = MapSectionData.LoadDataFrom(moduleDescriptor);
   if (!sectionData) {
     return <>Invalid or corrupted data</>;
   }

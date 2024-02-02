@@ -31,7 +31,7 @@ export class CharacterLevelData {
   }
 
   // Returns null if json doesn't form valid data
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new CharacterLevelData();
 
     data.requiredXp = json.requiredXp;

@@ -35,7 +35,7 @@ export class ModInfoStore {
 
     const pathRoot = modJsonFilePath.substring(0, modJsonFilePath.indexOf('/'));
     const textContent = await getTextContentOfFile(modJsonFilePath, zip);
-    const modDescriptor = ModDescriptor.FromJson(JSON.parse(textContent));
+    const modDescriptor = ModDescriptor.LoadDataFrom(JSON.parse(textContent));
     if (!modDescriptor) {
       console.error("Invalid mod.json file at mod's root directory");
       return null;

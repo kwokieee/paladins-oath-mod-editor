@@ -64,7 +64,7 @@ export class ModuleStore {
       modInfoStore.modDescriptor.rewardsMods,
       ModuleTypes.rewards,
       (json) => {
-        return RewardData.FromJson(json);
+        return RewardData.LoadDataFrom(json);
       },
     );
     modules.oathMods = await ModuleStore.loadModules(
@@ -72,7 +72,7 @@ export class ModuleStore {
       modInfoStore.modDescriptor.oathMods,
       ModuleTypes.oath,
       (json) => {
-        return OathData.FromJson(json);
+        return OathData.LoadDataFrom(json);
       },
     );
     modules.characterMods = await ModuleStore.loadModules(
@@ -80,7 +80,7 @@ export class ModuleStore {
       modInfoStore.modDescriptor.characterMods,
       ModuleTypes.character,
       (json) => {
-        return CharacterData.FromJson(json);
+        return CharacterData.LoadDataFrom(json);
       },
     );
     modules.enemyMods = await ModuleStore.loadModules(
@@ -96,7 +96,7 @@ export class ModuleStore {
       modInfoStore.modDescriptor.terrainMods,
       ModuleTypes.terrain,
       (json) => {
-        return TerrainData.FromJson(json);
+        return TerrainData.LoadDataFrom(json);
       },
     );
     modules.mapSectionMods = await ModuleStore.loadModules(
@@ -104,15 +104,15 @@ export class ModuleStore {
       modInfoStore.modDescriptor.mapSectionMods,
       ModuleTypes.mapSection,
       (json) => {
-        return MapSectionData.FromJson(json);
+        return MapSectionData.LoadDataFrom(json);
       },
     );
     // modules.scenarioMods = loadModules(modInfoStore, modInfoStore.modDescriptor.scenarioMods, ModuleTypes.scenario, (json) => {
-    //   return ScenarioData.FromJson(json);
+    //   return ScenarioData.LoadDataFrom(json);
     // });
     modules.scenarioMods = {};
     // modules.scenarioExtensionMods = loadModules(modInfoStore, modInfoStore.modDescriptor.scenarioExtensionMods, ModuleTypes.scenarioExtension, (json) => {
-    //   return ScenarioExtensionData.FromJson(json);
+    //   return ScenarioExtensionData.LoadDataFrom(json);
     // });
     modules.scenarioExtensionMods = {};
     this.modules = modules;

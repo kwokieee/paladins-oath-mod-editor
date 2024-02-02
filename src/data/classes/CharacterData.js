@@ -157,7 +157,7 @@ export class CharacterData {
     return out;
   }
 
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new CharacterData();
 
     data.guid = json.guid;
@@ -171,7 +171,7 @@ export class CharacterData {
     data.tileDefaultSprite = json.tileDefaultSprite;
     data.tileOccupiedSprite = json.tileOccupiedSprite;
     data.ownershipTokenMapPropSprite = json.ownershipTokenMapPropSprite;
-    data.levels = json.levels.map((level) => CharacterLevelData.FromJson(level));
+    data.levels = json.levels.map((level) => CharacterLevelData.LoadDataFrom(level));
     data.inaneBlessings = json.inaneBlessings.map((blessing) =>
       FindResourceById(GameResources.Blessing, blessing),
     );
@@ -191,13 +191,13 @@ export class CharacterData {
     data.starterHandSize = json.starterHandSize;
     data.starterFollowerSlotCount = json.starterFollowerSlotCount;
     data.starterReputation = json.starterReputation;
-    data.dummyPlayerStartingBoons = CrusadeStartingBoonsData.FromJson(
+    data.dummyPlayerStartingBoons = CrusadeStartingBoonsData.LoadDataFrom(
       json.dummyPlayerStartingBoons,
     );
     data.startingBoons = json.startingBoons
-      ? CrusadeStartingBoonsData.FromJson(json.startingBoons)
+      ? CrusadeStartingBoonsData.LoadDataFrom(json.startingBoons)
       : null;
-    data.roundBoons = json.roundBoons ? CrusadeRoundBoonsData.FromJson(json.roundBoons) : null;
+    data.roundBoons = json.roundBoons ? CrusadeRoundBoonsData.LoadDataFrom(json.roundBoons) : null;
 
     return data.isValid() ? data : null;
   }

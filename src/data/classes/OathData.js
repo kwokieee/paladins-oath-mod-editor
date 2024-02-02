@@ -48,16 +48,16 @@ export class OathData {
     return out;
   }
 
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new OathData();
 
     data.guid = json.guid;
     data.name = json.name;
     data.description = json.description;
     data.startingBoons = json.startingBoons
-      ? CrusadeStartingBoonsData.FromJson(json.startingBoons)
+      ? CrusadeStartingBoonsData.LoadDataFrom(json.startingBoons)
       : null;
-    data.roundBoons = json.roundBoons ? CrusadeRoundBoonsData.FromJson(json.roundBoons) : null;
+    data.roundBoons = json.roundBoons ? CrusadeRoundBoonsData.LoadDataFrom(json.roundBoons) : null;
     data.isCharacterSpecific = json.isCharacterSpecific;
 
     return data.isValid() ? data : null;

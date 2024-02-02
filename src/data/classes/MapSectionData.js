@@ -47,13 +47,13 @@ export class MapSectionData {
     return out;
   }
 
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new MapSectionData();
 
     data.guid = json.guid;
     data.numInstancesInDeck = json.numInstancesInDeck;
     data.sectionType = FindEnumByValue(GameValues.MapSectionType, json.sectionType);
-    data.hexes = json.hexes.map((hex) => MapHexData.FromJson(hex));
+    data.hexes = json.hexes.map((hex) => MapHexData.LoadDataFrom(hex));
 
     return data.isValid() ? data : null;
   }

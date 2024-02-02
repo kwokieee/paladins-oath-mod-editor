@@ -45,7 +45,7 @@ export class EnemyAttackData {
   }
 
   // Returns null if json doesn't form valid data
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new EnemyAttackData();
 
     data.element = FindEnumByValue(GameValues.Element, json.element);

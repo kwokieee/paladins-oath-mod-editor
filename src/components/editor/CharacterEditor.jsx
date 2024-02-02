@@ -7,7 +7,6 @@ import { getResourceWithCounts } from '../../utils';
 import { Box, Button } from '@mui/material';
 
 export const CharacterEditor = observer(({ moduleDescriptor }) => {
-  // const { pathRoot, selectedModule, getUrlForFile } = useModInfo();
   const [isEditingInaneBlessings, setIsEditingInaneBlessings] = useState(false);
   const [isEditingInaneCards, setIsEditingInaneCards] = useState(false);
   const [isEditingUniqueCards, setIsEditingUniqueCards] = useState(false);
@@ -20,37 +19,6 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
   const [tileDefaultSprite, setTileDefaultSprite] = useState('');
   const [tileOccupiedSprite, setTileOccupiedSprite] = useState('');
   const [ownershipTokenMapPropSprite, setOwnershipTokenMapPropSprite] = useState('');
-
-  // const loadImages = async () => {
-  //   const portraitSprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.portraitSprite}`,
-  //   );
-  //   setPortraitSprite(portraitSprite);
-  //   const medallionSprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.medallionSprite}`,
-  //   );
-  //   setMedallionSprite(medallionSprite);
-  //   const figurineSprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.figurineSprite}`,
-  //   );
-  //   setFigurineSprite(figurineSprite);
-  //   const fullbodySprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.fullbodySprite}`,
-  //   );
-  //   setFullbodySprite(fullbodySprite);
-  //   const tileDefaultSprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileDefaultSprite}`,
-  //   );
-  //   setTileDefaultSprite(tileDefaultSprite);
-  //   const tileOccupiedSprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.tileOccupiedSprite}`,
-  //   );
-  //   setTileOccupiedSprite(tileOccupiedSprite);
-  //   const ownershipTokenMapPropSprite = await getUrlForFile(
-  //     `${pathRoot}/${selectedModule}/${moduleDescriptor?.ownershipTokenMapPropSprite}`,
-  //   );
-  //   setOwnershipTokenMapPropSprite(ownershipTokenMapPropSprite);
-  // };
 
   const onEditInaneBlessings = () => {
     setIsEditingInaneBlessings(!isEditingInaneBlessings);

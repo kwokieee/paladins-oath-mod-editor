@@ -45,10 +45,10 @@ export class CrusadeRoundBoonsData {
   }
 
   // Returns null if json doesn't form valid data
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new CrusadeRoundBoonsData();
 
-    data.mana = json.mana ? json.mana.map((mana) => ManaData.FromJson(mana)) : [];
+    data.mana = json.mana ? json.mana.map((mana) => ManaData.LoadDataFrom(mana)) : [];
     data.reputationBonus = json.reputationBonus;
     data.movementPoints = json.movementPoints;
     data.healingPoints = json.healingPoints;

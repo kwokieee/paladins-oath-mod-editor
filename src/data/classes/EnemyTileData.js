@@ -22,8 +22,6 @@ export class EnemyTileData {
 
     const out = {};
 
-    // out.tileNormalSprite = this.tileNormalSprite;
-    // out.tileOutlinedSprite = this.tileOutlinedSprite;
     out.tileNormalSprite = this.tileNormalSprite.fileName;
     out.tileOutlinedSprite = this.tileOutlinedSprite.fileName;
 

@@ -11,7 +11,7 @@ export const TerrainEditor = observer(({ moduleDescriptor }) => {
     return <>Loading...</>;
   }
 
-  const terrainData = TerrainData.FromJson(moduleDescriptor);
+  const terrainData = TerrainData.LoadDataFrom(moduleDescriptor);
   if (!terrainData) {
     return <>Invalid or corrupted data</>;
   }

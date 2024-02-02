@@ -41,14 +41,14 @@ export class TerrainData {
     return out;
   }
 
-  static FromJson(json) {
+  static LoadDataFrom(json) {
     const data = new TerrainData();
 
     data.guid = json.guid;
     data.name = json.name;
     data.tileSprites = json.tileSprites;
 
-    const movementCostList = json.movementCost.map((c) => TerrainMovementCostData.FromJson(c));
+    const movementCostList = json.movementCost.map((c) => TerrainMovementCostData.LoadDataFrom(c));
     data.movementCostDay = movementCostList.find(
       (c) => c.timeOfDay?.value === GameValues.TimeOfDay.timeofday_day.value,
     );
