@@ -1,15 +1,17 @@
-import { useModInfo } from '../../hooks/useModInfo';
+import { useModuleStore } from '../../hooks/useModuleStore';
+import { Box } from '@mui/material';
 
 export default function Module({ name, type }) {
-  const { setSelectedModule, setSelectedModuleType } = useModInfo();
+  const moduleStore = useModuleStore();
   const onClickModule = () => {
-    setSelectedModule(name);
-    setSelectedModuleType(type);
+    moduleStore.changeSelectedModuleTo(type, name);
   };
 
   return (
-    <p style={{ fontSize: 12, textAlign: 'left', margin: '2 auto' }} onClick={onClickModule}>
-      {name}
-    </p>
+    <Box sx={{ '&:hover': { cursor: 'pointer' } }}>
+      <p style={{ fontSize: 12, textAlign: 'left', marginLeft: 10 }} onClick={onClickModule}>
+        {name}
+      </p>
+    </Box>
   );
 }

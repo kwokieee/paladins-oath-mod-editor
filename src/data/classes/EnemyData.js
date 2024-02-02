@@ -1,11 +1,12 @@
-import {EnemyElusiveData} from './EnemyElusiveData';
-import {EnemyAttackData} from './EnemyAttackData';
-import {EnemyTileData} from './EnemyTileData';
-import {GameResources, FindResourceById} from '../GameResources';
-import {GameValues, FindEnumByValue} from '../GameValues';
+import { EnemyElusiveData } from './EnemyElusiveData';
+import { EnemyAttackData } from './EnemyAttackData';
+import { EnemyTileData } from './EnemyTileData';
+import { ModImageData } from './ModImageData';
+import { GameValues, FindEnumByValue } from '../GameValues';
+import { makeAutoObservable } from 'mobx';
 
 export class EnemyData {
-  constructor(){
+  constructor() {
     // string. guid, unique only within the mod. Will be turned into guid 'mod:'+$yourModId+':'+$guid
     this.guid = null;
     // string. Enemy name (not localized)
@@ -46,64 +47,59 @@ export class EnemyData {
     this.fullBodyOutlineSprite = null;
     // EnemyTileData. Info to represent the enemy on the map.
     this.tileData = null;
+    makeAutoObservable(this);
   }
 
-  isValid(){
-    if( !this.guid ) return false;
-    if( !this.name ) return false;
-    if( this.numInstancesInDeck <= 0 ) return false;
-    if( !this.enemyType) return false;
-    if( this.armor <= 0 ) return false;
-    if( this.isElusive && (! this.elusiveData || ! this.elusiveData.isValid()) ) return false;
-    if( !this.fortification ) return false;
-    if( this.xpGain < 0 ) return false;
-    if( this.reputationGain < 0 ) return false;
-    if( this.reputationGainBonusWhenRampaging < 0 ) return false;
-    if( this.challengeRating < 1 || this.challengeRating > 10) return false;
-    if( this.attacks.length > 0 ){
-      for( let i = 0; i < this.attacks.length; i++ ){
-        const atk = this.attacks[i];
-        if( ! atk || ! atk.isValid() ){
-          return false;
-        }
+  isValid() {
+    if (!this.guid) return false;
+    if (!this.name) return false;
+    if (this.numInstancesInDeck <= 0) return false;
+    if (!this.enemyType || !FindEnumByValue(GameValues.EnemyType, this.enemyType.value))
+      return false;
+    if (this.armor <= 0) return false;
+    if (this.isElusive && (!this.elusiveData || !this.elusiveData.isValid())) return false;
+    if (!this.fortification) return false;
+    if (this.xpGain < 0) return false;
+    if (this.reputationGain < 0) return false;
+    if (this.reputationGainBonusWhenRampaging < 0) return false;
+    if (this.challengeRating < 1 || this.challengeRating > 10) return false;
+    for (let i = 0; i < this.attacks.length; i++) {
+      const atk = this.attacks[i];
+      if (!atk || !atk.isValid()) {
+        return false;
       }
     }
-    if( this.summoningAttacks.length > 0 ){
-      for( let i = 0; i < this.summoningAttacks.length; i++ ){
-        const summonType = this.summoningAttacks[i];
-        if( ! summonType || ! FindEnumByValue(GameValues.EnemyType, summonType.value) ){
-          return false;
-        }
+    for (let i = 0; i < this.summoningAttacks.length; i++) {
+      const summonType = this.summoningAttacks[i];
+      if (!summonType || !FindEnumByValue(GameValues.EnemyType, summonType.value)) {
+        return false;
       }
     }
-    if( this.attacks.length === 0 && this.summoningAttacks.length === 0 ) return false;
-    if( this.immunities.length > 0 ){
-      for( let i = 0; i < this.immunities.length; i++ ){
-        const immunity = this.immunities[i];
-        if( ! immunity || ! FindEnumByValue(GameValues.Immunity, immunity.value) ){
-          return false;
-        }
+    if (this.attacks.length === 0 && this.summoningAttacks.length === 0) return false;
+    for (let i = 0; i < this.immunities.length; i++) {
+      const immunity = this.immunities[i];
+      if (!immunity || !FindEnumByValue(GameValues.Immunity, immunity.value)) {
+        return false;
       }
     }
-    if( this.resistances.length > 0 ){
-      for( let i = 0; i < this.resistances.length; i++ ){
-        const resistance = this.resistances[i];
-        if( ! resistance || ! FindEnumByValue(GameValues.Element, resistance.value) ){
-          return false;
-        }
+    for (let i = 0; i < this.resistances.length; i++) {
+      const resistance = this.resistances[i];
+      if (!resistance || !FindEnumByValue(GameValues.Element, resistance.value)) {
+        return false;
       }
     }
-    if( ! this.portraitSprite ) return false;
-    if( ! this.fullBodySprite ) return false;
-    if( ! this.fullBodyOutlineSprite ) return false;
-    if( ! this.tileData || ! this.tileData.isValid() ) return false;
+
+    if (!this.portraitSprite || !this.portraitSprite.isValid()) return false;
+    if (!this.fullBodySprite || !this.fullBodySprite.isValid()) return false;
+    if (!this.fullBodyOutlineSprite || !this.fullBodyOutlineSprite.isValid()) return false;
+    if (!this.tileData || !this.tileData.isValid()) return false;
     return true;
   }
 
   // Throw if data is not valid
-  toJson(){
-    if( ! this.isValid() ) throw new Error('Invalid EnemyData');
- 
+  toJson() {
+    if (!this.isValid()) throw new Error('Invalid EnemyData');
+
     const out = {};
 
     out.guid = this.guid;
@@ -112,7 +108,7 @@ export class EnemyData {
     out.enemyType = this.enemyType.value;
     out.armor = this.armor;
     out.isElusive = this.isElusive;
-    if( this.isElusive ){
+    if (this.isElusive) {
       out.elusiveData = this.elusiveData.toJson();
     }
     out.fortification = this.fortification.value;
@@ -120,19 +116,19 @@ export class EnemyData {
     out.reputationGain = this.reputationGain;
     out.reputationGainBonusWhenRampaging = this.reputationGainBonusWhenRampaging;
     out.challengeRating = this.challengeRating;
-    out.attacks = this.attacks.map(atk => atk.toJson());
-    out.summoningAttacks = this.summoningAttacks.map(atk => atk.value);
-    out.immunities = this.immunities.map(immunity => immunity.value);
-    out.resistances = this.resistances.map(res => res.value);
-    out.portraitSprite = this.portraitSprite;
-    out.fullBodySprite = this.fullBodySprite;
-    out.fullBodyOutlineSprite = this.fullBodyOutlineSprite;
-    out.tileData = this.tileData.toJson();    
+    out.attacks = this.attacks.map((atk) => atk.toJson());
+    out.summoningAttacks = this.summoningAttacks.map((atk) => atk.value);
+    out.immunities = this.immunities.map((immunity) => immunity.value);
+    out.resistances = this.resistances.map((res) => res.value);
+    out.portraitSprite = this.portraitSprite.fileName;
+    out.fullBodySprite = this.fullBodySprite.fileName;
+    out.fullBodyOutlineSprite = this.fullBodyOutlineSprite.fileName;
+    out.tileData = this.tileData.toJson();
 
     return out;
   }
 
-  static FromJson(json){
+  static async LoadDataFrom(json, folder) {
     const data = new EnemyData();
 
     data.guid = json.guid;
@@ -141,7 +137,7 @@ export class EnemyData {
     data.enemyType = FindEnumByValue(GameValues.EnemyType, json.enemyType);
     data.armor = json.armor;
     data.isElusive = !!json.isElusive && !!json.elusiveData;
-    if( data.isElusive ){
+    if (data.isElusive) {
       data.elusiveData = EnemyElusiveData.FromJson(json.elusiveData);
     }
     data.fortification = FindEnumByValue(GameValues.Fortification, json.fortification);
@@ -149,15 +145,38 @@ export class EnemyData {
     data.reputationGain = json.reputationGain;
     data.reputationGainBonusWhenRampaging = json.reputationGainBonusWhenRampaging;
     data.challengeRating = json.challengeRating;
-    data.attacks = !!json.attacks ? json.attacks.map(atk => EnemyAttackData.FromJson(atk)) : [];
-    data.summoningAttacks = !!json.summoningAttacks ? json.summoningAttacks.map(atk => FindEnumByValue(GameValues.EnemyType, atk)) : [];
-    data.immunities = !!json.immunities ? json.immunities.map(immunity => FindEnumByValue(GameValues.Immunity, immunity)) : [];
-    data.resistances = !!json.resistances ? json.resistances.map(res => FindEnumByValue(GameValues.Element, res)) : [];
-    data.portraitSprite = json.portraitSprite;
-    data.fullBodySprite = json.fullBodySprite;
-    data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;
-    data.tileData = EnemyTileData.FromJson(json.tileData);
+    data.attacks = json.attacks ? json.attacks.map((atk) => EnemyAttackData.FromJson(atk)) : [];
+    data.summoningAttacks = json.summoningAttacks
+      ? json.summoningAttacks.map((atk) => FindEnumByValue(GameValues.EnemyType, atk))
+      : [];
+    data.immunities = json.immunities
+      ? json.immunities.map((immunity) => FindEnumByValue(GameValues.Immunity, immunity))
+      : [];
+    data.resistances = json.resistances
+      ? json.resistances.map((res) => FindEnumByValue(GameValues.Element, res))
+      : [];
+    await Promise.all([
+      ModImageData.Load(json.portraitSprite, folder),
+      ModImageData.Load(json.fullBodySprite, folder),
+      ModImageData.Load(json.fullBodyOutlineSprite, folder),
+      EnemyTileData.LoadDataFrom(json.tileData, folder),
+    ]).then((images) => {
+      data.portraitSprite = images[0];
+      data.fullBodySprite = images[1];
+      data.fullBodyOutlineSprite = images[2];
+      data.tileData = images[3];
+    });
 
     return data.isValid() ? data : null;
+  }
+
+  getImageData() {
+    const out = [];
+    out.push(this.portraitSprite);
+    out.push(this.fullBodySprite);
+    out.push(this.fullBodyOutlineSprite);
+    out.push(this.tileData.tileNormalSprite);
+    out.push(this.tileData.tileOutlinedSprite);
+    return out;
   }
 }

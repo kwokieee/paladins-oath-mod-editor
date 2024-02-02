@@ -1,20 +1,21 @@
+import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import {MapSectionData} from '../../data/classes/MapSectionData';
+import { MapSectionData } from '../../data/classes/MapSectionData';
 
-export default function MapSectionEditor({ moduleDescriptor }) {
-    useEffect(() => {
-      console.log(moduleDescriptor);
-    }, [moduleDescriptor]);
-  
-    if( ! moduleDescriptor ){
-      return <>Loading...</>;
-    }
-  
-    const sectionData = MapSectionData.FromJson(moduleDescriptor);
-    if( ! sectionData ){
-      return <>Invalid or corrupted data</>;
-    }
-  
+export const MapSectionEditor = observer(({ moduleDescriptor }) => {
+  useEffect(() => {
+    console.log(moduleDescriptor);
+  }, [moduleDescriptor]);
+
+  if (!moduleDescriptor) {
+    return <>Loading...</>;
+  }
+
+  const sectionData = MapSectionData.FromJson(moduleDescriptor);
+  if (!sectionData) {
+    return <>Invalid or corrupted data</>;
+  }
+
   return (
     <>
       <div>
@@ -39,4 +40,4 @@ export default function MapSectionEditor({ moduleDescriptor }) {
       </div>
     </>
   );
-}
+});
