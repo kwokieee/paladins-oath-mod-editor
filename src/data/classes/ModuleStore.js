@@ -9,7 +9,7 @@ import { TerrainData } from './TerrainData';
 import { MapSectionData } from './MapSectionData';
 // import { ScenarioData } from './data/classes/ScenarioData';
 // import { ScenarioExtensionData } from './data/classes/ScenarioExtensionData';
-import { ModuleTypes } from '../moduleTypes';
+import { ModuleTypes } from '../ModuleTypes';
 
 export class ModuleStore {
   /**

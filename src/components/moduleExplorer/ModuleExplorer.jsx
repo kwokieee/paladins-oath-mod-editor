@@ -1,6 +1,6 @@
 import ModuleGroup from './ModuleGroup';
 import { useModuleStore } from '../../hooks/useModuleStore';
-import { ModuleTypes } from '../../data/moduleTypes';
+import { ModuleTypes } from '../../data/ModuleTypes';
 
 export const ModuleExplorer = () => {
   const moduleStore = useModuleStore();

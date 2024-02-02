@@ -7,7 +7,7 @@ import { MapSectionEditor } from './MapSectionEditor';
 import { ScenarioEditor } from './ScenarioEditor';
 import { ScenarioExtensionEditor } from './ScenarioExtensionEditor';
 import { useModuleStore } from '../../hooks/useModuleStore';
-import { ModuleTypes } from '../../data/moduleTypes';
+import { ModuleTypes } from '../../data/ModuleTypes';
 import { observer } from 'mobx-react-lite';
 
 export const Editor = observer(() => {
