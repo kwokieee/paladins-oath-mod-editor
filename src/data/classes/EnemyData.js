@@ -1,6 +1,7 @@
 import { EnemyElusiveData } from './EnemyElusiveData';
 import { EnemyAttackData } from './EnemyAttackData';
 import { EnemyTileData } from './EnemyTileData';
+import { ModImageData } from './ModImageData';
 import { GameValues, FindEnumByValue } from '../GameValues';
 import { makeAutoObservable } from 'mobx';
 
@@ -87,9 +88,10 @@ export class EnemyData {
         return false;
       }
     }
-    if (!this.portraitSprite) return false;
-    if (!this.fullBodySprite) return false;
-    if (!this.fullBodyOutlineSprite) return false;
+
+    if (!this.portraitSprite || !this.portraitSprite.isValid()) return false;
+    if (!this.fullBodySprite || !this.fullBodySprite.isValid()) return false;
+    if (!this.fullBodyOutlineSprite || !this.fullBodyOutlineSprite.isValid()) return false;
     if (!this.tileData || !this.tileData.isValid()) return false;
     return true;
   }
@@ -103,7 +105,7 @@ export class EnemyData {
     out.guid = this.guid;
     out.name = this.name;
     out.numInstancesInDeck = this.numInstancesInDeck;
-    out.enemyType = this.enemyType.id;
+    out.enemyType = this.enemyType.value;
     out.armor = this.armor;
     out.isElusive = this.isElusive;
     if (this.isElusive) {
@@ -118,17 +120,15 @@ export class EnemyData {
     out.summoningAttacks = this.summoningAttacks.map((atk) => atk.value);
     out.immunities = this.immunities.map((immunity) => immunity.value);
     out.resistances = this.resistances.map((res) => res.value);
-    // TODO: Write data for image files
-    out.portraitSprite = this.portraitSprite;
-    out.fullBodySprite = this.fullBodySprite;
-    out.fullBodyOutlineSprite = this.fullBodyOutlineSprite;
+    out.portraitSprite = this.portraitSprite.fileName;
+    out.fullBodySprite = this.fullBodySprite.fileName;
+    out.fullBodyOutlineSprite = this.fullBodyOutlineSprite.fileName;
     out.tileData = this.tileData.toJson();
 
     return out;
   }
 
-  static FromJson(json) {
-    console.log(2);
+  static async LoadDataFrom(json, folder) {
     const data = new EnemyData();
 
     data.guid = json.guid;
@@ -155,12 +155,28 @@ export class EnemyData {
     data.resistances = json.resistances
       ? json.resistances.map((res) => FindEnumByValue(GameValues.Element, res))
       : [];
-    // TODO: Populate raw data of image files
-    data.portraitSprite = json.portraitSprite;
-    data.fullBodySprite = json.fullBodySprite;
-    data.fullBodyOutlineSprite = json.fullBodyOutlineSprite;
-    data.tileData = EnemyTileData.FromJson(json.tileData);
+    await Promise.all([
+      ModImageData.Load(json.portraitSprite, folder),
+      ModImageData.Load(json.fullBodySprite, folder),
+      ModImageData.Load(json.fullBodyOutlineSprite, folder),
+      EnemyTileData.LoadDataFrom(json.tileData, folder),
+    ]).then((images) => {
+      data.portraitSprite = images[0];
+      data.fullBodySprite = images[1];
+      data.fullBodyOutlineSprite = images[2];
+      data.tileData = images[3];
+    });
 
     return data.isValid() ? data : null;
+  }
+
+  getImageData() {
+    const out = [];
+    out.push(this.portraitSprite);
+    out.push(this.fullBodySprite);
+    out.push(this.fullBodyOutlineSprite);
+    out.push(this.tileData.tileNormalSprite);
+    out.push(this.tileData.tileOutlinedSprite);
+    return out;
   }
 }

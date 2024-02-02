@@ -118,7 +118,7 @@ export class CharacterData {
 
   // Throw if data is not valid
   toJson() {
-    if (!this.isValid()) throw new Error('Invalid EnemyData');
+    if (!this.isValid()) throw new Error('Invalid CharacterData');
 
     const out = {};
 

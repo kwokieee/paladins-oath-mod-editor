@@ -87,8 +87,8 @@ export class ModuleStore {
       modInfoStore,
       modInfoStore.modDescriptor.enemyMods,
       ModuleTypes.enemy,
-      (json) => {
-        return EnemyData.FromJson(json);
+      (json, folder) => {
+        return EnemyData.LoadDataFrom(json, folder);
       },
     );
     modules.terrainMods = await ModuleStore.loadModules(
@@ -118,6 +118,16 @@ export class ModuleStore {
     this.modules = modules;
     this.selectedModuleType = null;
     this.selectedModule = null;
+  }
+
+  export() {
+    this.getAllDescriptors().forEach((moduleDescriptor) => {
+      moduleDescriptor.export();
+    });
+  }
+
+  getCurrentlyLoadedModuleGuids() {
+    return Object.keys(this.modules);
   }
 
   getModuleGuidsFor(moduleType) {

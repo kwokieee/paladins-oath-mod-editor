@@ -2,6 +2,7 @@ import { makeAutoObservable, observable, action, makeObservable } from 'mobx';
 import { unzip, getTextContentOfFile } from '../../utils';
 import { ModDescriptor } from './ModDescriptor';
 import { ModuleStore } from './ModuleStore';
+import { saveAs } from 'file-saver';
 
 export class ModInfoStore {
   constructor() {
@@ -58,5 +59,14 @@ export class ModInfoStore {
 
   getModuleDescriptorPath(modId) {
     return this.getModuleFilePath(modId, 'mod.json');
+  }
+
+  export() {
+    const modJson = this.modDescriptor.toJson();
+    this.zip.file(`${this.pathRoot}/mod.json`, JSON.stringify(modJson, null, 2));
+    this.moduleStore.export();
+    this.zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, 'mod.zip');
+    });
   }
 }

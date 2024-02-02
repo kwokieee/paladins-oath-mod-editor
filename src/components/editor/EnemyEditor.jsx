@@ -1,9 +1,16 @@
 import { observer } from 'mobx-react-lite';
 import { ValuePicker } from '../valuePicker/ValuePicker';
-import { Box, Checkbox, Typography } from '@mui/material';
+import { Box, Button, Checkbox, Typography } from '@mui/material';
+import { useRef } from 'react';
 
 export const EnemyEditor = observer(({ moduleDescriptor }) => {
-  const handleFileSelected = (e) => {
+  const portraitFileInput = useRef();
+  const fullBodyFileInput = useRef();
+  const fullBodyOutlineFileInput = useRef();
+  const tileNormalFileInput = useRef();
+  const tileOutlinedFileInput = useRef();
+
+  const handleFileSelected = (file) => {
     const imageFile = e.target.files[0];
     console.log(imageFile);
   };
@@ -209,42 +216,99 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
 
       <hr />
 
-      {/* <div>
+      <div>
         <h5>Portrait sprite</h5>
-        {portraitSprite && <img src={portraitSprite} width={300} height={300} />}
-        <input type="file" accept="image/png" onChange={handleFileSelected} />
+        {enemyData.portraitSprite && (
+          <img src={enemyData.portraitSprite.getObjectUrl()} width={300} height={300} />
+        )}
+        <input
+          type="file"
+          accept="image/png"
+          ref={portraitFileInput}
+          style={{ display: 'none' }}
+          onChange={(e) => (enemyData.portraitSprite.rawData = e.target.files[0])}
+        />
+        <Button color="primary" onClick={() => portraitFileInput.current.click()} sx={{ my: 2 }}>
+          Upload image
+        </Button>
       </div>
 
       <hr />
 
       <div>
         <h5>Full body sprite</h5>
-        {fullBodySprite && <img src={fullBodySprite} width={300} height={300} />}
-        <input type="file" accept="image/png" onChange={handleFileSelected} />
+        {enemyData.fullBodySprite && (
+          <img src={enemyData.fullBodySprite.getObjectUrl()} width={300} height={300} />
+        )}
+        <input
+          type="file"
+          accept="image/png"
+          ref={fullBodyFileInput}
+          style={{ display: 'none' }}
+          onChange={(e) => (enemyData.fullBodySprite.rawData = e.target.files[0])}
+        />
+        <Button color="primary" onClick={() => fullBodyFileInput.current.click()} sx={{ my: 2 }}>
+          Upload image
+        </Button>
       </div>
-
       <hr />
 
       <div>
         <h5>Full body outline sprite</h5>
-        {fullBodyOutlineSprite && <img src={fullBodyOutlineSprite} width={300} height={300} />}
-        <input type="file" accept="image/png" onChange={handleFileSelected} />
+        {enemyData.fullBodyOutlineSprite && (
+          <img src={enemyData.fullBodyOutlineSprite.getObjectUrl()} width={300} height={300} />
+        )}
+        <input
+          type="file"
+          accept="image/png"
+          ref={fullBodyOutlineFileInput}
+          style={{ display: 'none' }}
+          onChange={(e) => (enemyData.fullBodyOutlineSprite.rawData = e.target.files[0])}
+        />
+        <Button
+          color="primary"
+          onClick={() => fullBodyOutlineFileInput.current.click()}
+          sx={{ my: 2 }}
+        >
+          Upload image
+        </Button>
       </div>
-
       <hr />
 
       <h5>Tile data</h5>
       <hr />
 
       <h5>Tile sprite</h5>
-      {tileNormalSprite && <img src={tileNormalSprite} width={256} height={384} />}
-      <input type="file" accept="image/png" onChange={handleFileSelected} />
+      {enemyData.tileData.tileNormalSprite && (
+        <img src={enemyData.tileData.tileNormalSprite.getObjectUrl()} width={256} height={384} />
+      )}
+      <input
+        type="file"
+        accept="image/png"
+        ref={tileNormalFileInput}
+        style={{ display: 'none' }}
+        onChange={(e) => (enemyData.tileData.tileNormalSprite.rawData = e.target.files[0])}
+      />
+      <Button color="primary" onClick={() => tileNormalFileInput.current.click()} sx={{ my: 2 }}>
+        Upload image
+      </Button>
 
       <hr />
 
       <h5>Tile outlined sprite</h5>
-      {tileOutlinedSprite && <img src={tileOutlinedSprite} width={256} height={384} />}
-      <input type="file" accept="image/png" onChange={handleFileSelected} /> */}
+      {enemyData.tileData.tileOutlinedSprite && (
+        <img src={enemyData.tileData.tileOutlinedSprite.getObjectUrl()} width={256} height={384} />
+      )}
+      <input
+        type="file"
+        accept="image/png"
+        ref={tileOutlinedFileInput}
+        style={{ display: 'none' }}
+        onChange={(e) => (enemyData.tileData.tileOutlinedSprite.rawData = e.target.files[0])}
+      />
+      <Button color="primary" onClick={() => tileOutlinedFileInput.current.click()} sx={{ my: 2 }}>
+        Upload image
+      </Button>
     </div>
   );
 });

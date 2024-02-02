@@ -17,9 +17,7 @@ export const App = observer(() => {
     console.log('new mod');
   };
   const onExportModButtonClicked = () => {
-    // TODO
-    console.log('save mod');
-    console.log(modInfoStore);
+    modInfoStore.export();
   };
   const handleFileSelected = async () => {
     const zipFile = fileInput.current.files[0];

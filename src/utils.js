@@ -12,13 +12,6 @@ export const unzip = async (zipFile) => {
 };
 
 /**
- * @returns a new JSZip object
- */
-export const generateNewZipFile = () => {
-  return new JSZip();
-};
-
-/**
  *
  * @param {string} path the absolute path of the file, with the root being the root of the zip folder
  * @param {JSZIP} zip the JSZip object containing all the files in the zipped file
@@ -28,26 +21,32 @@ export const getTextContentOfFile = async (path, zip) => {
   return await zip.file(path).async('text');
 };
 
+/**
+ *
+ * @param {string} path the path of the file to load relative to the zip object's root
+ * @param {JSZip} zip
+ * @returns a Blob representation of the file's contents
+ */
 export const getRawFileData = async (path, zip) => {
-  let content = await zip.file(path).async('arraybuffer');
-  let buffer = new Uint8Array(content);
-  return buffer;
+  return await zip.file(path).async('blob');
 };
 
-export const createObjectUrl = async (rawFileData) => {
-  let blob = new Blob([rawFileData]);
+/**
+ *
+ * @param {Blob} blob
+ * @returns a URL string representing the file
+ */
+export const getObjectUrl = (blob) => {
   return URL.createObjectURL(blob);
 };
 
-export const createObjectURL = async (path, zip) => {
-  let content = await zip.file(path).async('arraybuffer');
-  let buffer = new Uint8Array(content);
-  let blob = new Blob([buffer.buffer]);
-  return URL.createObjectURL(blob);
-};
-
-export const getResourceWithCounts = (resource) => {
-  return resource.reduce((acc, currResource) => {
+/**
+ *
+ * @param {Array} resources
+ * @returns an object of each resource with an additional property 'count' representing the number of times the resource appears in the array
+ */
+export const getResourceWithCounts = (resources) => {
+  return resources.reduce((acc, currResource) => {
     if (!acc[currResource.id]) {
       acc[currResource.id] = { ...currResource, count: 1 };
     } else {

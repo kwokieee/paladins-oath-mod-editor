@@ -18,21 +18,35 @@ export class ModuleDescriptor {
     const modJson = await getTextContentOfFile(
       modInfoStore.getModuleDescriptorPath(moduleId),
       modInfoStore.zip,
-    );
-    const modData = dataParserFn(JSON.parse(modJson));
-    // TODO(ylaunay) load additional images if any
-    if (!modData) {
-      // TODO(ylaunay) show error on UI
-      console.log(`Failed to load mod '${moduleId}'`);
+    ).then((text) => JSON.parse(text));
+    const modFolder = modInfoStore.getModuleFolder(moduleId);
+    if (!modJson) {
+      console.error(`Invalid json file for '${moduleId}'`);
       return null;
     }
-    console.log('Loaded ModData ', modData); // TODO(ylaunay) TEMP
+    if (!modFolder) {
+      console.error(`Invalid folder for '${moduleId}'`);
+      return null;
+    }
 
+    const modData = await dataParserFn(modJson, modFolder);
+    if (!modData) {
+      console.error(`Failed to load mod '${moduleId}'`);
+      return null;
+    }
+    console.log('Loaded ModData ', modData);
     const descriptor = new ModuleDescriptor(modType);
     descriptor.guid = modData.guid;
     descriptor.data = modData;
-    descriptor.folder = modInfoStore.getModuleFolder(modData.guid);
+    descriptor.folder = modFolder;
 
     return descriptor;
+  }
+
+  export() {
+    this.folder.file('mod.json', JSON.stringify(this.data.toJson(), null, 2));
+    this.data
+      .getImageData()
+      .forEach((imageData) => this.folder.file(imageData.fileName, imageData.rawData));
   }
 }
