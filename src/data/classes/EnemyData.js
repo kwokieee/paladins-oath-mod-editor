@@ -128,7 +128,7 @@ export class EnemyData {
     return out;
   }
 
-  static async LoadDataFrom(json, folder) {
+  static async LoadDataFrom(json, folder, moduleStore) {
     const data = new EnemyData();
 
     data.guid = json.guid;

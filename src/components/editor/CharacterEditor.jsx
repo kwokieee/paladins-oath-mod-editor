@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { ResourcePicker } from '../resourcePicker/ResourcePicker';
+import { ValuePicker } from '../valuePicker/ValuePicker';
 import { Card } from '../resources/Card';
 import { Blessing } from '../resources/Blessing';
 import { getResourceWithCounts } from '../../utils';
@@ -38,12 +39,12 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
     return <>Invalid or corrupted data</>;
   }
 
-  const [inaneBlessings, setInaneBlessings] = useState(characterData.inaneBlessings);
-  const [inaneCards, setInaneCards] = useState(characterData.inaneCards);
-  const [uniqueCards, setUniqueCards] = useState(characterData.uniqueCardsInfo);
+  // const [inaneBlessings, setInaneBlessings] = useState(characterData.inaneBlessings);
+  // const [inaneCards, setInaneCards] = useState(characterData.inaneCards);
+  // const [uniqueCards, setUniqueCards] = useState(characterData.uniqueCardsInfo);
 
-  const selectedInaneCardsWithCounts = getResourceWithCounts(inaneCards);
-  const selectedUniqueCardsWithCounts = getResourceWithCounts(characterData.uniqueCardsInfo);
+  // const selectedInaneCardsWithCounts = getResourceWithCounts(inaneCards);
+  // const selectedUniqueCardsWithCounts = getResourceWithCounts(characterData.uniqueCardsInfo);
 
   return (
     <div>
@@ -87,7 +88,7 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
 
       <hr />
 
-      <div>
+      {/* <div>
         <h5>Portrait sprite</h5>
         {portraitSprite && <img src={portraitSprite} width={300} height={300} />}
         <input type="file" accept="image/png" />
@@ -143,7 +144,7 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
         <input type="file" accept="image/png" />
       </div>
 
-      <hr />
+      <hr /> */}
 
       <div>
         <h5>Levels</h5>
@@ -155,14 +156,14 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
                 <p>XP required to reach this level: {level.requiredXp}</p>
                 <p>
                   Rewards given on reaching this level:{' '}
-                  {level?.rewardsLevelUp ?? 'Invalid reward on level up'}
+                  {level?.rewardsLevelUp?.name ?? 'Invalid reward on level up'}
                 </p>
               </div>
             ),
         )}
       </div>
 
-      <hr />
+      {/* <hr />
 
       <h5>Inane blessings:</h5>
       <Box>
@@ -263,23 +264,20 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
         />
       )}
 
-      <hr />
+      <hr /> */}
 
-      <h5>Personal Oaths:</h5>
-      <p>
-        {characterData.personalOaths.length === 0
-          ? 'None'
-          : characterData.personalOaths.map((oath) => card.name).join(', ')}
-      </p>
-      <Button style={{ marginBottom: 10 }} onClick={onEditPersonalOaths}>
-        Edit
-      </Button>
-      {/* TODO: Access to oath modules created by player */}
-      {/* {isEditingPersonalOaths && <ResourcePicker resourceType={'Oath'} />} */}
+      <h5>Personal Oaths</h5>
+      <div>
+        <ValuePicker
+          valueType="Oath"
+          selected={characterData.personalOaths}
+          handleSubmit={(newOaths) => (characterData.personalOaths = newOaths)}
+        />
+      </div>
 
       <hr />
 
-      <h5>Default allowed ambient die</h5>
+      {/* <h5>Default allowed ambient die</h5>
       <input
         type="number"
         placeholder={'(Optional) int > 0 [default=1]. How many Ambient mana can the character use.'}
@@ -591,7 +589,7 @@ export const CharacterEditor = observer(({ moduleDescriptor }) => {
         defaultValue={characterData.roundBoons.leadershipPoints}
       />
 
-      <hr />
+      <hr /> */}
     </div>
   );
 });

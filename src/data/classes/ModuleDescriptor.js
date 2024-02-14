@@ -14,7 +14,7 @@ export class ModuleDescriptor {
     makeAutoObservable(this);
   }
 
-  static async Load(modInfoStore, moduleId, modType, dataParserFn) {
+  static async Load(modInfoStore, moduleStore, moduleId, modType, dataParserFn) {
     const modJson = await getTextContentOfFile(
       modInfoStore.getModuleDescriptorPath(moduleId),
       modInfoStore.zip,
@@ -29,7 +29,7 @@ export class ModuleDescriptor {
       return null;
     }
 
-    const modData = await dataParserFn(modJson, modFolder);
+    const modData = await dataParserFn(modJson, modFolder, moduleStore);
     if (!modData) {
       console.error(`Failed to load mod '${moduleId}'`);
       return null;

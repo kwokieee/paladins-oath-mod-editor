@@ -1,8 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 import { GameValues, FindEnumByValue } from '../../data/GameValues';
+import { ModuleTypes } from '../ModuleTypes';
 
 export class CharacterLevelData {
   constructor() {
+    this.moduleStore = null;
     // int >= 0. At which XP this level up will be given.
     this.requiredXp = 0;
     // (Optional) Rewards::GUID [default=EMPTY]. ID of the rewards information to be given when leveling up. Don't specify if you don't want to give a reward at that level.
@@ -12,9 +14,9 @@ export class CharacterLevelData {
 
   isValid() {
     if (this.requiredXp < 0) return false;
-    // TODO: support checking against local mod GUIDs
-    // if (this.rewardsLeveUp && !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value))
-    //   return false;
+    if (this.rewardsLeveUp && !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value) 
+      && !FindEnumByValue(this.moduleStore.getRewardsValuesDict(), this.rewardsLevelUp.value))
+      return false;
     return true;
   }
 
@@ -31,13 +33,14 @@ export class CharacterLevelData {
   }
 
   // Returns null if json doesn't form valid data
-  static LoadDataFrom(json) {
+  static LoadDataFrom(json, moduleStore) {
     const data = new CharacterLevelData();
 
+    data.moduleStore = moduleStore;
     data.requiredXp = json.requiredXp;
     if (json.rewardsLevelUp) {
-      // TODO: support checking against local mod GUIDs
-      // data.rewardsLevelUp = FindEnumByValue(GameValues.Rewards, json.rewardsLevelUp);
+      data.rewardsLevelUp = FindEnumByValue(GameValues.Reward, json.rewardsLevelUp) ||
+        FindEnumByValue(moduleStore.getRewardsValuesDict(), moduleStore.extractModuleFrom(json.rewardsLevelUp, ModuleTypes.rewards));
     }
 
     return data.isValid() ? data : null;

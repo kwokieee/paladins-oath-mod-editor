@@ -1,11 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 import { GameResources, FindResourceById } from '../GameResources';
+import { GameValues, FindEnumByValue } from '../GameValues';
 import { CharacterLevelData } from './CharacterLevelData';
 import { CrusadeStartingBoonsData } from './CrusadeStartingBoonsData';
 import { CrusadeRoundBoonsData } from './CrusadeRoundBoonsData';
+import { ModuleTypes } from '../ModuleTypes';
 
 export class CharacterData {
   constructor() {
+    this.moduleStore = null;
     // string. guid, unique only within the mod. Will be turned into guid 'mod:'+$yourModId+':'+$guid
     this.guid = null;
     // string. Enemy name (not localized)
@@ -94,13 +97,12 @@ export class CharacterData {
         return false;
       }
     }
-    // TODO: will need to account for mod specific resources
-    // for (let i = 0; i < this.personalOaths.length; i++) {
-    //   const oath = this.personalOaths[i];
-    //   if (!oath || !FindResourceById(GameResources.Oath, oath.id)) {
-    //     return false;
-    //   }
-    // }
+    for (let i = 0; i < this.personalOaths.length; i++) {
+      const oath = this.personalOaths[i];
+      if (!oath || (!FindEnumByValue(GameValues.Oath, oath.value) && !FindEnumByValue(this.moduleStore.getOathValuesDict(), oath.value))) {
+        return false;
+      }
+    }
     if (this.defaultAllowedAmbientDie <= 0) return false;
     if (this.numPointsRequiredPerWound <= 0) return false;
     if (this.defaultExplorationDistance <= 0) return false;
@@ -157,9 +159,10 @@ export class CharacterData {
     return out;
   }
 
-  static LoadDataFrom(json) {
+  static LoadDataFrom(json, folder, moduleStore) {
     const data = new CharacterData();
 
+    data.moduleStore = moduleStore;
     data.guid = json.guid;
     data.name = json.name;
     data.description = json.description;
@@ -171,7 +174,7 @@ export class CharacterData {
     data.tileDefaultSprite = json.tileDefaultSprite;
     data.tileOccupiedSprite = json.tileOccupiedSprite;
     data.ownershipTokenMapPropSprite = json.ownershipTokenMapPropSprite;
-    data.levels = json.levels.map((level) => CharacterLevelData.LoadDataFrom(level));
+    data.levels = json.levels.map((level) => CharacterLevelData.LoadDataFrom(level, moduleStore));
     data.inaneBlessings = json.inaneBlessings.map((blessing) =>
       FindResourceById(GameResources.Blessing, blessing),
     );
@@ -180,9 +183,13 @@ export class CharacterData {
       ? json.uniqueInaneCardsInfo.map((card) => FindResourceById(GameResources.Card, card))
       : [];
     data.personalOaths = [];
-    // data.personalOaths = json.personalOaths
-    //   ? json.personalOaths.map((oath) => FindResourceById(GameResources.Oath, oath))
-    //   : [];
+    // Return value of the user loaded oath has to be a GameValue { value: 'id', name: 'name' }
+    data.personalOaths = json.personalOaths
+      ? json.personalOaths.map((oath) => {
+          return FindEnumByValue(GameValues.Oath, oath) || 
+            FindEnumByValue(moduleStore.getOathValuesDict(), moduleStore.extractModuleFrom(oath, ModuleTypes.oath));
+        })
+      : [];
     data.defaultAllowedAmbientDie = json.defaultAllowedAmbientDie;
     data.numPointsRequiredPerWound = json.numPointsRequiredPerWound;
     data.defaultExplorationDistance = json.defaultExplorationDistance;

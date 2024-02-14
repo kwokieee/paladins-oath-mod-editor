@@ -43,23 +43,19 @@ export const RewardsEditor = observer(({ moduleDescriptor }) => {
       <hr />
 
       <h5>Reward options</h5>
-      {rewardData.rewardOptions.length === 0 ? (
-        <p>No rewards selected</p>
-      ) : (
-        <div>
-          <ValuePicker
-            valueType="Reward"
-            selected={rewardData.rewardOptions}
-            handleSubmit={(newRewardOptions) => (rewardData.rewardOptions = newRewardOptions)}
-          />
-          {rewardData.rewardOptions.map((reward, index) => (
-            <div key={index}>
-              <hr />
-              <p>{reward.name}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      <div>
+        <ValuePicker
+          valueType="Reward"
+          selected={rewardData.rewardOptions}
+          handleSubmit={(newRewardOptions) => (rewardData.rewardOptions = newRewardOptions)}
+        />
+        {rewardData.rewardOptions.map((reward, index) => (
+          <div key={index}>
+            <hr />
+            <p>{reward.name}</p>
+          </div>
+        ))}
+      </div>
 
       <hr />
     </div>

@@ -26,6 +26,7 @@ export class ModuleStore {
    */
 
   constructor() {
+    this.modInfoStore = null;
     this.modules = {};
     this.selectedModule = null;
     this.selectedModuleType = null;
@@ -35,11 +36,11 @@ export class ModuleStore {
     makeAutoObservable(this);
   }
 
-  static async loadModules(modInfoStore, modulesList, moduleType, modParserFn) {
+  async loadModules(modInfoStore, modulesList, moduleType, modParserFn) {
     const loadedModules = {};
     for (const moduleId of modulesList) {
       console.log('Loading module: ' + moduleId);
-      const module = await ModuleDescriptor.Load(modInfoStore, moduleId, moduleType, modParserFn);
+      const module = await ModuleDescriptor.Load(modInfoStore, this, moduleId, moduleType, modParserFn);
       if (!module) {
         // TODO(ylaunay) show error on UI
         console.log(`Failed to load mod '${moduleId}'`);
@@ -58,64 +59,64 @@ export class ModuleStore {
   }
 
   async loadModulesUsing(modInfoStore) {
-    const modules = {};
-    modules.rewardsMods = await ModuleStore.loadModules(
+    this.modInfoStore = modInfoStore;
+    this.modules = {};
+    this.modules.rewardsMods = await this.loadModules(
       modInfoStore,
       modInfoStore.modDescriptor.rewardsMods,
       ModuleTypes.rewards,
-      (json) => {
-        return RewardData.LoadDataFrom(json);
+      (json, folder, moduleStore) => {
+        return RewardData.LoadDataFrom(json, folder, moduleStore);
       },
     );
-    modules.oathMods = await ModuleStore.loadModules(
+    this.modules.oathMods = await this.loadModules(
       modInfoStore,
       modInfoStore.modDescriptor.oathMods,
       ModuleTypes.oath,
-      (json) => {
-        return OathData.LoadDataFrom(json);
+      (json, folder, moduleStore) => {
+        return OathData.LoadDataFrom(json, folder, moduleStore);
       },
     );
-    modules.characterMods = await ModuleStore.loadModules(
+    this.modules.characterMods = await this.loadModules(
       modInfoStore,
       modInfoStore.modDescriptor.characterMods,
       ModuleTypes.character,
-      (json) => {
-        return CharacterData.LoadDataFrom(json);
+      (json, folder, moduleStore) => {
+        return CharacterData.LoadDataFrom(json, folder, moduleStore);
       },
     );
-    modules.enemyMods = await ModuleStore.loadModules(
+    this.modules.enemyMods = await this.loadModules(
       modInfoStore,
       modInfoStore.modDescriptor.enemyMods,
       ModuleTypes.enemy,
-      (json, folder) => {
-        return EnemyData.LoadDataFrom(json, folder);
+      (json, folder, moduleStore) => {
+        return EnemyData.LoadDataFrom(json, folder, modInfoStore, moduleStore);
       },
     );
-    modules.terrainMods = await ModuleStore.loadModules(
+    this.modules.terrainMods = await this.loadModules(
       modInfoStore,
       modInfoStore.modDescriptor.terrainMods,
       ModuleTypes.terrain,
-      (json) => {
-        return TerrainData.LoadDataFrom(json);
+      (json, folder, moduleStore) => {
+        return TerrainData.LoadDataFrom(json, folder, moduleStore);
       },
     );
-    modules.mapSectionMods = await ModuleStore.loadModules(
+    this.modules.mapSectionMods = await this.loadModules(
       modInfoStore,
       modInfoStore.modDescriptor.mapSectionMods,
       ModuleTypes.mapSection,
-      (json) => {
-        return MapSectionData.LoadDataFrom(json);
+      (json, folder, moduleStore) => {
+        return MapSectionData.LoadDataFrom(json, folder, moduleStore);
       },
     );
-    // modules.scenarioMods = loadModules(modInfoStore, modInfoStore.modDescriptor.scenarioMods, ModuleTypes.scenario, (json) => {
+    // this.modules.scenarioMods = loadModules(modInfoStore, modInfoStore.modDescriptor.scenarioMods, ModuleTypes.scenario, (json) => {
     //   return ScenarioData.LoadDataFrom(json);
     // });
-    modules.scenarioMods = {};
-    // modules.scenarioExtensionMods = loadModules(modInfoStore, modInfoStore.modDescriptor.scenarioExtensionMods, ModuleTypes.scenarioExtension, (json) => {
+    this.modules.scenarioMods = {};
+    // this.modules.scenarioExtensionMods = loadModules(modInfoStore, modInfoStore.modDescriptor.scenarioExtensionMods, ModuleTypes.scenarioExtension, (json) => {
     //   return ScenarioExtensionData.LoadDataFrom(json);
     // });
-    modules.scenarioExtensionMods = {};
-    this.modules = modules;
+    this.modules.scenarioExtensionMods = {};
     this.selectedModuleType = null;
     this.selectedModule = null;
   }
@@ -146,12 +147,67 @@ export class ModuleStore {
     );
   }
 
+  containsModule(moduleType, moduleGuid) {
+    return this.modules[moduleType][moduleGuid] !== undefined;
+  }
+
+  getOathValuesDict() {
+    const oathValuesDict = {};
+    for (const moduleGuid of this.getModuleGuidsFor(ModuleTypes.oath)) {
+      const moduleDescriptor = this.getModuleDescriptorFor(moduleGuid);
+      oathValuesDict[moduleGuid] = {
+        value: moduleGuid,
+        name: moduleDescriptor.data.name
+      };
+    }
+    return oathValuesDict;
+  }
+
+  getRewardsValuesDict() {
+    const rewardsValuesDict = {};
+    for (const moduleGuid of this.getModuleGuidsFor(ModuleTypes.rewards)) {
+      const moduleDescriptor = this.getModuleDescriptorFor(moduleGuid);
+      rewardsValuesDict[moduleGuid] = {
+        value: moduleGuid,
+        name: moduleDescriptor.data.name
+      };
+    }
+    return rewardsValuesDict;
+  }
+
+  // TODO
+  getTerrainResourcesDict() {
+    const terrainResourcesDict = {};
+    for (const moduleGuid of this.getModuleGuidsFor(ModuleTypes.terrain)) {
+      const moduleDescriptor = this.getModuleDescriptorFor(moduleGuid);
+      terrainResourcesDict[moduleGuid] = {
+        id: moduleGuid,
+        name: moduleDescriptor.data.name,
+        image: moduleDescriptor.data.imageData.fileName,
+        properties: {},
+      };
+    }
+    return terrainResourcesDict;
+  }
+
+  isValidModuleGuid(guid, moduleType) {
+    const guidParts = guid.split(':');
+    if (guidParts.length !== 3) return false;
+    if (guidParts[0] !== "mod") return false;
+    if (guidParts[1] !== this.modInfoStore.getModGuid()) return false;
+    if (Object.keys(this.modules[moduleType]).includes(guidParts[2])) return false;
+    return true;
+  }
+
+  extractModuleFrom(guid, moduleType) {
+    if (this.isValidModuleGuid(guid, moduleType)) return null;
+    return guid.split(':')[2];
+  }
+
   changeSelectedModuleTo(moduleType, moduleId) {
     this.isSwitchingModule = true;
     this.selectedModuleType = moduleType;
     this.selectedModule = moduleId;
-    console.log(this.selectedModuleType);
-    console.log(this.selectedModule);
     this.isSwitchingModule = false;
   }
 
