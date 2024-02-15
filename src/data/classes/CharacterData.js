@@ -99,7 +99,11 @@ export class CharacterData {
     }
     for (let i = 0; i < this.personalOaths.length; i++) {
       const oath = this.personalOaths[i];
-      if (!oath || (!FindEnumByValue(GameValues.Oath, oath.value) && !FindEnumByValue(this.moduleStore.getOathValuesDict(), oath.value))) {
+      if (
+        !oath ||
+        (!FindEnumByValue(GameValues.Oath, oath.value) &&
+          !FindEnumByValue(this.moduleStore.getOathValuesDict(), oath.value))
+      ) {
         return false;
       }
     }
@@ -186,8 +190,13 @@ export class CharacterData {
     // Return value of the user loaded oath has to be a GameValue { value: 'id', name: 'name' }
     data.personalOaths = json.personalOaths
       ? json.personalOaths.map((oath) => {
-          return FindEnumByValue(GameValues.Oath, oath) || 
-            FindEnumByValue(moduleStore.getOathValuesDict(), moduleStore.extractModuleFrom(oath, ModuleTypes.oath));
+          return (
+            FindEnumByValue(GameValues.Oath, oath) ||
+            FindEnumByValue(
+              moduleStore.getOathValuesDict(),
+              moduleStore.extractModuleFrom(oath, ModuleTypes.oath),
+            )
+          );
         })
       : [];
     data.defaultAllowedAmbientDie = json.defaultAllowedAmbientDie;

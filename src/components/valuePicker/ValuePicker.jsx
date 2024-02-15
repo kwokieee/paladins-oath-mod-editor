@@ -15,11 +15,23 @@ export const ValuePicker = ({ valueType, selected, isMultipleSelect, handleSubmi
   } else if (valueType === 'RewardComboType') {
     return <RewardComboTypePicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (valueType === 'EnemyType') {
-    return <EnemyTypePicker selected={selected} isMultipleSelect={isMultipleSelect} handleSubmit={handleSubmit} />;
+    return (
+      <EnemyTypePicker
+        selected={selected}
+        isMultipleSelect={isMultipleSelect}
+        handleSubmit={handleSubmit}
+      />
+    );
   } else if (valueType === 'Fortification') {
     return <FortificationPicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (valueType === 'Element') {
-    return <ElementPicker selected={selected} isMultipleSelect={isMultipleSelect} handleSubmit={handleSubmit} />;
+    return (
+      <ElementPicker
+        selected={selected}
+        isMultipleSelect={isMultipleSelect}
+        handleSubmit={handleSubmit}
+      />
+    );
   } else if (valueType === 'AttackType') {
     return <AttackTypePicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (valueType === 'AttackModifier') {
@@ -27,6 +39,12 @@ export const ValuePicker = ({ valueType, selected, isMultipleSelect, handleSubmi
   } else if (valueType === 'Oath') {
     return <OathPicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (valueType === 'Immunity') {
-    return <ImmunityPicker selected={selected} isMultipleSelect={isMultipleSelect} handleSubmit={handleSubmit} />;
+    return (
+      <ImmunityPicker
+        selected={selected}
+        isMultipleSelect={isMultipleSelect}
+        handleSubmit={handleSubmit}
+      />
+    );
   }
 };

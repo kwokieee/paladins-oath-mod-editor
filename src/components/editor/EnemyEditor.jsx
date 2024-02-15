@@ -169,7 +169,7 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
           <p>Attack value</p>
           <input
             type="number"
-            placeholder='int > 0. Value of the attack.'
+            placeholder="int > 0. Value of the attack."
             defaultValue={attack.value}
             onChange={(e) => (attack.value = Number(e.target.value))}
           />
@@ -179,13 +179,25 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
             selected={attack.attackModifiers}
             handleSubmit={(newModifiers) => (attack.attackModifiers = newModifiers)}
           />
-          <Button color="secondary" onClick={() => {enemyData.deleteAttack(index)}} sx={{ my: 2 }}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              enemyData.deleteAttack(index);
+            }}
+            sx={{ my: 2 }}
+          >
             Delete attack
           </Button>
           <hr />
         </div>
       ))}
-      <Button color="primary" onClick={() => {enemyData.addNewAttack()}} sx={{ my: 2 }}>
+      <Button
+        color="primary"
+        onClick={() => {
+          enemyData.addNewAttack();
+        }}
+        sx={{ my: 2 }}
+      >
         Add new attack
       </Button>
 

@@ -8,10 +8,12 @@ export const AttackModifierPicker = ({ selected, handleSubmit }) => {
     <div>
       <select
         multiple
-        defaultValue={currentSelection.map((selectedAttackModifier) => selectedAttackModifier.value)}
+        defaultValue={currentSelection.map(
+          (selectedAttackModifier) => selectedAttackModifier.value,
+        )}
         onChange={(e) => {
           const newSelection = Array.from(e.target.selectedOptions, (option) => option.value).map(
-            (value) => FindEnumByValue(GameValues.AttackModifier, Number(value))
+            (value) => FindEnumByValue(GameValues.AttackModifier, Number(value)),
           );
           setCurrentSelection(newSelection);
           handleSubmit(newSelection);
@@ -23,7 +25,7 @@ export const AttackModifierPicker = ({ selected, handleSubmit }) => {
             <option key={attackModifier.value} value={attackModifier.value}>
               {attackModifier.name}
             </option>
-        ))}
+          ))}
       </select>
     </div>
   );

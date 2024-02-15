@@ -5,7 +5,9 @@ export const AttackTypePicker = ({ selected, handleSubmit }) => {
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <select
         defaultValue={selected.value}
-        onChange={(e) => handleSubmit(FindEnumByValue(GameValues.AttackType, Number(e.target.value)))}
+        onChange={(e) =>
+          handleSubmit(FindEnumByValue(GameValues.AttackType, Number(e.target.value)))
+        }
       >
         {Object.values(GameValues.AttackType).map((attackType) => (
           <option key={attackType.value} value={attackType.value}>

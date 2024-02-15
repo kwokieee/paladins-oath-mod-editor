@@ -82,15 +82,9 @@ export class ModInfoStore {
     });
   }
 
-  createModule() {
+  createModule() {}
 
-  }
+  deleteModule() {}
 
-  deleteModule() {
-
-  }
-
-  updateModule() {
-    
-  }
+  updateModule() {}
 }

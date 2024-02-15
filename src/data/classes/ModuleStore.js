@@ -40,7 +40,13 @@ export class ModuleStore {
     const loadedModules = {};
     for (const moduleId of modulesList) {
       console.log('Loading module: ' + moduleId);
-      const module = await ModuleDescriptor.Load(modInfoStore, this, moduleId, moduleType, modParserFn);
+      const module = await ModuleDescriptor.Load(
+        modInfoStore,
+        this,
+        moduleId,
+        moduleType,
+        modParserFn,
+      );
       if (!module) {
         // TODO(ylaunay) show error on UI
         console.log(`Failed to load mod '${moduleId}'`);
@@ -157,7 +163,7 @@ export class ModuleStore {
       const moduleDescriptor = this.getModuleDescriptorFor(moduleGuid);
       oathValuesDict[moduleGuid] = {
         value: moduleGuid,
-        name: moduleDescriptor.data.name
+        name: moduleDescriptor.data.name,
       };
     }
     return oathValuesDict;
@@ -169,7 +175,7 @@ export class ModuleStore {
       const moduleDescriptor = this.getModuleDescriptorFor(moduleGuid);
       rewardsValuesDict[moduleGuid] = {
         value: moduleGuid,
-        name: moduleDescriptor.data.name
+        name: moduleDescriptor.data.name,
       };
     }
     return rewardsValuesDict;
@@ -193,7 +199,7 @@ export class ModuleStore {
   isValidModuleGuid(guid, moduleType) {
     const guidParts = guid.split(':');
     if (guidParts.length !== 3) return false;
-    if (guidParts[0] !== "mod") return false;
+    if (guidParts[0] !== 'mod') return false;
     if (guidParts[1] !== this.modInfoStore.getModGuid()) return false;
     if (Object.keys(this.modules[moduleType]).includes(guidParts[2])) return false;
     return true;

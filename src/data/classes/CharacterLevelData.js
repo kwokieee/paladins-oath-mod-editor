@@ -14,8 +14,11 @@ export class CharacterLevelData {
 
   isValid() {
     if (this.requiredXp < 0) return false;
-    if (this.rewardsLeveUp && !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value) 
-      && !FindEnumByValue(this.moduleStore.getRewardsValuesDict(), this.rewardsLevelUp.value))
+    if (
+      this.rewardsLeveUp &&
+      !FindEnumByValue(GameValues.Rewards, this.rewardsLevelUp.value) &&
+      !FindEnumByValue(this.moduleStore.getRewardsValuesDict(), this.rewardsLevelUp.value)
+    )
       return false;
     return true;
   }
@@ -39,8 +42,12 @@ export class CharacterLevelData {
     data.moduleStore = moduleStore;
     data.requiredXp = json.requiredXp;
     if (json.rewardsLevelUp) {
-      data.rewardsLevelUp = FindEnumByValue(GameValues.Reward, json.rewardsLevelUp) ||
-        FindEnumByValue(moduleStore.getRewardsValuesDict(), moduleStore.extractModuleFrom(json.rewardsLevelUp, ModuleTypes.rewards));
+      data.rewardsLevelUp =
+        FindEnumByValue(GameValues.Reward, json.rewardsLevelUp) ||
+        FindEnumByValue(
+          moduleStore.getRewardsValuesDict(),
+          moduleStore.extractModuleFrom(json.rewardsLevelUp, ModuleTypes.rewards),
+        );
     }
 
     return data.isValid() ? data : null;

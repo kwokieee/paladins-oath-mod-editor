@@ -14,7 +14,9 @@ export const OathPicker = observer(({ selected, handleSubmit }) => {
         defaultValue={currentSelection.map((selectedOath) => selectedOath.value)}
         onChange={(e) => {
           const newSelection = Array.from(e.target.selectedOptions, (option) => option.value).map(
-            (value) => FindEnumByValue(GameValues.Oath, value) || FindEnumByValue(moduleStore.getOathValuesDict(), value),
+            (value) =>
+              FindEnumByValue(GameValues.Oath, value) ||
+              FindEnumByValue(moduleStore.getOathValuesDict(), value),
           );
           setCurrentSelection(newSelection);
           handleSubmit(newSelection);

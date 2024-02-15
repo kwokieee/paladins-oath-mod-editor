@@ -11,9 +11,9 @@ export const ImmunityPicker = ({ selected, handleSubmit, isMultipleSelect = fals
           multiple
           defaultValue={currentSelection.map((selectedImmunity) => selectedImmunity.value)}
           onChange={(e) => {
-            const newSelection = Array.from(e.target.selectedOptions, (option) => Number(option.value)).map(
-              (value) => FindEnumByValue(GameValues.Immunity, value)
-            );
+            const newSelection = Array.from(e.target.selectedOptions, (option) =>
+              Number(option.value),
+            ).map((value) => FindEnumByValue(GameValues.Immunity, value));
             setCurrentSelection(newSelection);
             handleSubmit(newSelection);
           }}

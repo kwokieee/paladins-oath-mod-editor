@@ -12,7 +12,7 @@ export const EnemyTypePicker = ({ selected, handleSubmit, isMultipleSelect = fal
           defaultValue={currentSelection.map((selectedType) => selectedType.value)}
           onChange={(e) => {
             const newSelection = Array.from(e.target.selectedOptions, (option) => option.value).map(
-              (value) => FindEnumByValue(GameValues.EnemyType, value)
+              (value) => FindEnumByValue(GameValues.EnemyType, value),
             );
             setCurrentSelection(newSelection);
             handleSubmit(newSelection);

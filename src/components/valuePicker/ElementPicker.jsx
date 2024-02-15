@@ -12,7 +12,7 @@ export const ElementPicker = ({ selected, handleSubmit, isMultipleSelect = false
           defaultValue={currentSelection.map((selectedElement) => selectedElement.value)}
           onChange={(e) => {
             const newSelection = Array.from(e.target.selectedOptions, (option) => option.value).map(
-              (value) => FindEnumByValue(GameValues.Element, value)
+              (value) => FindEnumByValue(GameValues.Element, value),
             );
             setCurrentSelection(newSelection);
             handleSubmit(newSelection);
