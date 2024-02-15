@@ -280,9 +280,6 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
       </div>
       <hr />
 
-      <h5>Tile data</h5>
-      <hr />
-
       <h5>Tile sprite</h5>
       {enemyData.tileData.tileNormalSprite && (
         <img src={enemyData.tileData.tileNormalSprite.getObjectUrl()} width={256} height={384} />
