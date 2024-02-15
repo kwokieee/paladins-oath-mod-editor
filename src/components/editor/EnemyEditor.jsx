@@ -192,47 +192,32 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
       <hr />
 
       <h5>Summoning attacks</h5>
-      {enemyData.summoningAttacks.length === 0 ? (
-        <p>No summoning attacks</p>
-      ) : (
-        enemyData.summoningAttacks.map((summoningAttack, index) => (
-          <div key={index}>
-            <hr />
-            <p>{summoningAttack.name}</p>
-          </div>
-        ))
-      )}
       <ValuePicker
         valueType={'EnemyType'}
-        selected={enemyData.enemyType}
-        handleSubmit={(newEnemyType) => (enemyData.enemyType = newEnemyType)}
+        selected={enemyData.summoningAttacks}
+        isMultipleSelect
+        handleSubmit={(newEnemyTypes) => (enemyData.summoningAttacks = newEnemyTypes)}
       />
 
       <hr />
 
       <h5>Immunities</h5>
-      {enemyData.immunities.length === 0 ? (
-        <p>No immunities</p>
-      ) : (
-        enemyData.immunities.map((immunity, index) => (
-          <div key={index}>
-            <p>{immunity.name}</p>
-          </div>
-        ))
-      )}
+      <ValuePicker
+        valueType={'Immunity'}
+        selected={enemyData.immunities}
+        isMultipleSelect
+        handleSubmit={(newImmunities) => (enemyData.immunities = newImmunities)}
+      />
 
       <hr />
 
       <h5>Resistances</h5>
-      {enemyData.resistances.length === 0 ? (
-        <p>No resistances</p>
-      ) : (
-        enemyData.resistances.map((resistance, index) => (
-          <div key={index}>
-            <p>{resistance.name}</p>
-          </div>
-        ))
-      )}
+      <ValuePicker
+        valueType={'Element'}
+        selected={enemyData.resistances}
+        isMultipleSelect
+        handleSubmit={(newElement) => (enemyData.resistances = newElement)}
+      />
 
       <hr />
 

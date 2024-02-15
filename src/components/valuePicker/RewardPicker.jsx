@@ -3,7 +3,7 @@ import { FindEnumByValue, GameValues } from '../../data/GameValues';
 import { useState } from 'react';
 import { useModuleStore } from '../../hooks/useModuleStore';
 
-export const RewardPicker = observer(({ selected, handleSubmit }) => {
+export const RewardPicker = observer(({ selected, handleSubmit, canReferToModCreatedResources = false }) => {
   const [currentSelection, setCurrentSelection] = useState([...selected]);
   const moduleStore = useModuleStore();
 
@@ -20,13 +20,16 @@ export const RewardPicker = observer(({ selected, handleSubmit }) => {
           handleSubmit(newSelection);
         }}
       >
-        <optgroup label="Mod-created rewards">
-          {Object.values(moduleStore.getRewardsValuesDict()).map((reward) => (
-            <option key={reward.value} value={reward.value}>
-              {reward.name}
-            </option>
-          ))}
-        </optgroup>
+        {
+          canReferToModCreatedResources && 
+          <optgroup label="Mod-created rewards">
+            {Object.values(moduleStore.getRewardsValuesDict()).map((reward) => (
+              <option key={reward.value} value={reward.value}>
+                {reward.name}
+              </option>
+            ))}
+          </optgroup>
+        }
         <optgroup label="Default available rewards">
           {Object.values(GameValues.Reward).map((reward) => (
             <option key={reward.value} value={reward.value}>
