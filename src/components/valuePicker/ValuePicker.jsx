@@ -5,6 +5,7 @@ import { RewardComboTypePicker } from './RewardComboTypePicker';
 import { RewardPicker } from './RewardPicker';
 import { ElementPicker } from './ElementPicker';
 import { AttackTypePicker } from './AttackTypePicker';
+import { AttackModifierPicker } from './AttackModifierPicker';
 import { OathPicker } from './OathPicker';
 
 export const ValuePicker = ({ valueType, selected, handleSubmit }) => {
@@ -20,6 +21,8 @@ export const ValuePicker = ({ valueType, selected, handleSubmit }) => {
     return <ElementPicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (valueType === 'AttackType') {
     return <AttackTypePicker selected={selected} handleSubmit={handleSubmit} />;
+  } else if (valueType === 'AttackModifier') {
+    return <AttackModifierPicker selected={selected} handleSubmit={handleSubmit} />;
   } else if (valueType === 'Oath') {
     return <OathPicker selected={selected} handleSubmit={handleSubmit} />;
   }

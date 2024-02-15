@@ -152,17 +152,42 @@ export const EnemyEditor = observer(({ moduleDescriptor }) => {
 
       <h5>Attacks</h5>
       {enemyData.attacks.map((attack, index) => (
-        <div key={index}>
+        <div key={attack.id}>
           <hr />
-          <p>Element: {attack.element.name}</p>
-          <p>Attack type: {attack.attackType.name}</p>
-          <p>Attack value: {attack.value}</p>
-          <p>
-            Attack modifier(s):{' '}
-            {attack.attackModifiers.map((attackModifier) => attackModifier.name).join(',')}
-          </p>
+          <p>Element</p>
+          <ValuePicker
+            valueType={'Element'}
+            selected={attack.element}
+            handleSubmit={(newElement) => (attack.element = newElement)}
+          />
+          <p>Attack type</p>
+          <ValuePicker
+            valueType={'AttackType'}
+            selected={attack.attackType}
+            handleSubmit={(newAttackType) => (attack.attackType = newAttackType)}
+          />
+          <p>Attack value</p>
+          <input
+            type="number"
+            placeholder='int > 0. Value of the attack.'
+            defaultValue={attack.value}
+            onChange={(e) => (attack.value = Number(e.target.value))}
+          />
+          <p>Attack modifier(s)</p>
+          <ValuePicker
+            valueType="AttackModifier"
+            selected={attack.attackModifiers}
+            handleSubmit={(newModifiers) => (attack.attackModifiers = newModifiers)}
+          />
+          <Button color="secondary" onClick={() => {enemyData.deleteAttack(index)}} sx={{ my: 2 }}>
+            Delete attack
+          </Button>
+          <hr />
         </div>
       ))}
+      <Button color="primary" onClick={() => {enemyData.addNewAttack()}} sx={{ my: 2 }}>
+        Add new attack
+      </Button>
 
       <hr />
 

@@ -179,4 +179,14 @@ export class EnemyData {
     out.push(this.tileData.tileOutlinedSprite);
     return out;
   }
+
+  addNewAttack() {
+    const newAttack = new EnemyAttackData();
+    this.attacks.push(newAttack);
+  }
+
+  deleteAttack(indexToDelete) {
+    this.attacks.splice(indexToDelete, 1);
+    console.log(this.attacks);
+  }
 }

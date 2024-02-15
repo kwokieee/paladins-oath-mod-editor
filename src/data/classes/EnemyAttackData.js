@@ -1,8 +1,10 @@
 import { GameValues, FindEnumByValue } from '../../data/GameValues';
 import { makeAutoObservable } from 'mobx';
+import { v4 as uuidv4 } from 'uuid';
 
 export class EnemyAttackData {
   constructor() {
+    this.id = uuidv4();
     // Element. Resource ID. for the attack element
     this.element = GameValues.Element.element_physical;
     // (Optional) AttackType::int [default=Basic(0)]. Int value for AttackType enum.
