@@ -5,7 +5,7 @@ export const AttackModifierPicker = ({ selected, handleSubmit }) => {
   const [currentSelection, setCurrentSelection] = useState([...selected]);
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <select
         multiple
         defaultValue={currentSelection.map(
