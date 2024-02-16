@@ -1,15 +1,15 @@
 import { makeAutoObservable, observable, action } from 'mobx';
-import { getTextContentOfFile } from '../../utils';
-import { ModuleDescriptor } from './ModuleDescriptor';
-import { RewardData } from './RewardData';
-import { OathData } from './OathData';
-import { CharacterData } from './CharacterData';
-import { EnemyData } from './EnemyData';
-import { TerrainData } from './TerrainData';
-import { MapSectionData } from './MapSectionData';
+import { getTextContentOfFile } from '../utils';
+import { ModuleDescriptor } from '../data/classes/ModuleDescriptor';
+import { RewardData } from '../data/classes/RewardData';
+import { OathData } from '../data/classes/OathData';
+import { CharacterData } from '../data/classes/CharacterData';
+import { EnemyData } from '../data/classes/EnemyData';
+import { TerrainData } from '../data/classes/TerrainData';
+import { MapSectionData } from '../data/classes/MapSectionData';
 // import { ScenarioData } from './data/classes/ScenarioData';
 // import { ScenarioExtensionData } from './data/classes/ScenarioExtensionData';
-import { ModuleTypes } from '../ModuleTypes';
+import { ModuleTypes } from '../data/ModuleTypes';
 
 export class ModuleStore {
   /**

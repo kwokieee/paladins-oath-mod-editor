@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-import { unzip, getTextContentOfFile } from '../../utils';
-import { ModDescriptor } from './ModDescriptor';
+import { unzip, getTextContentOfFile } from '../utils';
+import { ModDescriptor } from '../data/classes/ModDescriptor';
 import { ModuleStore } from './ModuleStore';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
